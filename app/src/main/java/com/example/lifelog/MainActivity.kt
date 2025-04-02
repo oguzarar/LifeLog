@@ -17,5 +17,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         print("Merhaba")
+        print("ikinci push")
     }
 }
