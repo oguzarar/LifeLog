@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomnav,navhostFragment.navController)//navhost ile bottom nav bağlandı.
 
         val db= database(this) //Veritabanı için
-
+        
 
 
 
