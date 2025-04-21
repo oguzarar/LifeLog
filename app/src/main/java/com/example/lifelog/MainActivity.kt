@@ -7,6 +7,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.lifelog.database.database
+import com.example.lifelog.database.databasedao
 import com.example.lifelog.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         val navhostFragment=supportFragmentManager.findFragmentById(R.id.navhost) as NavHostFragment //Id ile navhost bulundu.
         NavigationUI.setupWithNavController(binding.bottomnav,navhostFragment.navController)//navhost ile bottom nav bağlandı.
+
+        val db= database(this) //Veritabanı için
+
+
+
 
 
     }
