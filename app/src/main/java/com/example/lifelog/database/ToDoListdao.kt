@@ -11,5 +11,22 @@ class ToDoListdao {
         db.insertOrThrow("ToDoList",null,values)
         db.close()
     }
-    
+    fun GetAllTask(vt: Database) : ArrayList<ToDoList>{
+        val TaskList= ArrayList<ToDoList>()
+        val db=vt.writableDatabase
+        val cursor=db.rawQuery("SELECT * FROM ToDoList",null)
+        while(cursor.moveToNext()){
+            val Task= ToDoList(cursor.getInt(cursor.getColumnIndex("task_id")),
+                cursor.getString(cursor.getColumnIndex("task")))
+            TaskList.add(Task)
+        }
+        db.close()
+        return TaskList
+    }
+    fun DeleteTask(vt: Database,kisi_id:Int){
+        val db=vt.writableDatabase
+        db.delete("ToDoList","task_id=?",arrayOf(kisi_id.toString()))
+        db.close()
+    }
+
 }
