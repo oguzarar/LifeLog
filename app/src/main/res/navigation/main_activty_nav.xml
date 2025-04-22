@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/mainPageFragment"
-        android:name="com.example.lifelog.pages.mainPageFragment"
+        android:name="com.example.lifelog.pages.MainPageFragment"
         android:label="fragment_main_page"
         tools:layout="@layout/fragment_main_page" />
     <fragment
         android:id="@+id/toDoFragment"
-        android:name="com.example.lifelog.pages.toDoFragment"
+        android:name="com.example.lifelog.pages.ToDoFragment"
         android:label="fragment_to_do"
         tools:layout="@layout/fragment_to_do" />
     <fragment
         android:id="@+id/addPagesFragment"
-        android:name="com.example.lifelog.pages.addPagesFragment"
+        android:name="com.example.lifelog.pages.AddPagesFragment"
         android:label="fragment_add_pages"
         tools:layout="@layout/fragment_add_pages" />
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.example.lifelog.pages.notesFragment"
+        android:name="com.example.lifelog.pages.NotesFragment"
         android:label="fragment_notes"
         tools:layout="@layout/fragment_notes" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.lifelog.pages.settingsFragment"
+        android:name="com.example.lifelog.pages.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

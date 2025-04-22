@@ -1,14 +1,10 @@
 package com.example.lifelog
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.lifelog.database.database
-import com.example.lifelog.database.databasedao
+import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,13 +12,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navhostFragment=supportFragmentManager.findFragmentById(R.id.navhost) as NavHostFragment //Id ile navhost bulundu.
-        NavigationUI.setupWithNavController(binding.bottomnav,navhostFragment.navController)//navhost ile bottom nav bağlandı.
+        val navhostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment //Id ile navhost bulundu.
+        NavigationUI.setupWithNavController(binding.bottomNav,navhostFragment.navController)//navhost ile bottom nav bağlandı.
 
-        val db= database(this) //Veritabanı için
+        val db = Database(this) //Veritabanı için
 
 
 

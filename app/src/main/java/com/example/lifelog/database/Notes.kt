@@ -1,7 +1,7 @@
 package com.example.lifelog.database
 
-class Notes(var notes_id:Int?,
-            var notes: String,
-            var notes_date: String,
-            var notes_time: String ) {
+class Notes(var note_id:Int?,
+            var note: String,
+            var note_date: String,
+            var note_time: String ) {
 }
