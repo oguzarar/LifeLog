@@ -10,145 +10,271 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="48dp"
         android:text="GÖREV EKLE"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/FutbolTakipButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/football"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:text="Futbol Takip Et"
-        app:layout_constraintBottom_toTopOf="@+id/KaloriSayaciButton"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/kriptotakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="128dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DersNotButton" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/KaloriSayaciButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/calories"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:text="Kalori Sayacı"
-        app:layout_constraintBottom_toTopOf="@+id/DersTakipButton"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/kriptotext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Kripto Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/kriptoImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/bitcoin" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/altintakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="200dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FutbolTakipButton"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/DersTakipButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/books"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="202dp"
-        android:text="Ders Takip et"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/KriptoButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/bitcoin"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:text="Kripto Takip et"
-        app:layout_constraintBottom_toTopOf="@+id/AltinTakipButton"
+            <TextView
+                android:id="@+id/altintext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Altın Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/altinImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/gold" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/doviztakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="272dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/AltinTakipButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/gold"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:text="Altın Takip Et"
-        app:layout_constraintBottom_toTopOf="@+id/DovizTakipButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/KriptoButton"
-        app:layout_constraintVertical_bias="0.5" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/DovizTakipButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/currencies"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:text="Döviz Takip et"
-        app:layout_constraintBottom_toTopOf="@+id/DersNotButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AltinTakipButton"
-        app:layout_constraintVertical_bias="0.5" />
+            <TextView
+                android:id="@+id/doviztext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Döviz Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
 
-    <Button
-        android:id="@+id/DersNotButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/education"
-        app:iconSize="40dp"
-        app:iconTint="@color/black"
-        app:iconGravity="end"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/acikmavi"
-        android:textSize="16dp"
-        android:layout_width="255dp"
-        android:layout_height="70dp"
-        android:text="Ders Notlarını Takip et"
-        app:layout_constraintBottom_toTopOf="@+id/FutbolTakipButton"
+            <ImageView
+                android:id="@+id/dovizImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/currencies" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/futboltakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="344dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DovizTakipButton"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/futboltext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Futbol Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/futbolImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/football" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/derstakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="416dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/derstakiptext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Ders Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/derstakipImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/books" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/kaloritakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="488dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/kaloritext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Kalori Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/kaloriImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/calories" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dersnottakipet"
+        android:layout_width="273dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="560dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/dersnottext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plain_text_border2"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Ders Not Takip Et"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/dersnotImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/education" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
