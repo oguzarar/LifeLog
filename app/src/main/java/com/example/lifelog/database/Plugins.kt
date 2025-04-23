@@ -1,4 +1,4 @@
 package com.example.lifelog.database
 
-class Plugins(var Plugin_name: String) {
+data class Plugins(var Plugin_name: String) {
 }
