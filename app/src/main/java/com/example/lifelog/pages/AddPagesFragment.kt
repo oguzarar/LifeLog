@@ -2,62 +2,83 @@ package com.example.lifelog.pages
 
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.lifelog.AddPages.AddPagesRecView
 import com.example.lifelog.R
 import com.example.lifelog.database.AddPagesDao
 import com.example.lifelog.database.Database
+import com.example.lifelog.database.Plugins
 import com.example.lifelog.databinding.FragmentAddPagesBinding
 
 class AddPagesFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding= FragmentAddPagesBinding.inflate(inflater,container,false)
-        val vt = Database(requireContext())
 
-        binding.KriptoButton.setOnClickListener {
-            PluginAdd("Kripto Takip","Kripto")
+
+        //Seçilen Eklenti Veritabaına ekleniyor
+        binding.kriptotakipet.setOnClickListener {
+            var kriptoText=binding.kriptotext.text
+            PluginAdd(kriptoText.toString())
         }
-        binding.AltinTakipButton.setOnClickListener {
-            PluginAdd("Altın Takip","Altin")
+
+        binding.altintakipet.setOnClickListener {
+            var AltinTakip=binding.altintext.text
+            PluginAdd(AltinTakip.toString())
         }
-        binding.DovizTakipButton.setOnClickListener {
-            PluginAdd("Döviz Takip","Doviz")
+
+        binding.doviztakipet.setOnClickListener {
+            var DovizTakip=binding.doviztext.text
+            PluginAdd(DovizTakip.toString())
         }
-        binding.DersNotButton.setOnClickListener {
-            PluginAdd("Ders Not Takibi","DersNot")
+
+        binding.futboltakipet.setOnClickListener {
+            var FutbolTakip=binding.futboltext.text
+            PluginAdd(FutbolTakip.toString())
         }
-        binding.FutbolTakipButton.setOnClickListener {
-            PluginAdd("Futbol Takip","Futbol")
+
+        binding.derstakipet.setOnClickListener {
+            var DersTakip=binding.derstakiptext.text
+            PluginAdd(DersTakip.toString())
         }
-        binding.KaloriSayaciButton.setOnClickListener {
-            PluginAdd("Kalori Sayacı","Kalori")
+
+        binding.kaloritakipet.setOnClickListener {
+            var KaloriTakip=binding.kaloritext.text
+            PluginAdd(KaloriTakip.toString())
         }
-        binding.DersTakipButton.setOnClickListener {
-            PluginAdd("Ders takip","DersTakip")
+
+        binding.dersnottakipet.setOnClickListener {
+            var DersNotTakip=binding.dersnottext.text
+            PluginAdd(DersNotTakip.toString())
         }
+
+
+
 
         return binding.root
     }
-    fun PluginAdd(Mesaj:String,PluginName: String){
-        val vt = Database(requireContext())
-        val alert= AlertDialog.Builder(requireContext())
+    fun PluginAdd(PluginName: String){
+        val vt = Database(requireContext())//Nesne oluşturuldu.
+        val alert= AlertDialog.Builder(requireContext())//Uyarı çıkması için
         alert.setTitle("Emin misiniz?")
-        alert.setMessage("$Mesaj için Ana Ekrana eklenecek Emin misiniz?")
+        alert.setMessage("$PluginName için Ana Ekrana eklenecek Emin misiniz?")
         alert.setPositiveButton("EVET") {dialog,which->
             try {
-                AddPagesDao().PluginAdd(vt,PluginName)
-            }catch (e:SQLiteConstraintException){
+                AddPagesDao().PluginAdd(vt,PluginName)//Seçilen ek veritabanına kayıt ediliyor
+            }catch (e:SQLiteConstraintException){//Eğer zaten var ise eklenmiyecek
                 Toast.makeText(requireContext(),"Bu eklenti zaten mevcut", Toast.LENGTH_LONG).show()
             }
         }
-        alert.setNegativeButton("HAYIR"){ dialog, which ->
+        alert.setNegativeButton("HAYIR"){ dialog, which ->//Hayır durumunda birşey yapılmıyor.
         }
         val dialog=alert.create()
         dialog.show()

@@ -11,4 +11,15 @@ class AddPagesDao {
         db.insertOrThrow("Plugins",null,values)
         db.close()
     }
+    fun getAllPlugin(vt: Database): ArrayList<Plugins>{
+        val PluginList= ArrayList<Plugins>()
+        val db=vt.writableDatabase
+        val cursor=db.rawQuery("SELECT * FROM Plugins",null)
+        while(cursor.moveToNext()){
+            val plugin= Plugins(cursor.getString(cursor.getColumnIndex("Plugin_name")))
+            PluginList.add(plugin)
+        }
+        db.close()
+        return PluginList
+    }
 }
