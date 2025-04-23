@@ -1,18 +1,32 @@
 package com.example.lifelog.AddPages
 
+
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 import com.example.lifelog.database.Plugins
+import com.example.lifelog.pages.MainPageFragment
+import androidx.fragment.app.Fragment
+import com.example.lifelog.PluginPages.AltinActivity
+import com.example.lifelog.PluginPages.DersNotTakipActivity
+import com.example.lifelog.PluginPages.DersTakipActivity
+import com.example.lifelog.PluginPages.DovizActivity
+import com.example.lifelog.PluginPages.FutbolActivity
+import com.example.lifelog.PluginPages.KaloriActivity
+import com.example.lifelog.PluginPages.KriptoActivity
 
 class AddPagesRecView(private var mContext: Context,private val PluginList: MutableList<Plugins>):
-    RecyclerView.Adapter<AddPagesRecView.CardviewnesneTutucu>() {
+    RecyclerView.Adapter<AddPagesRecView.CardviewnesneTutucu>(){
 
     inner class CardviewnesneTutucu(view: View): RecyclerView.ViewHolder(view){
         var PluginSatirCard: CardView
@@ -31,9 +45,45 @@ class AddPagesRecView(private var mContext: Context,private val PluginList: Muta
         return CardviewnesneTutucu(design)
     }
 
-    override fun onBindViewHolder(holder: CardviewnesneTutucu, position: Int) {
+    override fun onBindViewHolder(holder: CardviewnesneTutucu, position: Int){
+
         val plugin=PluginList[position]
         holder.PluginText.text=plugin.Plugin_name
+        holder.PluginSatirCard.setOnClickListener {
+            val activity = holder.itemView.context as AppCompatActivity
+            when(plugin.Plugin_name){
+                "Kripto Takip Et"->{
+                    val gecis= Intent(mContext, KriptoActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+                "Altın Takip Et"->{
+                    val gecis= Intent(mContext, AltinActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+                "Döviz Takip Et"->{
+                    val gecis= Intent(mContext, DovizActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+                "Futbol Takip Et"->{
+                    val gecis= Intent(mContext, FutbolActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+                "Ders Takip Et"->{
+                    val gecis= Intent(mContext, DersTakipActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+                "Kalori Takip Et"->{
+                    val gecis= Intent(mContext, KaloriActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+                "Ders Not Takip Et"->{
+                    val gecis= Intent(mContext, DersNotTakipActivity::class.java)
+                    mContext.startActivity(gecis)
+                }
+
+            }
+
+        }
 
     }
 
