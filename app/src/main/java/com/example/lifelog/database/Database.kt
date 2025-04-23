@@ -12,12 +12,15 @@ class Database(context: Context): SQLiteOpenHelper(context,"LifeLog",null,1) {
 
         db?.execSQL("CREATE TABLE ToDoList(task_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "task TEXT)")
+        db?.execSQL("CREATE TABLE  Plugins(Plugin_name TEXT PRIMARY KEY)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         db?.execSQL("DROP TABLE IF EXISTS Notes")
 
         db?.execSQL("DROP TABLE IF EXISTS ToDoList")
+
+        db?.execSQL("DROP TABLE IF EXISTS Plugins")
         onCreate(db)
 
 
