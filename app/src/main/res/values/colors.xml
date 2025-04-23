@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="acikBeyaz">#ededeb</color>
     <color name="aciksari">#e3e3aa</color>
+    <color name="acikyesil">#80f29f</color>
+    <color name="acikmavi">#635beb</color>
 </resources>
