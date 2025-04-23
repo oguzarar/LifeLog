@@ -57,6 +57,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("androidx.navigation:navigation-ui:2.8.9")
+    implementation ("androidx.fragment:fragment:1.8.6")
 
 
 

@@ -13,6 +13,27 @@
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="31">
         <activity
+            android:name=".PluginPages.DersNotTakipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PluginPages.KaloriActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PluginPages.DersTakipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PluginPages.FutbolActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PluginPages.DovizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PluginPages.AltinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PluginPages.KriptoActivity"
+            android:exported="false" />
+        <activity
             android:name=".Notes.NotuGoruntuleActivity"
             android:exported="false" />
         <activity
