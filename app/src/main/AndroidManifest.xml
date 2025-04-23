@@ -13,10 +13,10 @@
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="31">
         <activity
-            android:name=".NotuGoruntuleActivity"
+            android:name=".Notes.NotuGoruntuleActivity"
             android:exported="false" />
         <activity
-            android:name=".NotYazmaActivity"
+            android:name=".Notes.NotYazmaActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
