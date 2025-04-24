@@ -33,11 +33,11 @@ class NotesAdapter(private val context: Context, private val notesList: MutableL
         val binding = LayoutInflater.from(context).inflate(R.layout.notlar_card_tasarimi, parent, false)
         return CardTasarimTutucu(binding)
     }
-    //Notlar Listesinin uzunluğu
+    //Notlar Listesinin uzunluğunu döndürme
     override fun getItemCount(): Int {
         return notesList.size
     }
-    //
+    //tıklanabilir cardView oluşturma
     override fun onBindViewHolder(holder: CardTasarimTutucu, position: Int) {
 
         val note = notesList[position]
