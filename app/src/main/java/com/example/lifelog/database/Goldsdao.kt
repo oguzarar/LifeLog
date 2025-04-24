@@ -24,22 +24,18 @@ class Goldsdao {
 
     }
 
-    //Altın verilerinin veritabanında güncellenmesi
-    fun updateGold(vt: Database, goldType:String, newGoldAmount: Int){
+    //Altın miktarının güncellenmesi
+    fun updateGoldAmount(vt: Database, goldId: Int, newAmount: Int){
 
         val db = vt.writableDatabase
+
         val values = ContentValues()
 
-        values.put("goldAmount", newGoldAmount)
+        values.put("goldAmount", newAmount)
 
-        try {
-            db.update("Golds", values, "goldType=?", arrayOf(goldType))
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
+        db.update("Golds", values, "goldId=?", arrayOf(goldId.toString()))
 
         db.close()
-
     }
 
     //altın verilerinin tamamının getirilmesi
@@ -64,6 +60,26 @@ class Goldsdao {
 
         return goldsArrayList
 
+    }
+
+    fun addGoldByType(vt: Database, goldType:String) : Golds? {
+
+        val db = vt.writableDatabase
+
+        val cursor = db.rawQuery("SELECT * FROM  golds WHERE goldType=?", arrayOf(goldType))
+
+        var gold: Golds? = null
+        while (cursor.moveToNext()){
+            val goldId = cursor.getInt(cursor.getColumnIndexOrThrow("goldId"))
+            val goldAmount = cursor.getInt(cursor.getColumnIndexOrThrow("goldAmount"))
+
+            gold = Golds(goldId, goldType, goldAmount)
+        }
+
+        cursor.close()
+        db.close()
+
+        return gold
     }
 
 }
