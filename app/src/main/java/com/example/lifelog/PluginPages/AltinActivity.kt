@@ -23,6 +23,7 @@ class AltinActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAltinBinding
     private lateinit var fab: FloatingActionButton
+    private lateinit var altinAdapter: AltinAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +45,10 @@ class AltinActivity : AppCompatActivity() {
         Log.e("AltinActivity", "Açılışta çekilen altınlar: $ilkListe")
 
         //recyclerView ile adapter sınıfının bağlanması
-        binding.altinRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.altinRecyclerView.adapter = AltinAdapter(this, ilkListe)
+        altinAdapter = AltinAdapter(this@AltinActivity, ilkListe)
+        binding.altinRecyclerView.layoutManager = LinearLayoutManager(this@AltinActivity)
+        binding.altinRecyclerView.adapter = altinAdapter
+
 
         //fab butonuna basılması durumunda altın ekleme diyaloğunun açılması
         fab.setOnClickListener{
@@ -83,20 +86,24 @@ class AltinActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
 
+
+
                 //seçilen radiobuttondan altın türünün alınması
                 val secilenRadioButton = dialogView.findViewById<RadioButton>(secilenRadioButtonId)
                 val altinTuru = secilenRadioButton.text.toString()
 
-                //Kullanıcıya eklenen verinin bilgisini ekranda gösterme
-                Toast.makeText(this@AltinActivity, "Altın Türü: $altinTuru,  Eklenen Altın Miktarı: $altinMiktar Adet", Toast.LENGTH_SHORT).show()
-                //kullanıcın girdiği verilerin veritabanına kayıt edilmesi
-                Goldsdao().addGold(vt, altinTuru, altinMiktar)
-                //kayıt sonrası Log kaydı ile kontrol etme
-                val guncelListe = Goldsdao().fetchAllGold(vt)
-                Log.e("AltinActivity", "Ekleme sonrası veritabanı: $guncelListe")
+                val mevcutAltin = Goldsdao().addGoldByType(vt, altinTuru)
 
-                binding.altinRecyclerView.adapter = AltinAdapter(this@AltinActivity, guncelListe)
-
+                //Girilen altın türü kontrol edilir, eğer ki mevcutsa adet güncellenir ve yeni card oluşturulmamış olur. Mevcut olmayan altın etklenirse card oluşturulur.
+                if (mevcutAltin != null) {
+                    val yeniMiktar = mevcutAltin.goldAmount + altinMiktar
+                    Goldsdao().updateGoldAmount(vt, mevcutAltin.goldId, yeniMiktar)
+                    Toast.makeText(this, "$altinTuru altın güncellendi. Eklenen Adet: $altinMiktar", Toast.LENGTH_SHORT).show()
+                } else {
+                    Goldsdao().addGold(vt, altinTuru, altinMiktar)
+                    Toast.makeText(this, "$altinTuru atlın eklendi. Eklenen Adet: $altinMiktar", Toast.LENGTH_SHORT).show()
+                }
+                onResume()
             }
                 .setNegativeButton("İptal", null)
                 .create()
@@ -104,5 +111,14 @@ class AltinActivity : AppCompatActivity() {
                 .show()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val guncelListe = Goldsdao().fetchAllGold(Database(this))
+
+        Log.e("AltinActivity", "onResume'da çekilen altınlar: $guncelListe")
+        altinAdapter = AltinAdapter(this, guncelListe)
+        binding.altinRecyclerView.adapter = altinAdapter
     }
 }
