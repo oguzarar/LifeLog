@@ -59,6 +59,10 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui:2.8.9")
     implementation ("androidx.fragment:fragment:1.8.6")
 
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
 
 
 }
