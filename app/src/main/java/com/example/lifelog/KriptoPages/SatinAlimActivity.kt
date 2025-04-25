@@ -54,9 +54,6 @@ class SatinAlimActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
-
-
-
             }
             override fun onTextChanged(
                 p0: CharSequence?,
@@ -64,7 +61,6 @@ class SatinAlimActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
-
             }
             override fun afterTextChanged(p0: Editable?) {
                 try {
@@ -72,14 +68,9 @@ class SatinAlimActivity : AppCompatActivity() {
                     val gelen2= gelenfiyat!!.toDouble()
                     val guncel=gelen.toDouble()*gelen2
                     binding.AmountOfUsdt.setText(guncel.toString())
-
                 }catch (e:NumberFormatException){
-
                 }
-
-
             }
-
         })
 }
 fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
