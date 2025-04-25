@@ -58,6 +58,12 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("androidx.navigation:navigation-ui:2.8.9")
     implementation ("androidx.fragment:fragment:1.8.6")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("com.google.code.gson:gson:2.12.1")
+
+
 
 
 
