@@ -1,4 +1,4 @@
-package com.example.lifelog.PluginPages
+package com.example.lifelog.GoldPages
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

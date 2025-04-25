@@ -1,4 +1,4 @@
-package com.example.lifelog.PluginPages
+package com.example.lifelog.GoldPages
 
 import android.os.Bundle
 import android.util.Log
@@ -15,15 +15,22 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.R
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.Goldsdao
 import com.example.lifelog.databinding.ActivityAltinBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class AltinActivity : AppCompatActivity() {
+
+    val BASE_URL_GOLD = "https://api.metalpriceapi.com/v1/"
 
     private lateinit var binding: ActivityAltinBinding
     private lateinit var fab: FloatingActionButton
     private lateinit var altinAdapter: AltinAdapter
+    private var gramGoldPrice: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +52,7 @@ class AltinActivity : AppCompatActivity() {
         Log.e("AltinActivity", "Açılışta çekilen altınlar: $ilkListe")
 
         //recyclerView ile adapter sınıfının bağlanması
-        altinAdapter = AltinAdapter(this@AltinActivity, ilkListe)
+        altinAdapter = AltinAdapter(this@AltinActivity, ilkListe, gramGoldPrice)
         binding.altinRecyclerView.layoutManager = LinearLayoutManager(this@AltinActivity)
         binding.altinRecyclerView.adapter = altinAdapter
 
@@ -110,15 +117,67 @@ class AltinActivity : AppCompatActivity() {
 
                 .show()
         }
+        loadGoldData()
 
     }
-
+    //altın ekleme, eksiltme durumlarını anında güncellemek için onResume metodu
     override fun onResume() {
         super.onResume()
         val guncelListe = Goldsdao().fetchAllGold(Database(this))
 
         Log.e("AltinActivity", "onResume'da çekilen altınlar: $guncelListe")
-        altinAdapter = AltinAdapter(this, guncelListe)
+        altinAdapter = AltinAdapter(this, guncelListe, gramGoldPrice)
         binding.altinRecyclerView.adapter = altinAdapter
+
+        val toplamAltinTutari = altinAdapter.toplamAltinTutariHesaplama()
+        binding.textViewTumAtlinVarlik.text = "Toplam Altın Varlığınız: %.2f TL".format(toplamAltinTutari)
+
     }
+
+    //Api ile çekilen verilen activity içerisine yüklenmesini sağlayacak metod
+    private fun loadGoldData(){
+        //retrofit nesnesinin oluşturulması
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL_GOLD)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        //servis oluşturulması
+        val service = retrofit.create(GoldAPI::class.java)
+        val call = service.getGoldPrice()
+
+        call.enqueue(object: Callback<GoldModel>{
+
+            override fun onResponse(p0: Call<GoldModel>, response: Response<GoldModel>) {
+                //apiden gelen cevabı başarılı şekilde alabilirsek bu kodlama çalışır.
+                if (response.isSuccessful){
+                    response.body()?.let { goldModel ->
+                        val onsPrice = goldModel.rates.tryXau
+                        gramGoldPrice = onsPrice / 31.1035
+
+                        Log.e("GoldAPI", "Gram Altın Fiyatı: $gramGoldPrice")
+
+                        val guncelListe = Goldsdao().fetchAllGold(Database(this@AltinActivity))
+
+                        altinAdapter = AltinAdapter(this@AltinActivity, guncelListe, gramGoldPrice)
+                        binding.altinRecyclerView.layoutManager = LinearLayoutManager(this@AltinActivity)
+                        binding.altinRecyclerView.adapter = altinAdapter
+                        //toplam altın tutarı yüklenir.
+                        val toplamAltinTutari = altinAdapter.toplamAltinTutariHesaplama()
+                        binding.textViewTumAtlinVarlik.text = "Toplam Altın Varlığınız: %.2f TL".format(toplamAltinTutari)
+                    }
+                }
+                else{
+                    Log.e("Altin API", "Cevap Basarisiz: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(p0: Call<GoldModel>, p1: Throwable) {
+                Log.e("Altin API: ", "Hata: ${p1.message}")
+            }
+
+        })
+
+    }
+
+
 }

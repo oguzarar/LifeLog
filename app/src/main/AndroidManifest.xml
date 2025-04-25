@@ -14,7 +14,7 @@
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="31" >
         <activity
-            android:name=".PluginPages.AltinDetayActivity"
+            android:name=".GoldPages.AltinDetayActivity"
             android:exported="false" />
         <activity
             android:name=".PluginPages.DersNotTakipActivity"
@@ -32,7 +32,7 @@
             android:name=".PluginPages.DovizActivity"
             android:exported="false" />
         <activity
-            android:name=".PluginPages.AltinActivity"
+            android:name=".GoldPages.AltinActivity"
             android:exported="false" />
         <activity
             android:name=".PluginPages.KriptoActivity"

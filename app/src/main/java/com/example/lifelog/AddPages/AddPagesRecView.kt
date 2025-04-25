@@ -3,21 +3,16 @@ package com.example.lifelog.AddPages
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 import com.example.lifelog.database.Plugins
-import com.example.lifelog.pages.MainPageFragment
-import androidx.fragment.app.Fragment
-import com.example.lifelog.PluginPages.AltinActivity
+import com.example.lifelog.GoldPages.AltinActivity
 import com.example.lifelog.PluginPages.DersNotTakipActivity
 import com.example.lifelog.PluginPages.DersTakipActivity
 import com.example.lifelog.PluginPages.DovizActivity

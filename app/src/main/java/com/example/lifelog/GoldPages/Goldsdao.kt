@@ -1,7 +1,7 @@
-package com.example.lifelog.database
+package com.example.lifelog.GoldPages
 
 import android.content.ContentValues
-import android.provider.ContactsContract.Data
+import com.example.lifelog.database.Database
 
 class Goldsdao {
 
