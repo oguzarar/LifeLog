@@ -1,7 +1,8 @@
-package com.example.lifelog.PluginPages
+package com.example.lifelog.GoldPages
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
-import com.example.lifelog.database.Golds
-import org.w3c.dom.Text
+
 //RecyclerView de altınları listelemek için adapter sınıfı oluşturma
-class AltinAdapter(private val context: Context, private var goldsList: List<Golds>) : RecyclerView.Adapter<AltinAdapter.CardViewTasarimNesneleriniTutucu>() {
+class AltinAdapter(private val context: Context, private var goldsList: List<Golds>, private val gramGoldPrice: Double) : RecyclerView.Adapter<AltinAdapter.CardViewTasarimNesneleriniTutucu>() {
     //itemların görsel öğelerine erişim için viewHolder sınıfı
     inner class CardViewTasarimNesneleriniTutucu(view: View) : RecyclerView.ViewHolder(view){
 
@@ -48,8 +48,29 @@ class AltinAdapter(private val context: Context, private var goldsList: List<Gol
 
         val gold = goldsList[position]
 
+        Log.e("AltinAdapter", "Gold Amount: ${gold.goldAmount}, Gram Gold Price: $gramGoldPrice")
+
         holder.altinTuru.text = "${gold.goldType}"
         holder.altinMiktar.text = "${gold.goldAmount}"
+
+        //her altın türü için when yapısı ile ayrı ayrı toplam tutarlarının hesaplanması
+        val adet = gold.goldAmount
+        val altinTutari = when(gold.goldType.lowercase()){
+            "gram" -> adet * gramGoldPrice * 1.0
+            "çeyrek" -> adet * gramGoldPrice * 1.75
+            "yarım" -> adet * gramGoldPrice * 3.5
+            "tam" -> adet * gramGoldPrice * 7.0
+            "cumhuriyet" -> adet * gramGoldPrice * 7.216
+            else -> {
+                Log.e("AltinAdapter", "Bilinmeyen altın türü: ${gold.goldType}")
+                0.0
+            }
+
+        }
+
+        Log.e("AltinAdapter", "Altın Tutarı: $altinTutari")
+        //cardViewlerde her altın türü için toplamTutarları formatlı şekilde yazılır.
+        holder.altinTutari.text = "%.2f TL".format(altinTutari)
 
         holder.cardViewAltin.setOnClickListener{
 
@@ -59,6 +80,28 @@ class AltinAdapter(private val context: Context, private var goldsList: List<Gol
 
         }
 
+    }
+    //Toplam altın tutarını hesaplamak için metod
+    fun toplamAltinTutariHesaplama() : Double{
+        var toplamTutar = 0.0
+        //goldsList gezilir, tek tek altın türlerinin toplam tutarları hesaplanıp eklenir.
+        for (i in 0 until goldsList.size) {
+            val gold = goldsList[i]
+
+            val adet = gold.goldAmount
+            val altinTutari = when(gold.goldType.lowercase()) {
+                "gram" -> adet * gramGoldPrice * 1.0
+                "çeyrek" -> adet * gramGoldPrice * 1.75
+                "yarım" -> adet * gramGoldPrice * 3.5
+                "tam" -> adet * gramGoldPrice * 7.0
+                "cumhuriyet" -> adet * gramGoldPrice * 7.216
+                else -> 0.0
+            }
+
+            // Toplama ekle
+            toplamTutar += altinTutari
+        }
+        return toplamTutar
     }
 
 
