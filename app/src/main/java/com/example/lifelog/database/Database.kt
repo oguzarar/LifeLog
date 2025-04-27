@@ -19,6 +19,8 @@ class Database(context: Context): SQLiteOpenHelper(context,"LifeLog",null,1) {
 
         db?.execSQL("CREATE TABLE CryptoDB(CryptoLongName TEXT PRIMARY KEY,CryptoShortName TEXT," +
                 "AmountOfCrypto TEXT,AmountOfUSDT TEXT)")
+
+        db?.execSQL("CREATE TABLE DersTakip(DersAdi TEXT ,SinavTarih TEXT,SinavSaat TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -31,6 +33,8 @@ class Database(context: Context): SQLiteOpenHelper(context,"LifeLog",null,1) {
         db?.execSQL("DROP TABLE IF EXISTS Golds")
 
         db?.execSQL("DROP TABLE IF EXISTS CryptoDB")
+
+        db?.execSQL("DROP TABLE IF EXISTS DersTakip")
         onCreate(db)
 
 
