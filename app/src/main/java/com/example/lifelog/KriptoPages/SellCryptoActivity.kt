@@ -1,58 +1,70 @@
 package com.example.lifelog.KriptoPages
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteConstraintException
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.R
-import com.example.lifelog.database.Crypto
+import com.example.lifelog.database.AddPagesDao
+import com.example.lifelog.database.CryptoDB
 import com.example.lifelog.database.CryptoDao
 import com.example.lifelog.database.Database
-import com.example.lifelog.databinding.ActivitySatinAlimBinding
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import com.example.lifelog.databinding.ActivitySellCryptoBinding
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 
-class SatinAlimActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySatinAlimBinding
+class SellCryptoActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySellCryptoBinding
+    private lateinit var CrpytoLists: ArrayList<CryptoDB>
     var gelenfiyat: String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_satin_alim)
-        binding= ActivitySatinAlimBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_sell_crypto)
+        binding= ActivitySellCryptoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val vt= Database(this)
-        val gelenCrypto=intent.getSerializableExtra("Crypto") as Crypto//Diğer sayfadan gelen veri
+        val gelenCrypto= intent.getSerializableExtra("Crypto") as CryptoDB
+        val result= CryptoDao().getOneCrypto(vt,gelenCrypto.CryptoLongName)
 
-        binding.GelenCoinLong.text=gelenCrypto.CryptoName
-        binding.GelenCoinshort.text=gelenCrypto.Cryptoshort
-
-        //Fiyat bilgisi alma
-        fetchCryptoPrice(gelenCrypto.Cryptoshort) { price ->
+        binding.GelenCoinLong.text=gelenCrypto.CryptoLongName
+        binding.GelenCoinshort.text=gelenCrypto.CryptoShortName
+        fetchCryptoPrice(gelenCrypto.CryptoShortName) { price ->
             if (price != null) {
                 gelenfiyat=price.toString()
                 binding.GuncelFiyat.text=gelenfiyat
+            }
         }
-    }
-        binding.AmountOfCoin.addTextChangedListener(object: TextWatcher{//Edittexte yazılan veriyi anlık olarak alma
+        binding.SahipTutar.text=result!!.first.toString()
+        binding.SahipCrypto.text=result!!.second.toString()
+
+        binding.AmountOfCoin.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(
                 p0: CharSequence?,
                 p1: Int,
                 p2: Int,
                 p3: Int
             ) {
+
+
             }
             override fun onTextChanged(
                 p0: CharSequence?,
@@ -63,18 +75,13 @@ class SatinAlimActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(p0: Editable?) {
                 try {
-                    try {
-                        val yazilan=p0.toString()
-                        val gelenFiyat= gelenfiyat!!.toDouble()
-                        val guncel=yazilan.toDouble()*gelenFiyat
-                        binding.GuncelTutar.text=guncel.toString()
-                        binding.GuncelAdet.text=p0
-                        binding.AmountOfUsdt.text.clear()
-                    }catch (e: NullPointerException){
-                        Log.e("Fiyat alınamadı","Fiyat alınamadı")
 
-                    }
-
+                    val yazilan=p0.toString()
+                    val gelenFiyat= gelenfiyat!!.toDouble()
+                    val guncel=yazilan.toDouble()*gelenFiyat
+                    binding.GuncelTutar.text=guncel.toString()
+                    binding.GuncelAdet.text=p0
+                    binding.AmountOfUsdt.text.clear()
                 }catch (e:NumberFormatException){
                     if(binding.AmountOfUsdt.text.isNullOrEmpty()&&binding.AmountOfCoin.text.isNullOrEmpty()){
                         binding.GuncelAdet.text=""
@@ -91,6 +98,8 @@ class SatinAlimActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
+
+
             }
             override fun onTextChanged(
                 p0: CharSequence?,
@@ -98,7 +107,9 @@ class SatinAlimActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
+
             }
+
             override fun afterTextChanged(p0: Editable?) {
                 try {
                     val yazilan=p0.toString()
@@ -117,25 +128,25 @@ class SatinAlimActivity : AppCompatActivity() {
                 }
             }
         })
+
         binding.KriptoBuyButton.setOnClickListener {
-            val adet=binding.GuncelAdet.text.toString()
-            val tutar=binding.GuncelTutar.text.toString()
-            try {//Eğer eklenen kripto yoksa vt'ye eklenecek
-                CryptoDao().AddCrypto(vt,gelenCrypto.CryptoName,gelenCrypto.Cryptoshort,tutar,adet)
-                Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
-                binding.AmountOfCoin.text.clear()
+            val AmountUsdt=binding.GuncelTutar.text.toString()
+            val AmountCrypto=binding.GuncelAdet.text.toString()
+            if(AmountUsdt.toDouble()<=result.first&&AmountCrypto.toDouble()<=result.second){
+                val result= CryptoDao().getOneCrypto(vt,gelenCrypto.CryptoLongName)
+                CryptoDao().SellCryptoUSDT(vt,gelenCrypto.CryptoLongName,AmountUsdt.toDouble(),AmountCrypto.toDouble())
+                Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
                 binding.AmountOfUsdt.text.clear()
-            }catch (e:SQLiteConstraintException){//Eğer zaten varsa güncellenecek
-                CryptoDao().UpdateCryptoUSDT(vt,gelenCrypto.CryptoName,tutar.toDouble(),adet.toDouble())
-                Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
                 binding.AmountOfCoin.text.clear()
-                binding.AmountOfUsdt.text.clear()
+                binding.SahipTutar.text=result!!.first.toString()
+                binding.SahipCrypto.text=result.second.toString()
             }
-
-
+            else{
+                Toast.makeText(this,"Bakiye yetersiz", Toast.LENGTH_SHORT).show()
+            }
         }
 
-
+    }
 }
 fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
     // Coroutine başlatıyoruz
@@ -146,7 +157,6 @@ fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
         callback(price)
     }
 }
-
 suspend fun getCryptoPrice(symbol: String): Double? {
     val apiUrl = "https://api.api-ninjas.com/v1/cryptoprice?symbol=${symbol}USDT"
     val client = OkHttpClient()
@@ -155,6 +165,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
         .url(apiUrl)
         .addHeader("X-Api-Key", Keys().getKriptoKey())
         .build()
+
     return withContext(Dispatchers.IO) {
         try {
             val response: Response = client.newCall(request).execute()
@@ -176,4 +187,5 @@ suspend fun getCryptoPrice(symbol: String): Double? {
             null
         }
     }
-}}
+}
+

@@ -123,6 +123,7 @@ class AllCryptoActivity : AppCompatActivity() {
             "XEM" to "NEM",
             "DENT" to "Dent"
         )
+
         for(i in cryptoMap){
             var kripto=Crypto(i.key,i.value)
             cryptoList.add(kripto)

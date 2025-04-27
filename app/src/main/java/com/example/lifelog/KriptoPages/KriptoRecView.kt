@@ -33,7 +33,6 @@ class KriptoRecView (private var mContext: Context,val CryptoList: List<Crypto>)
             val gecis= Intent(mContext, SatinAlimActivity::class.java)//Sayfaya geçiş
             gecis.putExtra("Crypto",Crypto)//Geçilen sayfaya veri aktarımı
             mContext.startActivity(gecis)
-
         }
 
     }
