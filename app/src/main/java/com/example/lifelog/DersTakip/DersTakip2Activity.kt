@@ -40,9 +40,9 @@ class DersTakip2Activity : AppCompatActivity() {
             datepicker.show()
         }
         binding.saatinput.setOnClickListener {
-            val calendar= java.util.Calendar.getInstance()
-            val saat1=calendar.get(java.util.Calendar.HOUR_OF_DAY)
-            val dakika=calendar.get(java.util.Calendar.MINUTE)
+            val calendar= Calendar.getInstance()
+            val saat1=calendar.get(Calendar.HOUR_OF_DAY)
+            val dakika=calendar.get(Calendar.MINUTE)
             val timePicker=TimePickerDialog(this@DersTakip2Activity,TimePickerDialog.OnTimeSetListener{timePicker, i, i2 ->
                 binding.saatinput.setText("$i:$i2")
             },saat1,dakika,true)
@@ -51,23 +51,24 @@ class DersTakip2Activity : AppCompatActivity() {
             timePicker.setTitle("Saat seçiniz")
             timePicker.setButton(DialogInterface.BUTTON_POSITIVE,"Ayarla",timePicker)//Ayarlamak için buton ayarlandı
             timePicker.setButton(DialogInterface.BUTTON_NEGATIVE,"İPTAL",timePicker)//İptal etmek için buton ayarlandı
-
             timePicker.show()
 
         }
         binding.SNavekle.setOnClickListener {
             val vt= Database(this)
-            val dersad=binding.dersinput.text
-            val dersTarih=binding.Tarihinput.text
-            val dersSaat=binding.saatinput.text
-            DersTakipdao().dersEkle(vt,dersad.toString(),dersTarih.toString(),dersSaat.toString())
-            binding.dersinput.text.clear()
-            binding.saatinput.text.clear()
-            binding.Tarihinput.text.clear()
-            Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
+            val dersad=binding.dersinput.text.trim()
+            val dersTarih=binding.Tarihinput.text.trim()
+            val dersSaat=binding.saatinput.text.trim()
+            if(dersad.isNullOrEmpty()||dersTarih.isNullOrEmpty()||dersSaat.isNullOrEmpty()){
+                Toast.makeText(this,"Boş değer girilemez", Toast.LENGTH_SHORT).show()
+            }else{
+                DersTakipdao().dersEkle(vt,dersad.toString(),dersTarih.toString(),dersSaat.toString())
+                binding.dersinput.text.clear()
+                binding.saatinput.text.clear()
+                binding.Tarihinput.text.clear()
+                Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
+            }
+
         }
-
-
-
     }
 }

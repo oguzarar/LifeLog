@@ -4,13 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
+import com.example.lifelog.database.Database
 import com.example.lifelog.database.DersTakip
+import com.example.lifelog.database.DersTakipdao
 
-class DersRecview(private var mContext: Context,val DersLists:List<DersTakip>):
+class DersRecview(private var mContext: Context, val DersLists: MutableList<DersTakip>):
     RecyclerView.Adapter<DersRecview.RecviewNesneTutucu>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -22,9 +26,17 @@ class DersRecview(private var mContext: Context,val DersLists:List<DersTakip>):
 
     override fun onBindViewHolder(holder: DersRecview.RecviewNesneTutucu, position: Int) {
         val ders=DersLists[position]
+        val vt= Database(mContext)
         holder.DersAdiText.text=ders.dersAdi
         holder.SinavTarihi.text=ders.dersTarih
         holder.SinavSaati.text=ders.dersSaat
+        holder.SinavSilme.setOnClickListener {
+            DersTakipdao().DeleteTask(vt,ders.ders_id)
+            DersLists.removeAt(position)
+            notifyItemRemoved(position)
+            Toast.makeText(mContext,"Silindi", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 
@@ -36,12 +48,14 @@ class DersRecview(private var mContext: Context,val DersLists:List<DersTakip>):
         var DersAdiText: TextView
         var SinavTarihi: TextView
         var SinavSaati: TextView
+        var SinavSilme: ImageView
 
         init{
             DersCardview=view.findViewById(R.id.dersCardview)
             DersAdiText=view.findViewById(R.id.DersAdi)
             SinavSaati=view.findViewById(R.id.SinavSaati)
             SinavTarihi=view.findViewById(R.id.SinavTarihi)
+            SinavSilme=view.findViewById(R.id.sinavSilme)
         }
     }
 }

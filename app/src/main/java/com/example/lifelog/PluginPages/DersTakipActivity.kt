@@ -17,7 +17,7 @@ import com.example.lifelog.databinding.ActivityDersTakipBinding
 class DersTakipActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDersTakipBinding
     private lateinit var adapter: DersRecview
-    private lateinit var Gelenders: ArrayList<DersTakip>
+    private lateinit var Gelenders: MutableList<DersTakip>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -19,6 +19,7 @@ class DersTakipdao {
         val cursor = db.rawQuery("SELECT * FROM DersTakip", null)
         while (cursor.moveToNext()) {
             val ders = DersTakip(
+                cursor.getInt(cursor.getColumnIndex("Ders_id")),
                 cursor.getString(cursor.getColumnIndex("DersAdi")),
                 cursor.getString(cursor.getColumnIndex("SinavTarih")),
                 cursor.getString(cursor.getColumnIndex("SinavSaat")))
@@ -26,5 +27,10 @@ class DersTakipdao {
         }
         db.close()
         return gelenders
+    }
+    fun DeleteTask(vt: Database,Ders_id: Int){
+        val db=vt.writableDatabase
+        db.delete("DersTakip","Ders_id=?",arrayOf(Ders_id.toString()))
+        db.close()
     }
 }
