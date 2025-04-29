@@ -1,6 +1,7 @@
 package com.example.lifelog
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomNav,navhostFragment.navController)//navhost ile bottom nav bağlandı.
 
         val db = Database(this) //Veritabanı için
+        Log.e("Deneme","deneme")
 
 
 
