@@ -133,7 +133,5 @@ class AllCryptoActivity : AppCompatActivity() {
 
         adapter= KriptoRecView(this,cryptoList)
         binding.KriptoRV.adapter=adapter
-
-
     }
 }
