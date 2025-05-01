@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="206dp"
         android:text="AYARLAR"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

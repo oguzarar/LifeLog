@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/TaskPlainText"
-        android:layout_width="312dp"
-        android:layout_height="53dp"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/plain_text_border"
         android:ems="10"
@@ -22,11 +22,12 @@
 
     <Button
         android:id="@+id/ToDoAddButton"
-        android:layout_width="162dp"
-        android:layout_height="48dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="116dp"
-        android:backgroundTint="@color/aciksari"
+        android:backgroundTint="#09610F"
         android:text="EKLE"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
