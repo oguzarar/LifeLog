@@ -10,11 +10,11 @@
         android:id="@+id/textView2"
         android:layout_width="177dp"
         android:layout_height="43dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:text="ANA SAYFA"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,21 +24,16 @@
         android:layout_height="477dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.425" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary_dark"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="350dp"
+        android:layout_height="35dp"
+        android:text="tüm takip ettiklerin"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="83dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

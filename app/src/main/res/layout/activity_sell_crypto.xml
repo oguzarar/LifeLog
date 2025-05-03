@@ -10,6 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="374dp"
         android:layout_height="494dp"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="25dp"
         app:cardElevation="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="167dp"
-            android:background="@color/DahaKoyuMavi">
+            android:background="@color/acikmav2">
 
             <TextView
                 android:id="@+id/GelenCoinLong"
@@ -151,10 +152,10 @@
 
             <Button
                 android:id="@+id/KriptoBuyButton"
-                android:layout_width="146dp"
-                android:layout_height="46dp"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="@color/DahaKoyuMavi"
+                android:backgroundTint="@color/acikmav2"
                 android:text="Sat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

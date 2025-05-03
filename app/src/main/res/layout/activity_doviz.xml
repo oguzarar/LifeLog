@@ -13,6 +13,7 @@
         android:layout_height="84dp"
         android:layout_marginTop="70dp"
         android:text="Döviz"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="72sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="167dp"
-            android:background="@color/fümerengi">
+            android:background="@android:color/holo_orange_light">
 
             <TextView
                 android:id="@+id/GelenCoinLong"
@@ -85,10 +85,8 @@
 
             <EditText
                 android:id="@+id/AmountOfCoin"
-                android:layout_width="283dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="37dp"
-                android:layout_marginEnd="54dp"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="160dp"
                 android:background="@drawable/plain_text_border3"
                 android:ems="10"
@@ -96,15 +94,13 @@
                 android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/KriptoBuyButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/AmountOfUsdt"
-                android:layout_width="283dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="37dp"
-                android:layout_marginEnd="54dp"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="88dp"
                 android:background="@drawable/plain_text_border3"
                 android:ems="10"
@@ -112,15 +108,15 @@
                 android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/KriptoBuyButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/KriptoBuyButton"
-                android:layout_width="146dp"
-                android:layout_height="46dp"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="@color/fümerengi"
+                android:backgroundTint="@android:color/holo_orange_light"
                 android:text="Satın Al"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
