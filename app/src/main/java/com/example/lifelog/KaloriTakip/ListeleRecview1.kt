@@ -1,6 +1,7 @@
 package com.example.lifelog.KaloriTakip
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,12 @@ class ListeleRecview1(private var mContext: Context, val Yemeklists: ArrayList<K
         holder.Yemekismi.text=Yemek.isim
         holder.kalorimiktari.text=Yemek.kalori
         holder.proteinmiktari.text=Yemek.protein
+        holder.YemekCardview.setOnClickListener {
+            var gecis= Intent(mContext, KaloriEkleActivity::class.java)
+            gecis.putExtra("Yemek",Yemek)
+            mContext.startActivity(gecis)
+
+        }
 
 
     }
@@ -33,6 +40,7 @@ class ListeleRecview1(private var mContext: Context, val Yemeklists: ArrayList<K
     override fun getItemCount(): Int {
         return Yemeklists.size
     }
+
     inner class YemekNesneTutucu(view: View): RecyclerView.ViewHolder(view){
         val YemekCardview: CardView
         val Yemekismi: TextView

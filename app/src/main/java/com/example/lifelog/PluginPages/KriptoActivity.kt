@@ -76,8 +76,6 @@ class KriptoActivity : AppCompatActivity() {
         CrpytoLists.clear()
         CrpytoLists.addAll(CryptoDao().GetCrypto(vt))
         adapter.notifyDataSetChanged()
-
-
     }
 }
 

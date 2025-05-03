@@ -3,7 +3,9 @@ package com.example.lifelog.KaloriTakip
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+
 import org.jetbrains.annotations.NotNull
+import java.io.Serializable
 
 @Entity(tableName = "urunler")
 data class Kalori(@PrimaryKey(autoGenerate = true)
@@ -14,5 +16,5 @@ data class Kalori(@PrimaryKey(autoGenerate = true)
                   @ColumnInfo(name="kalori")@NotNull
                   var kalori: String,
                   @ColumnInfo(name="protein")@NotNull
-                  var protein: String) {
+                  var protein: String): Serializable {
 }
