@@ -1,9 +1,11 @@
 package com.example.lifelog.DovizTakip
 
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +14,7 @@ import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.R
 import com.example.lifelog.database.Database
 import com.example.lifelog.database.Doviz
+import com.example.lifelog.database.DovizDao
 import com.example.lifelog.databinding.ActivitySatinAlimPageBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,14 +79,28 @@ class SatinAlimPageActivity : AppCompatActivity() {
                     if(binding.AmountOfMoney.text.isNullOrEmpty()){
                         binding.GuncelTutar.text=""
                     }
-
                 }
-
             }
         })
 
-
-
+        binding.DovizBuyButton.setOnClickListener {
+            val DovizLongName=gelen.DovizName
+            val DovizShortName=gelen.Dovizshort
+            val DovizAmount=binding.AmountOfMoney.text.toString()
+            val DovizTRYTutar=binding.GuncelTutar.text.toString()
+            if(DovizAmount.isEmpty()&&DovizTRYTutar.isEmpty()){
+                Toast.makeText(this,"Fiyat Bilgisi Alınamadı",Toast.LENGTH_SHORT).show()
+            }else{
+                try {
+                    DovizDao().AddDoviz(vt,DovizLongName,DovizShortName,DovizAmount,DovizTRYTutar)
+                }catch (e: SQLiteConstraintException){
+                    DovizDao().UpadteCryptoUSDT(vt,DovizLongName,DovizAmount.toDouble(),DovizTRYTutar.toDouble())
+                }
+                binding.AmountOfMoney.text.clear()
+                binding.GuncelTutar.text=""
+                Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
 fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {

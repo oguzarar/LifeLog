@@ -23,6 +23,8 @@ class Database(context: Context): SQLiteOpenHelper(context,"LifeLog",null,1) {
         db?.execSQL("CREATE TABLE DersTakip(Ders_id INTEGER PRIMARY KEY AUTOINCREMENT,DersAdi TEXT ,SinavTarih TEXT,SinavSaat TEXT)")
 
         db?.execSQL("CREATE TABLE Kalori(yemek_id INTEGER PRIMARY KEY AUTOINCREMENT,yemek_ismi TEXT,yemek_turu TEXT,yemek_kalori TEXT,yemek_protein TEXT)")
+
+        db?.execSQL("CREATE TABLE Doviz(DovizLongName TEXT PRIMARY KEY,DovizShortName TEXT,DovizAmount TEXT,DovizMiktariTRY TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -39,6 +41,8 @@ class Database(context: Context): SQLiteOpenHelper(context,"LifeLog",null,1) {
         db?.execSQL("DROP TABLE IF EXISTS DersTakip")
 
         db?.execSQL("DROP TABLE IF EXISTS Kalori")
+
+        db?.execSQL("DROP TABLE IF EXISTS Doviz")
         onCreate(db)
 
 
