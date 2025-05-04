@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 import com.example.lifelog.database.Plugins
 import com.example.lifelog.GoldPages.AltinActivity
-import com.example.lifelog.PluginPages.DersNotTakipActivity
 import com.example.lifelog.PluginPages.DersTakipActivity
 import com.example.lifelog.PluginPages.DovizActivity
 import com.example.lifelog.PluginPages.FutbolActivity
@@ -71,10 +70,7 @@ class AddPagesRecView(private var mContext: Context,private val PluginList: Muta
                     val gecis= Intent(mContext, KaloriActivity::class.java)
                     mContext.startActivity(gecis)
                 }
-                "Ders Not Takip Et"->{
-                    val gecis= Intent(mContext, DersNotTakipActivity::class.java)
-                    mContext.startActivity(gecis)
-                }
+
 
             }
 

@@ -240,42 +240,5 @@
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/dersnottakipet"
-        android:layout_width="273dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="560dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/dersnottext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_red_light"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:text="Ders Not Takip Et"
-                android:textColor="@color/black"
-                android:textSize="25dp" />
-
-            <ImageView
-                android:id="@+id/dersnotImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginEnd="8dp"
-                app:srcCompat="@drawable/education" />
-
-        </FrameLayout>
-    </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

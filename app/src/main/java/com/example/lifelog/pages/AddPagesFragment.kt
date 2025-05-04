@@ -56,10 +56,7 @@ class AddPagesFragment : Fragment() {
             PluginAdd(KaloriTakip.toString())
         }
 
-        binding.dersnottakipet.setOnClickListener {
-            var DersNotTakip=binding.dersnottext.text
-            PluginAdd(DersNotTakip.toString())
-        }
+
         return binding.root
     }
     fun PluginAdd(PluginName: String){
