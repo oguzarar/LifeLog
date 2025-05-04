@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         val navhostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment //Id ile navhost bulundu.
         NavigationUI.setupWithNavController(binding.bottomNav,navhostFragment.navController)//navhost ile bottom nav bağlandı.
 
-        
+
 
 
 
