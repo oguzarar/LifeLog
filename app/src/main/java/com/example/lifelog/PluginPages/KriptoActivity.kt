@@ -76,6 +76,9 @@ class KriptoActivity : AppCompatActivity() {
         CrpytoLists.clear()
         CrpytoLists.addAll(CryptoDao().GetCrypto(vt))
         adapter.notifyDataSetChanged()
+        val getir=CryptoDao().GetTotalAmount(vt)
+        val son="%.2f".format(getir.toDouble())
+        binding.ToplamBakiyeBilgiText.text=son
     }
 }
 

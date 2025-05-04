@@ -1,0 +1,149 @@
+package com.example.lifelog.DovizTakip
+
+import android.content.Intent
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.lifelog.ApiKeys.Keys
+import com.example.lifelog.PluginPages.DovizActivity
+import com.example.lifelog.R
+import com.example.lifelog.database.Database
+import com.example.lifelog.database.Doviz
+import com.example.lifelog.database.DovizDB
+import com.example.lifelog.database.DovizDao
+import com.example.lifelog.databinding.ActivitySellPageBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONObject
+
+class SellPageActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySellPageBinding
+    var gelenfiyat: String?=null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_sell_page)
+        binding= ActivitySellPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val gelenDoviz=intent.getSerializableExtra("Doviz") as DovizDB
+
+
+        binding.SellGelenDovizLong.text=gelenDoviz.DovizLongName
+        binding.SellGelenDovizshort.text=gelenDoviz.DovizShortName
+        binding.GuncelSahiplik.text=gelenDoviz.DovizMiktari
+
+        CurrencyUtil.fetchCurrencyRate(gelenDoviz.DovizShortName,"TRY") { price->
+            if(price!=null){
+                gelenfiyat=price.toString()
+                binding.SellGuncelFiyat.text=gelenfiyat
+            }
+        }
+
+        binding.SellAmountOfMoney.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int
+            ) {
+
+            }
+            override fun onTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int
+            ) {
+
+            }
+            override fun afterTextChanged(p0: Editable?) {
+                try {
+                    try {
+                        val yazilan=p0.toString()
+                        val gelenFiyat= gelenfiyat!!.toDouble()
+                        val guncel=yazilan.toDouble()*gelenFiyat
+                        binding.GuncelTutar.text=guncel.toString()
+                    }catch (e: NullPointerException){
+                        Log.e("Fiyat alınamadı","Fiyat alınamadı")
+
+                    }
+                }catch (e:NumberFormatException){
+                    if(binding.SellAmountOfMoney.text.isNullOrEmpty()){
+                        binding.GuncelTutar.text=""
+                    }
+                }
+            }
+        })
+        val vt= Database(this)
+        binding.DovizSellButton.setOnClickListener {
+            val girilenAmount=binding.SellAmountOfMoney.text.toString()
+            val totalAmount=binding.GuncelTutar.text.toString()
+            if(girilenAmount.isEmpty()&&totalAmount.isEmpty()){
+                Toast.makeText(this,"Değer giriniz",Toast.LENGTH_SHORT).show()
+            }else{
+                if(girilenAmount.toDouble()>gelenDoviz.DovizMiktari.toDouble()){
+                    Toast.makeText(this,"Yetersiz Bakiye",Toast.LENGTH_SHORT).show()
+                }else{
+                    DovizDao().SellCryptoUSDT(vt,gelenDoviz.DovizLongName,girilenAmount.toDouble(),totalAmount.toDouble())
+                    Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
+                    val gecis= Intent(this@SellPageActivity, DovizActivity::class.java)
+                    startActivity(gecis)
+                    finish()
+                }
+            }
+        }
+    }
+}
+
+
+
+
+object CurrencyUtil {
+    fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val rate = getCurrencyRate(from, to)
+            callback(rate)
+        }
+    }
+
+    suspend fun getCurrencyRate(from: String, to: String): Double? {
+        val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${Keys().getDovizKey()}&base_currency=$from&currencies=$to"
+        val client = OkHttpClient()
+
+        val request = Request.Builder().url(apiUrl).build()
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val body = response.body?.string()
+                    val json = JSONObject(body)
+                    json.getJSONObject("data").getDouble(to)
+                } else {
+                    Log.e("API", "Error: ${response.code}")
+                    null
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Exception: ${e.message}")
+                null
+            }
+        }
+    }
+}
+
+
+
+
+
+
