@@ -6,34 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".pages.MainPageFragment">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="177dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="32dp"
-        android:text="ANA SAYFA"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MainPageRV"
         android:layout_width="372dp"
         android:layout_height="477dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="350dp"
-        android:layout_height="35dp"
-        android:text="tüm takip ettiklerin"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="83dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

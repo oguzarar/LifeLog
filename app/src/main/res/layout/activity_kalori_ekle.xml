@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="167dp"
-            android:background="@color/fümerengi">
+            android:background="@color/sari">
 
             <TextView
                 android:id="@+id/GelenYemek"
@@ -39,11 +39,12 @@
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="88dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="76dp"
                 android:text="Kalori"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toStartOf="@+id/textView15"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,23 +52,27 @@
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="216dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="76dp"
+                android:layout_marginEnd="24dp"
                 android:text="Protein"
                 android:textColor="@color/white"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
-                app:layout_constraintTop_toBottomOf="@+id/GelenYemek" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/KaloriMiktari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="45dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="36dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="35dp"
                 android:text="TextView"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toStartOf="@+id/proteinMiktari"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -75,9 +80,14 @@
                 android:id="@+id/proteinMiktari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="165dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="45dp"
+                android:layout_marginBottom="36dp"
                 android:text="TextView"
                 android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/KaloriMiktari"
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -92,7 +102,7 @@
                 android:layout_width="146dp"
                 android:layout_height="46dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="@color/fümerengi"
+                android:backgroundTint="@color/sari"
                 android:text="Ekle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,12 +124,13 @@
                 android:id="@+id/textView29"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="78dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="41dp"
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="104dp"
                 android:text="Kalori"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textView30"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
@@ -127,36 +138,35 @@
                 android:id="@+id/textView30"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="53dp"
                 android:text="Protein"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView29"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
             <TextView
                 android:id="@+id/GirlenKaloriMiktari"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="23dp"
-                app:layout_constraintEnd_toStartOf="@+id/girilenproteinmktari"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_height="0dp"
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="344dp"
+                android:layout_marginEnd="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView29" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/girilenproteinmktari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="23dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="242dp"
+                android:layout_marginTop="344dp"
+                android:layout_marginEnd="132dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/GirlenKaloriMiktari"
-                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

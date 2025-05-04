@@ -23,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.DecimalFormat
 
 class SatinAlimActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySatinAlimBinding
@@ -42,7 +43,7 @@ class SatinAlimActivity : AppCompatActivity() {
         //Fiyat bilgisi alma
         fetchCryptoPrice(gelenCrypto.Cryptoshort) { price ->
             if (price != null) {
-                gelenfiyat=price.toString()
+                gelenfiyat=formatNumber(price)
                 binding.GuncelFiyat.text=gelenfiyat
         }
     }
@@ -67,7 +68,7 @@ class SatinAlimActivity : AppCompatActivity() {
                         val yazilan=p0.toString()
                         val gelenFiyat= gelenfiyat!!.toDouble()
                         val guncel=yazilan.toDouble()*gelenFiyat
-                        binding.GuncelTutar.text=guncel.toString()
+                        binding.GuncelTutar.text=formatNumber(guncel)
                         binding.GuncelAdet.text=p0
                         binding.AmountOfUsdt.text.clear()
                     }catch (e: NullPointerException){
@@ -121,15 +122,25 @@ class SatinAlimActivity : AppCompatActivity() {
             val adet=binding.GuncelAdet.text.toString()
             val tutar=binding.GuncelTutar.text.toString()
             try {//Eğer eklenen kripto yoksa vt'ye eklenecek
-                CryptoDao().AddCrypto(vt,gelenCrypto.CryptoName,gelenCrypto.Cryptoshort,tutar,adet)
-                Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
-                binding.AmountOfCoin.text.clear()
-                binding.AmountOfUsdt.text.clear()
+                if(adet.isEmpty()||tutar.isEmpty()){
+                    Toast.makeText(this,"Fiyat Bilgisi Alınamadı", Toast.LENGTH_SHORT).show()
+                }else{
+                    CryptoDao().AddCrypto(vt,gelenCrypto.CryptoName,gelenCrypto.Cryptoshort,tutar,adet)
+                    Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
+                    binding.AmountOfCoin.text.clear()
+                    binding.AmountOfUsdt.text.clear()
+                }
+
             }catch (e:SQLiteConstraintException){//Eğer zaten varsa güncellenecek
-                CryptoDao().UpdateCryptoUSDT(vt,gelenCrypto.CryptoName,tutar.toDouble(),adet.toDouble())
-                Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
-                binding.AmountOfCoin.text.clear()
-                binding.AmountOfUsdt.text.clear()
+                if(adet.isEmpty()||tutar.isEmpty()){
+                    Toast.makeText(this,"Fiyat Bilgisi Alınamadı", Toast.LENGTH_SHORT).show()
+                }else{
+                    CryptoDao().UpdateCryptoUSDT(vt,gelenCrypto.CryptoName,tutar.toDouble(),adet.toDouble())
+                    Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
+                    binding.AmountOfCoin.text.clear()
+                    binding.AmountOfUsdt.text.clear()
+                }
+
             }
 
 
@@ -168,7 +179,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
 
                 priceJson?.asDouble
             } else {
-                Log.e("Error:", "${response.code} ${response.message}")
+                Log.e("Error:", "Fiyat bilgisi gelmedi ${response.code} ${response.message}")
                 null
             }
         } catch (e: Exception) {
@@ -177,3 +188,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
         }
     }
 }}
+fun formatNumber(number: Double): String {
+    val formatter = DecimalFormat("0.##########") // En fazla 10 basamak gösterir, gereksiz sıfır koymaz
+    return formatter.format(number)
+}

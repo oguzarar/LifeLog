@@ -7,7 +7,7 @@
         android:id="@+id/MainDovizCardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/acikmav2"
+        android:backgroundTint="@android:color/holo_green_dark"
         app:cardCornerRadius="25dp"
         app:cardElevation="6dp"
         android:layout_marginTop="12dp"
