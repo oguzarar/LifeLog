@@ -144,23 +144,23 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/futboltext"
+                android:id="@+id/fitnessText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/plain_text_border2"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
-                android:text="Futbol Takip Et"
+                android:text="Aktivite Takip Et"
                 android:textColor="@color/black"
                 android:textSize="25dp" />
 
             <ImageView
-                android:id="@+id/futbolImage"
+                android:id="@+id/fitnessImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="8dp"
-                app:srcCompat="@drawable/football" />
+                app:srcCompat="@drawable/icon_fitness" />
 
         </FrameLayout>
     </androidx.cardview.widget.CardView>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FitnessPages.AktiviteSecActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/aktiviteniSecCard"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="false"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/aktivitelerRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/aktiviteSecmeGeriTusu"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp">
+
+            <ImageView
+                android:id="@+id/aktiviteSecmeEkraniImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Aktivite Icon"
+                android:src="@drawable/icon_fitness" />
+
+            <TextView
+                android:id="@+id/gecmisAktivitelerim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aktiviteni Seç"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/aktivitelerRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="575dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aktiviteniSecCard" />
+
+    <ImageView
+        android:id="@+id/aktiviteSecmeGeriTusu"
+        android:layout_width="43dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/aktivitelerRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.212"
+        app:srcCompat="@drawable/arrow_back" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
