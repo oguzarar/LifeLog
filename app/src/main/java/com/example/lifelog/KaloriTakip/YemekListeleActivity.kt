@@ -2,6 +2,7 @@ package com.example.lifelog.KaloriTakip
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.R
@@ -38,6 +39,16 @@ class YemekListeleActivity : AppCompatActivity() {
             binding.KaloriRecview.adapter=adapter
         }
 
+        binding.searchView2.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter?.filter(newText)
+                return true
+            }
+        })
 
 
 

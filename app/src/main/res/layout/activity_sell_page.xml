@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="167dp"
-            android:background="@android:color/holo_orange_light">
+            android:background="@android:color/holo_green_dark">
 
             <TextView
                 android:id="@+id/SellGelenDovizLong"
@@ -100,7 +100,7 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="@android:color/holo_orange_light"
+                android:backgroundTint="@android:color/holo_green_dark"
                 android:text="Sat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

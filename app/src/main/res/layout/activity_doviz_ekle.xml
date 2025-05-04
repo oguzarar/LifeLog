@@ -11,7 +11,22 @@
         android:id="@+id/DovizListeleRecView"
         android:layout_width="368dp"
         android:layout_height="613dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737" />
+
+    <SearchView
+        android:id="@+id/searchview"
+        android:layout_width="348dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/plain_text_border"
+        app:layout_constraintBottom_toTopOf="@+id/DovizListeleRecView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

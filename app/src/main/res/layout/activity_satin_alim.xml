@@ -22,19 +22,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="167dp"
-            android:background="@android:color/holo_orange_light">
+            android:background="@color/acikmav2">
 
             <TextView
                 android:id="@+id/GelenCoinLong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="39dp"
-                android:layout_marginTop="57dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginEnd="253dp"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,11 +44,15 @@
                 android:id="@+id/Textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="104dp"
-                android:layout_marginTop="57dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="80dp"
                 android:text="Güncel Fiyat"
                 android:textColor="#FFFAFA"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/GelenCoinLong"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,28 +60,30 @@
                 android:id="@+id/GuncelFiyat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="126dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="82dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginEnd="148dp"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.117"
-                app:layout_constraintStart_toEndOf="@+id/GelenCoinshort"
-                app:layout_constraintTop_toBottomOf="@+id/Textview" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/GelenCoinLong"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.657" />
 
             <TextView
                 android:id="@+id/GelenCoinshort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="43dp"
+                android:layout_marginStart="36dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="56dp"
                 android:text="TextView"
                 android:textColor="#FDFDFD"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/GelenCoinLong" />
+                app:layout_constraintTop_toBottomOf="@+id/GelenCoinLong"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,7 +103,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/KriptoBuyButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="8dp"/>
 
             <EditText
                 android:id="@+id/AmountOfUsdt"
@@ -109,14 +118,15 @@
                 app:layout_constraintBottom_toTopOf="@+id/KriptoBuyButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="8dp"/>
 
             <Button
                 android:id="@+id/KriptoBuyButton"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="@android:color/holo_orange_light"
+                android:backgroundTint="@color/acikmav2"
                 android:text="Satın Al"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -165,11 +175,11 @@
                 android:id="@+id/GuncelTutar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="34dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="14dp"
-                android:layout_marginBottom="18dp"
+                android:layout_marginEnd="219dp"
                 android:text=""
-                app:layout_constraintBottom_toTopOf="@+id/KriptoBuyButton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView20"
                 app:layout_constraintTop_toBottomOf="@+id/GuncelAdet" />
 

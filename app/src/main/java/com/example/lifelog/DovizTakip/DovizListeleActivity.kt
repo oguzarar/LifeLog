@@ -1,6 +1,7 @@
 package com.example.lifelog.DovizTakip
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.KriptoPages.KriptoRecView
@@ -64,6 +65,16 @@ class DovizListeleActivity : AppCompatActivity() {
         adapter= DovizListeleRecview(this,CurrencyList)
         binding.DovizListeleRecView.adapter=adapter
 
+        binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter?.filter(newText)
+                return true
+            }
+        })
 
 
     }

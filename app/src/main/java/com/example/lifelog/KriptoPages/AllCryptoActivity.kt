@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ class AllCryptoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAllCryptoBinding
     private lateinit var cryptoList: ArrayList<Crypto>
     private lateinit var adapter: KriptoRecView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_crypto)
@@ -79,7 +81,6 @@ class AllCryptoActivity : AppCompatActivity() {
             "KSM" to "Kusama",
             "NEO" to "Neo",
             "CRO" to "Cronos",
-            "BAT" to "Basic Attention Token",
             "1INCH" to "1inch",
             "DYDX" to "dYdX",
             "COMP" to "Compound",
@@ -133,5 +134,22 @@ class AllCryptoActivity : AppCompatActivity() {
 
         adapter= KriptoRecView(this,cryptoList)
         binding.KriptoRV.adapter=adapter
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter?.filter(newText)
+                return true
+            }
+        })
     }
+
+
 }
+
+
+
+

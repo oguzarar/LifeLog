@@ -32,7 +32,7 @@ class KaloriActivity : AppCompatActivity() {
         binding.ToplamprtoeinText.text= "%.2f".format(KaloriDao().GetTotalcalorie(vt).second)
 
 
-        binding.button.setOnClickListener {
+        binding.Button.setOnClickListener {
             val gecis= Intent(this@KaloriActivity, YemekListeleActivity::class.java)
             startActivity(gecis)
         }

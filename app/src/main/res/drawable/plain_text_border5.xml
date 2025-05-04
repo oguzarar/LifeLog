@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#8da5f7" /> <!-- Arka plan rengi -->
+
+    <corners
+        android:topLeftRadius="0dp"
+        android:topRightRadius="0dp"
+        android:bottomLeftRadius="24dp"
+        android:bottomRightRadius="24dp" />
+
+</shape>

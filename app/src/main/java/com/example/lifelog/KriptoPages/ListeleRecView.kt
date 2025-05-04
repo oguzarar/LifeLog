@@ -1,5 +1,6 @@
 package com.example.lifelog.KriptoPages
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -51,6 +52,7 @@ class ListeleRecView(private var mContext: Context,val CryptoLists:List<CryptoDB
             val gecis= Intent(mContext, SellCryptoActivity::class.java)//Sayfaya geçiş
             gecis.putExtra("Crypto",Crypto)//Geçilen sayfaya veri aktarımı
             mContext.startActivity(gecis)
+
 
         }
 

@@ -120,7 +120,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
 
                 priceJson?.asDouble
             } else {
-                Log.e("Error:", "${response.code} ${response.message}")
+                Log.e("Error:", "Fiyat bilgisi gelmedi ${response.code} ${response.message}")
                 null
             }
         } catch (e: Exception) {

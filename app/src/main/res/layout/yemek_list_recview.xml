@@ -8,9 +8,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/KaloriCardview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:backgroundTint="@color/acikmav2"
+        android:backgroundTint="@color/sari"
         app:cardCornerRadius="25dp"
         app:cardElevation="6dp">
 
@@ -24,12 +24,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bitcoin"
-                android:textColor="@color/gri"
+                android:textColor="@color/white"
                 android:textSize="34sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/KaloriTextRecview"
@@ -37,11 +39,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="Kalori"
-                android:textColor="@color/gri"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.269"
+                app:layout_constraintHorizontal_bias="0.103"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,11 +53,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="Protein"
-                android:textColor="@color/gri"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.785"
+                app:layout_constraintHorizontal_bias="0.878"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,7 +65,7 @@
                 android:id="@+id/kalorimiktariText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="84dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -75,14 +77,12 @@
                 android:id="@+id/proteinMiktaritext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="109dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="70dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.625"
-                app:layout_constraintStart_toEndOf="@+id/kalorimiktariText"
+                app:layout_constraintHorizontal_bias="0.855"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/proteinTextRecview"
                 app:layout_constraintVertical_bias="0.0" />
 
