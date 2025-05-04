@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lifelog.FitnessPages.FitnessActivity
 import com.example.lifelog.R
 import com.example.lifelog.database.Plugins
 import com.example.lifelog.GoldPages.AltinActivity
 import com.example.lifelog.PluginPages.DersTakipActivity
 import com.example.lifelog.PluginPages.DovizActivity
-import com.example.lifelog.PluginPages.FutbolActivity
 import com.example.lifelog.PluginPages.KaloriActivity
 import com.example.lifelog.PluginPages.KriptoActivity
 
@@ -58,8 +58,8 @@ class AddPagesRecView(private var mContext: Context,private val PluginList: Muta
                     val gecis= Intent(mContext, DovizActivity::class.java)
                     mContext.startActivity(gecis)
                 }
-                "Futbol Takip Et"->{
-                    val gecis= Intent(mContext, FutbolActivity::class.java)
+                "Aktivite Takip Et"->{
+                    val gecis= Intent(mContext, FitnessActivity::class.java)
                     mContext.startActivity(gecis)
                 }
                 "Ders Takip Et"->{

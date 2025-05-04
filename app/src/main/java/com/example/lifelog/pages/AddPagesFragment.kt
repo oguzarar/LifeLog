@@ -42,7 +42,7 @@ class AddPagesFragment : Fragment() {
         }
 
         binding.futboltakipet.setOnClickListener {
-            var FutbolTakip=binding.futboltext.text
+            var FutbolTakip=binding.fitnessText.text
             PluginAdd(FutbolTakip.toString())
         }
 

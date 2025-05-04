@@ -28,6 +28,16 @@
             android:exported="false" />
         <activity
             android:name=".KaloriTakip.YemekListeleActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".FitnessPages.GecmisAktivitelerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FitnessPages.AktiviteSecActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FitnessPages.FitnessActivity"
             android:exported="false" />
         <activity
             android:name=".DersTakip.DersTakip2Activity"
@@ -46,16 +56,10 @@
             android:name=".GoldPages.AltinDetayActivity"
             android:exported="false" />
         <activity
-            android:name=".PluginPages.DersNotTakipActivity"
-            android:exported="false" />
-        <activity
             android:name=".PluginPages.KaloriActivity"
             android:exported="false" />
         <activity
             android:name=".PluginPages.DersTakipActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PluginPages.FutbolActivity"
             android:exported="false" />
         <activity
             android:name=".PluginPages.DovizActivity"
