@@ -90,7 +90,7 @@ class SellPageActivity : AppCompatActivity() {
             val girilenAmount=binding.SellAmountOfMoney.text.toString()
             val totalAmount=binding.GuncelTutar.text.toString()
             if(girilenAmount.isEmpty()&&totalAmount.isEmpty()){
-                Toast.makeText(this,"Değer giriniz",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Fİyat bilgidi alınamadı",Toast.LENGTH_SHORT).show()
             }else{
                 if(girilenAmount.toDouble()>gelenDoviz.DovizMiktari.toDouble()){
                     Toast.makeText(this,"Yetersiz Bakiye",Toast.LENGTH_SHORT).show()

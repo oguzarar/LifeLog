@@ -132,18 +132,23 @@ class SellCryptoActivity : AppCompatActivity() {
         binding.KriptoBuyButton.setOnClickListener {
             val AmountUsdt=binding.GuncelTutar.text.toString()
             val AmountCrypto=binding.GuncelAdet.text.toString()
-            if(AmountUsdt.toDouble()<=result.first&&AmountCrypto.toDouble()<=result.second){
-                val result= CryptoDao().getOneCrypto(vt,gelenCrypto.CryptoLongName)
-                CryptoDao().SellCryptoUSDT(vt,gelenCrypto.CryptoLongName,AmountUsdt.toDouble(),AmountCrypto.toDouble())
-                Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
-                binding.AmountOfUsdt.text.clear()
-                binding.AmountOfCoin.text.clear()
-                binding.SahipTutar.text=result!!.first.toString()
-                binding.SahipCrypto.text=result.second.toString()
+            if(AmountUsdt.isEmpty()||AmountCrypto.isEmpty()){
+                Toast.makeText(this,"Fiyat bilgisi alınamadı", Toast.LENGTH_SHORT).show()
+            }else{
+                if(AmountUsdt.toDouble()<=result.first&&AmountCrypto.toDouble()<=result.second){
+                    val result= CryptoDao().getOneCrypto(vt,gelenCrypto.CryptoLongName)
+                    CryptoDao().SellCryptoUSDT(vt,gelenCrypto.CryptoLongName,AmountUsdt.toDouble(),AmountCrypto.toDouble())
+                    Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
+                    binding.AmountOfUsdt.text.clear()
+                    binding.AmountOfCoin.text.clear()
+                    binding.SahipTutar.text=result!!.first.toString()
+                    binding.SahipCrypto.text=result.second.toString()
+                }
+                else{
+                    Toast.makeText(this,"Bakiye yetersiz", Toast.LENGTH_SHORT).show()
+                }
             }
-            else{
-                Toast.makeText(this,"Bakiye yetersiz", Toast.LENGTH_SHORT).show()
-            }
+
         }
 
     }
