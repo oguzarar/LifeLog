@@ -32,7 +32,7 @@ class AktiviteTakipdao {
 
     }
 
-    fun tumAktiviteleriGetir(vt: Database) : List<AktiviteModel>{
+    fun tumAktiviteleriGetir(vt: Database) : MutableList<AktiviteModel>{
 
         val db = vt.writableDatabase
         val aktiviteListesi = mutableListOf<AktiviteModel>()
@@ -52,6 +52,15 @@ class AktiviteTakipdao {
         db.close()
 
         return aktiviteListesi
+    }
+
+    fun gecmisAktiviteSil(vt: Database, aktiviteId: Int){
+
+        val db = vt.writableDatabase
+
+        db.delete("AktiviteTakip", "aktiviteId=?", arrayOf(aktiviteId.toString()))
+        db.close()
+
     }
 
 }
