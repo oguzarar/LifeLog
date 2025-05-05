@@ -63,6 +63,8 @@ class AktiviteSecAdapter (private val context: Context, private var egzersizList
         }
 
 
+
+
     }
 
 

@@ -79,10 +79,6 @@ class FitnessActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.fizikselAktiviteSayfasiGeriTusu.setOnClickListener{
-            finish()
-        }
-
         var isRunning = false
         var timeWhenStopped: Long = 0
 
@@ -92,6 +88,8 @@ class FitnessActivity : AppCompatActivity() {
                 binding.chronometer.start()
                 isRunning = true
                 binding.baslatDurdurButtonKronometre.text = "Durdur"
+                binding.aktiviteEkleCard.isClickable = false
+                binding.aktiviteEkleCard.alpha = 0.5f
             } else {
                 timeWhenStopped = binding.chronometer.base - SystemClock.elapsedRealtime()
                 binding.chronometer.stop()
@@ -100,27 +98,32 @@ class FitnessActivity : AppCompatActivity() {
             }
         }
 
+        var sureMiliSaniye = SystemClock.elapsedRealtime() - binding.chronometer.base
+        var sureSaniye = (sureMiliSaniye / 1000).toInt()
+
         binding.buttonAktiviteBitir.setOnClickListener {
+
             val dialogView = LayoutInflater.from(this@FitnessActivity).inflate(R.layout.aktivite_dialog, null)
 
             val egzersizIsmi = binding.secilenAktiviteTextView.text.toString()
             val kaloriText = binding.secilenAktiviteKalori.text.toString()
             val kalori = kaloriText.substringBefore(" ").toDoubleOrNull() ?: 0
 
+            sureMiliSaniye = SystemClock.elapsedRealtime() - binding.chronometer.base
+            sureSaniye = (sureMiliSaniye / 1000).toInt()
 
-            val sureMillis = SystemClock.elapsedRealtime() - binding.chronometer.base
-            val sureDakika = (sureMillis / 1000 / 60).toInt()
+
+            val dakika = sureSaniye / 60
+            val saniye = sureSaniye % 60
 
             val tarih = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())
 
+            val harcananKalori = (kalori.toDouble() / 3600) * sureSaniye
+
             dialogView.findViewById<TextView>(R.id.dialogEgzersizIsmi).text = "Egzersiz: $egzersizIsmi"
-            dialogView.findViewById<TextView>(R.id.dialogHarcananKalori).text = "Harcanan Kalori: ${(kalori.toDouble() / 100) * sureDakika} kcal"
-            dialogView.findViewById<TextView>(R.id.dialogEgzersizSuresi).text = "Geçen Süre: $sureDakika dakika"
+            dialogView.findViewById<TextView>(R.id.dialogHarcananKalori).text = "Harcanan Kalori: %.2f kcal".format(harcananKalori)
+            dialogView.findViewById<TextView>(R.id.dialogEgzersizSuresi).text = "Geçen Süre: $dakika dakika $saniye saniye"
             dialogView.findViewById<TextView>(R.id.dialogEgzersizTarihi).text = "Tarih: $tarih"
-
-            Log.e("Kalori", "Kalori: $kalori, Süre: $sureDakika, Harcanan Kalori: ${kalori.toDouble() * sureDakika}")
-
-            val harcananKalori = (kalori.toDouble() / 100) * sureDakika
 
             val alertDialog = AlertDialog.Builder(this@FitnessActivity)
                 .setView(dialogView)
@@ -128,15 +131,21 @@ class FitnessActivity : AppCompatActivity() {
                     val aktivite = AktiviteModel(
                         aktiviteAdi = egzersizIsmi,
                         harcananKalori = harcananKalori,
-                        aktiviteSuresi = sureDakika.toString(),
+                        aktiviteSuresi = sureSaniye.toString(),
                         aktiviteTarihi = tarih
                     )
                     AktiviteTakipdao().aktiviteKaydet(vt, aktivite.aktiviteAdi, aktivite.harcananKalori, aktivite.aktiviteSuresi)
 
                     Toast.makeText(this, "Aktivite kaydedildi!", Toast.LENGTH_SHORT).show()
 
+                    binding.baslatDurdurButtonKronometre.text = "Başlat"
+
+                    binding.aktiviteEkleCard.isClickable = true
+                    binding.aktiviteEkleCard.alpha = 1.0f
+
                     binding.chronometer.stop()
                     binding.chronometer.base = SystemClock.elapsedRealtime()
+                    isRunning = false
                     binding.eklenenAktiviteCard.visibility = View.GONE
                     binding.kronometreCard.visibility = View.GONE
                     binding.buttonAktiviteBitir.visibility = View.GONE
@@ -146,6 +155,24 @@ class FitnessActivity : AppCompatActivity() {
                 .create()
 
             alertDialog.show()
+        }
+
+        binding.fizikselAktiviteSayfasiGeriTusu.setOnClickListener{
+
+            if(sureSaniye == 0){
+                AlertDialog.Builder(this)
+                    .setTitle("Kronometre Çalışıyor")
+                    .setMessage("Bitirilmemiş bir aktiviteniz mevcut. Sayfadan çıkmak istediğinize emin misiniz?")
+                    .setPositiveButton("Evet"){ _, _ ->
+                        finish()
+                    }
+                    .setNegativeButton("Hayır", null)
+                    .show()
+            }
+            else{
+                finish()
+            }
+
         }
 
 

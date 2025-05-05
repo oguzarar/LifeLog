@@ -16,7 +16,7 @@ class GecmisAktivitelerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGecmisAktivitelerBinding
     private lateinit var gecmisAktivitelerAdapter: GecmisAktivitelerAdapter
-    private lateinit var aktiviteListesi: List<AktiviteModel>
+    private lateinit var aktiviteListesi: MutableList<AktiviteModel>
     private lateinit var vt: Database
 
     override fun onCreate(savedInstanceState: Bundle?) {
