@@ -1,7 +1,9 @@
 package com.example.lifelog.GoldPages
 
 import android.content.ContentValues
+import android.util.Log
 import com.example.lifelog.database.Database
+import kotlinx.coroutines.currentCoroutineContext
 
 class Goldsdao {
 
@@ -62,7 +64,7 @@ class Goldsdao {
 
     }
 
-    fun addGoldByType(vt: Database, goldType:String) : Golds? {
+    fun getGoldByType(vt: Database, goldType:String) : Golds? {
 
         val db = vt.writableDatabase
 
@@ -80,6 +82,62 @@ class Goldsdao {
         db.close()
 
         return gold
+    }
+
+    fun sellGoldByType(vt: Database, goldType: String, goldAmount: Int) : Golds? {
+
+        val db = vt.writableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Golds WHERE goldType=?", arrayOf(goldType))
+
+        var gold: Golds? = null
+        if(cursor.moveToFirst()){
+            val goldId = cursor.getInt(cursor.getColumnIndexOrThrow("goldId"))
+            val currentAmount = cursor.getInt(cursor.getColumnIndexOrThrow("goldAmount"))
+            if(currentAmount >= goldAmount){
+                val newAmount = currentAmount - goldAmount
+                updateGoldAmount(vt, goldId, newAmount)
+                gold = Golds(goldId, goldType, newAmount)
+            }
+            else{
+                Log.e("Goldsdao", "Yeterli ALtın Yok")
+            }
+        }
+        else{
+            Log.e("Goldsdao", "Altın TÜrü Bulunamadı")
+        }
+
+        cursor.close()
+        db.close()
+
+        return gold
+    }
+
+    fun addGoldByType(vt: Database, goldType: String, goldAmount: Int) {
+
+        val db = vt.writableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Golds WHERE goldType=?", arrayOf(goldType))
+
+        if (cursor.moveToFirst()) {
+            val goldId = cursor.getInt(cursor.getColumnIndexOrThrow("goldId"))
+            val currentAmount = cursor.getInt(cursor.getColumnIndexOrThrow("goldAmount"))
+            val newAmount = currentAmount + goldAmount
+            updateGoldAmount(vt, goldId, newAmount)
+        } else {
+            val values = ContentValues()
+            values.put("goldType", goldType)
+            values.put("goldAmount", goldAmount)
+            db.insertOrThrow("Golds", null, values)
+        }
+
+        cursor.close()
+        db.close()
+    }
+
+    fun deleteGold(vt: Database, goldId: Int){
+        val db = vt.writableDatabase
+
+        db.delete("Golds","goldId", arrayOf(goldId.toString()))
+        db.close()
     }
 
 }
