@@ -23,14 +23,15 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AltinActivity : AppCompatActivity() {
+class AltinActivity : AppCompatActivity(), AltinAdapter.onAltinMiktariDegistiListener {
 
     val BASE_URL_GOLD = "https://api.metalpriceapi.com/v1/"
 
     private lateinit var binding: ActivityAltinBinding
     private lateinit var fab: FloatingActionButton
-    private lateinit var altinAdapter: AltinAdapter
+    lateinit var altinAdapter: AltinAdapter
     private var gramGoldPrice: Double = 0.0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class AltinActivity : AppCompatActivity() {
         Log.e("AltinActivity", "Açılışta çekilen altınlar: $ilkListe")
 
         //recyclerView ile adapter sınıfının bağlanması
-        altinAdapter = AltinAdapter(this@AltinActivity, ilkListe, gramGoldPrice)
+        altinAdapter = AltinAdapter(this@AltinActivity, ilkListe, gramGoldPrice, this)
         binding.altinRecyclerView.layoutManager = LinearLayoutManager(this@AltinActivity)
         binding.altinRecyclerView.adapter = altinAdapter
 
@@ -99,7 +100,7 @@ class AltinActivity : AppCompatActivity() {
                 val secilenRadioButton = dialogView.findViewById<RadioButton>(secilenRadioButtonId)
                 val altinTuru = secilenRadioButton.text.toString()
 
-                val mevcutAltin = Goldsdao().addGoldByType(vt, altinTuru)
+                val mevcutAltin = Goldsdao().getGoldByType(vt, altinTuru)
 
                 //Girilen altın türü kontrol edilir, eğer ki mevcutsa adet güncellenir ve yeni card oluşturulmamış olur. Mevcut olmayan altın etklenirse card oluşturulur.
                 if (mevcutAltin != null) {
@@ -123,16 +124,19 @@ class AltinActivity : AppCompatActivity() {
     //altın ekleme, eksiltme durumlarını anında güncellemek için onResume metodu
     override fun onResume() {
         super.onResume()
-        val guncelListe = Goldsdao().fetchAllGold(Database(this))
 
-        Log.e("AltinActivity", "onResume'da çekilen altınlar: $guncelListe")
-        altinAdapter = AltinAdapter(this, guncelListe, gramGoldPrice)
-        binding.altinRecyclerView.adapter = altinAdapter
+        val guncelListe = Goldsdao().fetchAllGold(Database(this))
+        altinAdapter.updateList(guncelListe)
 
         val toplamAltinTutari = altinAdapter.toplamAltinTutariHesaplama()
         binding.textViewTumAtlinVarlik.text = "Toplam Altın Varlığınız: %.2f TL".format(toplamAltinTutari)
 
     }
+
+    override fun onAltinMiktariDegisti(yeniToplam: Double) {
+        binding.textViewTumAtlinVarlik.text = "Toplam Altın Varlığınız: %.2f TL".format(yeniToplam)
+    }
+
 
     //Api ile çekilen verilen activity içerisine yüklenmesini sağlayacak metod
     private fun loadGoldData(){
@@ -158,7 +162,7 @@ class AltinActivity : AppCompatActivity() {
 
                         val guncelListe = Goldsdao().fetchAllGold(Database(this@AltinActivity))
 
-                        altinAdapter = AltinAdapter(this@AltinActivity, guncelListe, gramGoldPrice)
+                        altinAdapter = AltinAdapter(this@AltinActivity, guncelListe, gramGoldPrice, this@AltinActivity)
                         binding.altinRecyclerView.layoutManager = LinearLayoutManager(this@AltinActivity)
                         binding.altinRecyclerView.adapter = altinAdapter
                         //toplam altın tutarı yüklenir.
@@ -178,6 +182,7 @@ class AltinActivity : AppCompatActivity() {
         })
 
     }
+
 
 
 }
