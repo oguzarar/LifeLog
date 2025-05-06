@@ -148,7 +148,9 @@ class SellCryptoActivity : AppCompatActivity() {
                     Toast.makeText(this,"Bakiye yetersiz", Toast.LENGTH_SHORT).show()
                 }
             }
-
+        }
+        binding.backbutton.setOnClickListener {
+            finish()
         }
 
     }

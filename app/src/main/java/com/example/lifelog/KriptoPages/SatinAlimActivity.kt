@@ -140,10 +140,10 @@ class SatinAlimActivity : AppCompatActivity() {
                     binding.AmountOfCoin.text.clear()
                     binding.AmountOfUsdt.text.clear()
                 }
-
             }
-
-
+        }
+        binding.backbutton.setOnClickListener {
+            finish()
         }
 
 

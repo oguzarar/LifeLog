@@ -78,6 +78,9 @@ class KaloriEkleActivity : AppCompatActivity() {
             }
         }
 
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
 
 
 

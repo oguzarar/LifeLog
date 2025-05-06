@@ -70,5 +70,8 @@ class DersTakip2Activity : AppCompatActivity() {
             }
 
         }
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
     }
 }

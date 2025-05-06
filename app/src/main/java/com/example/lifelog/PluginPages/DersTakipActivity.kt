@@ -35,6 +35,9 @@ class DersTakipActivity : AppCompatActivity() {
             val gecis= Intent(this, DersTakip2Activity::class.java)
             startActivity(gecis)
         }
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
 
     }
 

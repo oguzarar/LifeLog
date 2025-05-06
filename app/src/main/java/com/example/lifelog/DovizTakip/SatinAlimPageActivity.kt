@@ -101,6 +101,10 @@ class SatinAlimPageActivity : AppCompatActivity() {
                 Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
     }
 }
 fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {

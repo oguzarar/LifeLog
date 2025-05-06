@@ -145,6 +145,10 @@ class AllCryptoActivity : AppCompatActivity() {
                 return true
             }
         })
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
 

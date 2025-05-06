@@ -50,6 +50,11 @@ class DovizActivity : AppCompatActivity() {
         DovizLists= DovizDao().GetAllDoviz(vt)
         adapter= MainPageDovizListeleRecView(this,DovizLists)
         binding.MainPageDovizRecView.adapter=adapter
+
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun onResume() {

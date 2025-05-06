@@ -103,6 +103,10 @@ class SellPageActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
     }
 }
 

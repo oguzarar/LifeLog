@@ -7,27 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".DovizTakip.DovizListeleActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/DovizListeleRecView"
-        android:layout_width="368dp"
-        android:layout_height="613dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
+
+    <ImageView
+        android:id="@+id/backbutton"
+        android:layout_width="47dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.737" />
+        app:srcCompat="@drawable/arrow_back" />
 
     <SearchView
         android:id="@+id/searchview"
-        android:layout_width="348dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/plain_text_border"
-        app:layout_constraintBottom_toTopOf="@+id/DovizListeleRecView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/backbutton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/DovizListeleRecView" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/DovizListeleRecView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
