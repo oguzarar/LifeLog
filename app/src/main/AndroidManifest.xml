@@ -13,8 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeLog"
-        tools:targetApi="31"
-        android:windowSoftInputMode="adjustPan">
+        tools:targetApi="31">
         <activity
             android:name=".DovizTakip.SellPageActivity"
             android:exported="false" />

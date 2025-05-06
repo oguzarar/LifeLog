@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 
 import com.example.lifelog.KaloriTakip.KaloriEkleActivity
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 
 class ListeleRecview1(private var mContext: Context, val Yemeklists: ArrayList<Kalori>) :
     RecyclerView.Adapter<ListeleRecview1.YemekNesneTutucu>(), Filterable {
@@ -27,8 +28,8 @@ class ListeleRecview1(private var mContext: Context, val Yemeklists: ArrayList<K
     override fun onBindViewHolder(holder: YemekNesneTutucu, position: Int) {
         val yemek = filteredList[position] // Burada filteredList kullanıyoruz
         holder.Yemekismi.text = yemek.isim
-        holder.kalorimiktari.text = yemek.kalori
-        holder.proteinmiktari.text = yemek.protein
+        holder.kalorimiktari.text = formatNumber2(yemek.kalori.toDouble())
+        holder.proteinmiktari.text = formatNumber2(yemek.protein.toDouble())
         holder.YemekCardview.setOnClickListener {
             val gecis = Intent(mContext, KaloriEkleActivity::class.java)
             gecis.putExtra("Yemek", yemek) // Yemek verisini geçiyoruz
@@ -66,7 +67,7 @@ class ListeleRecview1(private var mContext: Context, val Yemeklists: ArrayList<K
     inner class YemekNesneTutucu(view: View) : RecyclerView.ViewHolder(view) {
         val YemekCardview: CardView = view.findViewById(R.id.KaloriCardview)
         val Yemekismi: TextView = view.findViewById(R.id.Yemekismi)
-        val kalorimiktari: TextView = view.findViewById(R.id.kalorimiktariText)
+        val kalorimiktari: TextView = view.findViewById(R.id.KaloritextmiktariText)
         val proteinmiktari: TextView = view.findViewById(R.id.proteinMiktaritext)
     }
 }

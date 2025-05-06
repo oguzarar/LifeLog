@@ -10,6 +10,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 import com.example.lifelog.database.DovizDB
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 
 
 class MainPageDovizListeleRecView(private var mContext: Context, val DovizList: ArrayList<DovizDB>):
@@ -29,7 +31,7 @@ RecyclerView.Adapter<MainPageDovizListeleRecView.DovizNesneTutucu>(){
         val Doviz= DovizList[position]
         holder.DovizLongName.text=Doviz.DovizLongName
         holder.DovizShortName.text=Doviz.DovizShortName
-        holder.Tutar.text=Doviz.DovizMiktariTRY
+        holder.Tutar.text=formatNumber2(Doviz.DovizMiktariTRY.toDouble())
         holder.DovizCardView.setOnClickListener {
             val gecis= Intent(mContext, SellPageActivity::class.java)
             gecis.putExtra("Doviz", Doviz)

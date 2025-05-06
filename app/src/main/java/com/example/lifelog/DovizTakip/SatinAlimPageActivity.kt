@@ -16,6 +16,9 @@ import com.example.lifelog.database.Database
 import com.example.lifelog.database.Doviz
 import com.example.lifelog.database.DovizDao
 import com.example.lifelog.databinding.ActivitySatinAlimPageBinding
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber4
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,7 +43,7 @@ class SatinAlimPageActivity : AppCompatActivity() {
 
         fetchCurrencyRate(gelen.Dovizshort,"TRY") {price->
             if (price != null) {
-                gelenfiyat=price.toString()
+                gelenfiyat=formatNumber4(price)
                 binding.GuncelFiyat.text=gelenfiyat
             }
         }
@@ -70,7 +73,7 @@ class SatinAlimPageActivity : AppCompatActivity() {
                         val yazilan=p0.toString()
                         val gelenFiyat= gelenfiyat!!.toDouble()
                         val guncel=yazilan.toDouble()*gelenFiyat
-                        binding.GuncelTutar.text=guncel.toString()
+                        binding.GuncelTutar.text=formatNumber2(guncel)
                     }catch (e: NullPointerException){
                         Log.e("Fiyat alınamadı","Fiyat alınamadı")
 
