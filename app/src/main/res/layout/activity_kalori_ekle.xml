@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="167dp"
-            android:background="@color/sari">
+            android:background="@color/material_dynamic_tertiary40">
 
             <TextView
                 android:id="@+id/GelenYemek"
@@ -104,7 +104,7 @@
                 android:layout_width="146dp"
                 android:layout_height="46dp"
                 android:layout_marginBottom="32dp"
-                android:backgroundTint="@color/sari"
+                android:backgroundTint="@color/material_dynamic_tertiary40"
                 android:text="Ekle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

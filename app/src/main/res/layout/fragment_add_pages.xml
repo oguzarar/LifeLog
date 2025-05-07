@@ -222,7 +222,7 @@
                 android:id="@+id/kaloritext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/material_dynamic_tertiary40"
+                android:background="@color/material_dynamic_tertiary60"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:text="Kalori Takip Et"
