@@ -6,17 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.R
+import com.example.lifelog.database.Dao.Doviz.DovizDao
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.Doviz
-import com.example.lifelog.database.DovizDao
+import com.example.lifelog.database.Dao.Doviz.Doviz
+import com.example.lifelog.database.Dao.Doviz.DovizDB
 import com.example.lifelog.databinding.ActivitySatinAlimPageBinding
-import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber4
 import kotlinx.coroutines.CoroutineScope
@@ -87,17 +84,17 @@ class SatinAlimPageActivity : AppCompatActivity() {
         })
 
         binding.DovizBuyButton.setOnClickListener {
-            val DovizLongName=gelen.DovizName
-            val DovizShortName=gelen.Dovizshort
             val DovizAmount=binding.AmountOfMoney.text.toString()
             val DovizTRYTutar=binding.GuncelTutar.text.toString()
+
             if(DovizAmount.isEmpty()&&DovizTRYTutar.isEmpty()){
                 Toast.makeText(this,"Fiyat Bilgisi Alınamadı",Toast.LENGTH_SHORT).show()
             }else{
+                val doviz= DovizDB(gelen.DovizName,gelen.Dovizshort,binding.AmountOfMoney.text.toString(),binding.GuncelTutar.text.toString())
                 try {
-                    DovizDao().AddDoviz(vt,DovizLongName,DovizShortName,DovizAmount,DovizTRYTutar)
+                    DovizDao().addAsset(vt,doviz)
                 }catch (e: SQLiteConstraintException){
-                    DovizDao().UpadteCryptoUSDT(vt,DovizLongName,DovizAmount.toDouble(),DovizTRYTutar.toDouble())
+                    DovizDao().updateAsset(vt,doviz)
                 }
                 binding.AmountOfMoney.text.clear()
                 binding.GuncelTutar.text=""

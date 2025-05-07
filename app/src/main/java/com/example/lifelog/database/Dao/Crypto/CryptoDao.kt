@@ -1,10 +1,11 @@
-package com.example.lifelog.database
+package com.example.lifelog.database.Dao.Crypto
 
 import android.content.ContentValues
+import com.example.lifelog.database.Database
 
 class CryptoDao {
     //Veri ekleme
-    fun AddCrypto(vt: Database,CryptoLongName: String,CryptoShortName: String,AmountOfUSDT: String,AmountOfCrypto: String){
+    fun AddCrypto(vt: Database, CryptoLongName: String, CryptoShortName: String, AmountOfUSDT: String, AmountOfCrypto: String){
         val db=vt.writableDatabase
         val values= ContentValues()
 
@@ -44,7 +45,7 @@ class CryptoDao {
         return gelenCrypto
     }
     //Güncelleme
-    fun UpdateCryptoUSDT(vt: Database, cryptoLongName: String, eklenecekMiktar: Double,eklenecekCoin:Double): Boolean {
+    fun UpdateCryptoUSDT(vt: Database, cryptoLongName: String, eklenecekMiktar: Double, eklenecekCoin:Double): Boolean {
         val db = vt.writableDatabase
         val cursor = db.rawQuery("SELECT AmountOfUSDT, AmountOfCrypto FROM CryptoDB WHERE CryptoLongName = ?", arrayOf(cryptoLongName))
         var basarili = false
@@ -103,39 +104,7 @@ class CryptoDao {
         return basarili
     }
 
-    fun getOneCrypto(vt: Database, cryptoLongName: String): Pair<Double, Double>? {
-        val db = vt.readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT AmountOfUSDT, AmountOfCrypto FROM CryptoDB WHERE CryptoLongName = ?",
-            arrayOf(cryptoLongName)
-        )
 
-        var result: Pair<Double, Double>? = null
-
-        if (cursor.moveToFirst()) {
-            val amountOfUsdt = cursor.getDouble(cursor.getColumnIndexOrThrow("AmountOfUSDT"))
-            val amountOfCrypto = cursor.getDouble(cursor.getColumnIndexOrThrow("AmountOfCrypto"))
-            result = Pair(amountOfUsdt.toDouble(), amountOfCrypto.toDouble())
-        }
-
-        cursor.close()
-        return result
-    }
-    fun getCryptoName(vt: Database): List<CryptoUpdate> {
-        val cryptoNames = mutableListOf<CryptoUpdate>()
-        val db=vt.writableDatabase
-        val cursor = db.rawQuery("SELECT CryptoShortName,AmountOfCrypto FROM CryptoDB", null)
-
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                val Coin = CryptoUpdate(cursor.getString(cursor.getColumnIndex("CryptoShortName")),
-                                        cursor.getString(cursor.getColumnIndex("AmountOfCrypto")))
-                cryptoNames.add(Coin)
-            }
-            cursor.close()
-        }
-        return cryptoNames
-    }
     fun guncelleCrypto(vt: Database, CryptoShortName: String, AmountOfUSDT: String) {
         val db = vt.writableDatabase
         val values = ContentValues()

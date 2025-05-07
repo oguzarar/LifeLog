@@ -1,15 +1,11 @@
 package com.example.lifelog.KriptoPages
 
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.SearchView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.R
-import com.example.lifelog.database.Crypto
+import com.example.lifelog.database.Dao.Crypto.Crypto
 import com.example.lifelog.databinding.ActivityAllCryptoBinding
 
 class AllCryptoActivity : AppCompatActivity() {

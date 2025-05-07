@@ -46,4 +46,26 @@ class KaloriDao {
         db.close()
         return Pair(toplamKalori,toplamProtein)
     }
+    fun UpadteKalori(vt: Database, Yemek_ismi: String, Yemek_kalori: Double, Yemek_Protein: Double) {
+        val db = vt.writableDatabase
+        val cursor = db.rawQuery("SELECT yemek_kalori, yemek_protein FROM Kalori WHERE yemek_ismi = ?", arrayOf(Yemek_ismi))
+
+        if (cursor.moveToFirst()) {
+            val mevcutKalori = cursor.getString(cursor.getColumnIndex("yemek_kalori")).toDouble()
+            val mevcutProtein = cursor.getString(cursor.getColumnIndex("yemek_protein")).toDouble()
+
+            val yeniKalori = mevcutKalori+Yemek_kalori
+            val yeniProtein = mevcutProtein+Yemek_Protein
+
+            val contentValues = ContentValues().apply {
+                put("yemek_kalori", yeniKalori.toString())
+                put("yemek_protein", yeniProtein.toString())
+            }
+
+            db.update("Kalori", contentValues, "yemek_ismi = ?", arrayOf(Yemek_ismi))
+        }
+
+        cursor.close()
+        db.close()
+    }
 }

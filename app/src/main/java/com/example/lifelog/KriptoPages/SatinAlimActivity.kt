@@ -1,6 +1,5 @@
 package com.example.lifelog.KriptoPages
 
-import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.text.Editable
@@ -10,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.R
-import com.example.lifelog.database.Crypto
-import com.example.lifelog.database.CryptoDao
+import com.example.lifelog.database.Dao.Crypto.Crypto
+import com.example.lifelog.database.Dao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySatinAlimBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
@@ -24,7 +23,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DecimalFormat
 
 class SatinAlimActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySatinAlimBinding

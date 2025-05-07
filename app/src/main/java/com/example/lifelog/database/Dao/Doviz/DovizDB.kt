@@ -1,4 +1,4 @@
-package com.example.lifelog.database
+package com.example.lifelog.database.Dao.Doviz
 
 import java.io.Serializable
 

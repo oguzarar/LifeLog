@@ -6,17 +6,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.PluginPages.DovizActivity
 import com.example.lifelog.R
+import com.example.lifelog.database.Dao.Doviz.DovizDao
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.Doviz
-import com.example.lifelog.database.DovizDB
-import com.example.lifelog.database.DovizDao
+import com.example.lifelog.database.Dao.Doviz.DovizDB
 import com.example.lifelog.databinding.ActivitySellPageBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber4
@@ -26,7 +22,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import org.json.JSONObject
 
 class SellPageActivity : AppCompatActivity() {
@@ -92,12 +87,13 @@ class SellPageActivity : AppCompatActivity() {
             val girilenAmount=binding.SellAmountOfMoney.text.toString()
             val totalAmount=binding.GuncelTutar.text.toString()
             if(girilenAmount.isEmpty()&&totalAmount.isEmpty()){
-                Toast.makeText(this,"Fİyat bilgidi alınamadı",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Fİyat bilgisi alınamadı",Toast.LENGTH_SHORT).show()
             }else{
                 if(girilenAmount.toDouble()>gelenDoviz.DovizMiktari.toDouble()){
                     Toast.makeText(this,"Yetersiz Bakiye",Toast.LENGTH_SHORT).show()
                 }else{
-                    DovizDao().SellCryptoUSDT(vt,gelenDoviz.DovizLongName,girilenAmount.toDouble(),totalAmount.toDouble())
+                    val doviz= DovizDB(gelenDoviz.DovizLongName,gelenDoviz.DovizShortName,girilenAmount,totalAmount)
+                    DovizDao().sellAsset(vt,doviz)
                     Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
                     val gecis= Intent(this@SellPageActivity, DovizActivity::class.java)
                     startActivity(gecis)

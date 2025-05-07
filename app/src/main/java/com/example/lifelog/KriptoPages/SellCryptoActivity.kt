@@ -1,23 +1,16 @@
 package com.example.lifelog.KriptoPages
 
-import android.annotation.SuppressLint
-import android.database.sqlite.SQLiteConstraintException
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.R
-import com.example.lifelog.database.AddPagesDao
-import com.example.lifelog.database.CryptoDB
-import com.example.lifelog.database.CryptoDao
+import com.example.lifelog.database.Dao.Crypto.CryptoDB
+import com.example.lifelog.database.Dao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySellCryptoBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
@@ -30,8 +23,6 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.internal.format
-import java.text.DecimalFormat
 
 class SellCryptoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySellCryptoBinding
@@ -46,7 +37,7 @@ class SellCryptoActivity : AppCompatActivity() {
 
         val vt= Database(this)
         val gelenCrypto= intent.getSerializableExtra("Crypto") as CryptoDB
-        val result= CryptoDao().getOneCrypto(vt,gelenCrypto.CryptoLongName)
+
 
         binding.GelenCoinLong.text=gelenCrypto.CryptoLongName
         binding.GelenCoinshort.text=gelenCrypto.CryptoShortName
@@ -56,8 +47,8 @@ class SellCryptoActivity : AppCompatActivity() {
                 binding.GuncelFiyat.text=gelenfiyat
             }
         }
-        binding.SahipTutar.text=result!!.first.toString()
-        binding.SahipCrypto.text=result!!.second.toString()
+        binding.SahipTutar.text=gelenCrypto.AmountOfUSDT
+        binding.SahipCrypto.text=gelenCrypto.AmountOfCrypto
 
         binding.AmountOfCoin.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(
@@ -138,14 +129,12 @@ class SellCryptoActivity : AppCompatActivity() {
             if(AmountUsdt.isEmpty()||AmountCrypto.isEmpty()){
                 Toast.makeText(this,"Fiyat bilgisi alınamadı", Toast.LENGTH_SHORT).show()
             }else{
-                if(AmountUsdt.toDouble()<=result.first&&AmountCrypto.toDouble()<=result.second){
-                    val result= CryptoDao().getOneCrypto(vt,gelenCrypto.CryptoLongName)
+                if(AmountUsdt.toDouble()<=gelenCrypto.AmountOfUSDT.toDouble()&&AmountCrypto.toDouble()<=gelenCrypto.AmountOfCrypto.toDouble()){
                     CryptoDao().SellCryptoUSDT(vt,gelenCrypto.CryptoLongName,AmountUsdt.toDouble(),AmountCrypto.toDouble())
                     Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
                     binding.AmountOfUsdt.text.clear()
                     binding.AmountOfCoin.text.clear()
-                    binding.SahipTutar.text=result!!.first.toString()
-                    binding.SahipCrypto.text=result.second.toString()
+                    finish()
                 }
                 else{
                     Toast.makeText(this,"Bakiye yetersiz", Toast.LENGTH_SHORT).show()

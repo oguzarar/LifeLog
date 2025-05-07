@@ -1,4 +1,4 @@
-package com.example.lifelog.database
+package com.example.lifelog.database.Dao.Crypto
 
 import java.io.Serializable
 

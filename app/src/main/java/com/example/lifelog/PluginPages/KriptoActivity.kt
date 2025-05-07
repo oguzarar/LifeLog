@@ -1,11 +1,8 @@
 package com.example.lifelog.PluginPages
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Adapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.ApiKeys.Keys
@@ -13,12 +10,10 @@ import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.KriptoPages.AllCryptoActivity
 import com.example.lifelog.KriptoPages.ListeleRecView
 import com.example.lifelog.R
-import com.example.lifelog.database.CryptoDB
-import com.example.lifelog.database.CryptoDao
-import com.example.lifelog.database.CryptoUpdate
+import com.example.lifelog.database.Dao.Crypto.CryptoDB
+import com.example.lifelog.database.Dao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivityKriptoBinding
-import com.example.lifelog.pages.MainPageFragment
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import kotlinx.coroutines.CoroutineScope
@@ -28,14 +23,12 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import org.json.JSONObject
-import java.io.IOException
 
 class KriptoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityKriptoBinding
     private lateinit var adapter: ListeleRecView
     private lateinit var CrpytoLists: ArrayList<CryptoDB>
-    private lateinit var CryptoList2: List<CryptoUpdate>
+    private lateinit var CryptoList2: List<CryptoDB>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kripto)
@@ -50,11 +43,11 @@ class KriptoActivity : AppCompatActivity() {
         val vt= Database(this)
 
         //Eklenmiş kripto paralın fiyatını güncelleme kısmı
-        CryptoList2= CryptoDao().getCryptoName(vt)//Veritabaınından kripto kısa isimelri alındı
+        CryptoList2= CryptoDao().GetCrypto(vt)//Veritabaınından kriptolar alındı
         for(i in CryptoList2){//Döngü içinde listelenmiş kriptoların fiyatları alındı
-            fetchCryptoPrice(i.CryptoShortame){price->
-                val guncel= price?.times(i.CoinAmount.toDouble())//güncel fiyatlar coin miktarı ile çarpıldı
-                CryptoDao().guncelleCrypto(vt,i.CryptoShortame,guncel.toString())//Güncel fiyatlar VT'ye eklendi.
+            fetchCryptoPrice(i.CryptoShortName){price->
+                val guncel= price?.times(i.AmountOfCrypto.toDouble())//güncel fiyatlar coin miktarı ile çarpıldı
+                CryptoDao().guncelleCrypto(vt,i.CryptoShortName,guncel.toString())//Güncel fiyatlar VT'ye eklendi.
             }
         }
 

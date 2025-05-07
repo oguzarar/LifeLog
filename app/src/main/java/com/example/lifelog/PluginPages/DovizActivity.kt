@@ -3,22 +3,16 @@ package com.example.lifelog.PluginPages
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.DovizTakip.DovizListeleActivity
 import com.example.lifelog.DovizTakip.MainPageDovizListeleRecView
-import com.example.lifelog.KriptoPages.ListeleRecView
 import com.example.lifelog.R
-import com.example.lifelog.database.CryptoDao
+import com.example.lifelog.database.Dao.Doviz.DovizDao
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.DovizDB
-import com.example.lifelog.database.DovizDao
+import com.example.lifelog.database.Dao.Doviz.DovizDB
 import com.example.lifelog.databinding.ActivityDovizBinding
-import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +25,7 @@ import org.json.JSONObject
 class DovizActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDovizBinding
     private lateinit var DovizLists: ArrayList<DovizDB>
+    private lateinit var DovizUpdate: ArrayList<DovizDB>
     private lateinit var adapter: MainPageDovizListeleRecView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +39,15 @@ class DovizActivity : AppCompatActivity() {
             val gecis= Intent(this@DovizActivity, DovizListeleActivity::class.java)
             startActivity(gecis)
         }
+        DovizUpdate= ArrayList<DovizDB>()
+        DovizUpdate=DovizDao().getAllAssets(vt)
+
+
+
         DovizLists= ArrayList<DovizDB>()
-
-
+        DovizLists= DovizDao().getAllAssets(vt)
         binding.MainPageDovizRecView.setHasFixedSize(true)
         binding.MainPageDovizRecView.layoutManager= LinearLayoutManager(this)
-        DovizLists= DovizDao().GetAllDoviz(vt)
         adapter= MainPageDovizListeleRecView(this,DovizLists)
         binding.MainPageDovizRecView.adapter=adapter
 
@@ -63,9 +61,9 @@ class DovizActivity : AppCompatActivity() {
         super.onResume()
         val vt= Database(this)
         DovizLists.clear()
-        DovizLists.addAll(DovizDao().GetAllDoviz(vt))
+        DovizLists.addAll(DovizDao().getAllAssets(vt))
         adapter.notifyDataSetChanged()
-        val getir= DovizDao().GetTotalDovizAmount(vt)
+        val getir= DovizDao().getTotalAmount(vt)
         val son="%.2f".format(getir.toDouble())
         binding.ToplamBakiyeBilgiText.text=son
     }
