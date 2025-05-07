@@ -13,6 +13,7 @@ import com.example.lifelog.R
 import com.example.lifelog.database.Database
 import com.example.lifelog.database.KaloriDao
 import com.example.lifelog.databinding.ActivityKaloriEkleBinding
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 
 class KaloriEkleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityKaloriEkleBinding
@@ -51,8 +52,8 @@ class KaloriEkleActivity : AppCompatActivity() {
                     val gelen=p0.toString()
                     val gelenkalori=(gelenYemek.kalori.toDouble())/100
                     val gelenprotein=(gelenYemek.protein.toDouble())/100
-                    binding.GirlenKaloriMiktari.text=(gelen.toDouble()*gelenkalori).toString()
-                    binding.girilenproteinmktari.text=(gelen.toDouble()*gelenprotein).toString()
+                    binding.GirlenKaloriMiktari.text=formatNumber2((gelen.toDouble()*gelenkalori))
+                    binding.girilenproteinmktari.text=formatNumber2((gelen.toDouble()*gelenprotein))
                 }catch (e:NumberFormatException){
                     binding.GirlenKaloriMiktari.text=""
                     binding.girilenproteinmktari.text=""
