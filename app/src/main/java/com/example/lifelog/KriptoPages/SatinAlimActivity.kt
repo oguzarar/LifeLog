@@ -14,6 +14,7 @@ import com.example.lifelog.database.Crypto
 import com.example.lifelog.database.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySatinAlimBinding
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -140,10 +141,10 @@ class SatinAlimActivity : AppCompatActivity() {
                     binding.AmountOfCoin.text.clear()
                     binding.AmountOfUsdt.text.clear()
                 }
-
             }
-
-
+        }
+        binding.backbutton.setOnClickListener {
+            finish()
         }
 
 
@@ -188,7 +189,4 @@ suspend fun getCryptoPrice(symbol: String): Double? {
         }
     }
 }}
-fun formatNumber(number: Double): String {
-    val formatter = DecimalFormat("0.##########") // En fazla 10 basamak gösterir, gereksiz sıfır koymaz
-    return formatter.format(number)
-}
+

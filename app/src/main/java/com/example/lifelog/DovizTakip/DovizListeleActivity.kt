@@ -75,7 +75,9 @@ class DovizListeleActivity : AppCompatActivity() {
                 return true
             }
         })
-
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
 
     }
     }

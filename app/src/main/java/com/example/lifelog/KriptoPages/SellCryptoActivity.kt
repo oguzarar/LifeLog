@@ -20,6 +20,7 @@ import com.example.lifelog.database.CryptoDB
 import com.example.lifelog.database.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySellCryptoBinding
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +30,8 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import okhttp3.internal.format
+import java.text.DecimalFormat
 
 class SellCryptoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySellCryptoBinding
@@ -79,7 +82,7 @@ class SellCryptoActivity : AppCompatActivity() {
                     val yazilan=p0.toString()
                     val gelenFiyat= gelenfiyat!!.toDouble()
                     val guncel=yazilan.toDouble()*gelenFiyat
-                    binding.GuncelTutar.text=guncel.toString()
+                    binding.GuncelTutar.text= formatNumber(guncel)
                     binding.GuncelAdet.text=p0
                     binding.AmountOfUsdt.text.clear()
                 }catch (e:NumberFormatException){
@@ -148,7 +151,9 @@ class SellCryptoActivity : AppCompatActivity() {
                     Toast.makeText(this,"Bakiye yetersiz", Toast.LENGTH_SHORT).show()
                 }
             }
-
+        }
+        binding.backbutton.setOnClickListener {
+            finish()
         }
 
     }
@@ -193,4 +198,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
         }
     }
 }
+
+
+
 

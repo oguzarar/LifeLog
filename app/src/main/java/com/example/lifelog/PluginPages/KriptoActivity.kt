@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.ApiKeys.Keys
+
 import com.example.lifelog.KriptoPages.AllCryptoActivity
 import com.example.lifelog.KriptoPages.ListeleRecView
 import com.example.lifelog.R
@@ -17,6 +18,7 @@ import com.example.lifelog.database.CryptoDao
 import com.example.lifelog.database.CryptoUpdate
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivityKriptoBinding
+import com.example.lifelog.pages.MainPageFragment
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import kotlinx.coroutines.CoroutineScope
@@ -67,6 +69,10 @@ class KriptoActivity : AppCompatActivity() {
         CrpytoLists= CryptoDao().GetCrypto(vt)
         adapter= ListeleRecView(this,CrpytoLists)
         binding.kriptoRv.adapter=adapter
+
+        binding.KriptoBack.setOnClickListener {
+            finish()
+        }
     }
 
     //Yeni kritp eklendiğinde sayfa güncellenecek
@@ -80,6 +86,8 @@ class KriptoActivity : AppCompatActivity() {
         val son="%.2f".format(getir.toDouble())
         binding.ToplamBakiyeBilgiText.text=son
     }
+
+
 }
 
 //Apiden fiat bilgisi

@@ -45,6 +45,10 @@ class KaloriActivity : AppCompatActivity() {
         binding.MainYemekListeleRecview.layoutManager= LinearLayoutManager(this)
         adapter= GelenYemekRecView(this,yemeklist)
         binding.MainYemekListeleRecview.adapter=adapter
+
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {

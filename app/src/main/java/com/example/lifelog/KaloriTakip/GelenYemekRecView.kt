@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 
 class GelenYemekRecView(private var mContext: Context, var YemekList: ArrayList<Kalori>):
     RecyclerView.Adapter<GelenYemekRecView.Yemeknesnetutucu>() {
@@ -25,8 +26,8 @@ class GelenYemekRecView(private var mContext: Context, var YemekList: ArrayList<
     ) {
         val yemek=YemekList[position]
         holder.yemekismi.text=yemek.isim
-        holder.kaloriMiktari.text=yemek.kalori
-        holder.proteinmiktari.text=yemek.protein
+        holder.kaloriMiktari.text=formatNumber2(yemek.kalori.toDouble())
+        holder.proteinmiktari.text=formatNumber2(yemek.protein.toDouble())
 
 
     }

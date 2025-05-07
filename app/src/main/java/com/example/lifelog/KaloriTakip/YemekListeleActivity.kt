@@ -50,6 +50,9 @@ class YemekListeleActivity : AppCompatActivity() {
             }
         })
 
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
 
 
 

@@ -18,6 +18,7 @@ import com.example.lifelog.database.Database
 import com.example.lifelog.database.DovizDB
 import com.example.lifelog.database.DovizDao
 import com.example.lifelog.databinding.ActivityDovizBinding
+import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,11 +46,17 @@ class DovizActivity : AppCompatActivity() {
         }
         DovizLists= ArrayList<DovizDB>()
 
+
         binding.MainPageDovizRecView.setHasFixedSize(true)
         binding.MainPageDovizRecView.layoutManager= LinearLayoutManager(this)
         DovizLists= DovizDao().GetAllDoviz(vt)
         adapter= MainPageDovizListeleRecView(this,DovizLists)
         binding.MainPageDovizRecView.adapter=adapter
+
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun onResume() {

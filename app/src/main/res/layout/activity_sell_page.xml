@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DovizTakip.SellPageActivity">
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView6"
         android:layout_width="374dp"
         android:layout_height="494dp"
         app:cardCornerRadius="25dp"
@@ -25,23 +27,21 @@
 
             <TextView
                 android:id="@+id/SellGelenDovizLong"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="39dp"
                 android:layout_marginTop="57dp"
-                android:layout_marginEnd="253dp"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/Textview"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="104dp"
+                android:layout_marginStart="96dp"
                 android:layout_marginTop="57dp"
                 android:text="Güncel Fiyat"
                 android:textColor="#FFFAFA"
@@ -51,23 +51,21 @@
 
             <TextView
                 android:id="@+id/SellGuncelFiyat"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="126dp"
+                android:layout_marginStart="96dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="82dp"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.117"
-                app:layout_constraintStart_toEndOf="@+id/SellGelenDovizshort"
+                app:layout_constraintStart_toEndOf="@+id/SellGelenDovizLong"
                 app:layout_constraintTop_toBottomOf="@+id/Textview" />
 
             <TextView
                 android:id="@+id/SellGelenDovizshort"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="43dp"
+                android:layout_marginStart="39dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="56dp"
                 android:text="TextView"
@@ -93,7 +91,8 @@
                 android:inputType="number"
                 app:layout_constraintBottom_toTopOf="@+id/DovizSellButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="8dp"/>
 
             <Button
                 android:id="@+id/DovizSellButton"
@@ -123,40 +122,54 @@
 
             <TextView
                 android:id="@+id/GuncelTutar"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="72dp"
                 android:layout_marginBottom="18dp"
                 android:text=""
                 app:layout_constraintBottom_toTopOf="@+id/DovizSellButton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView20"
                 app:layout_constraintTop_toBottomOf="@+id/SellAmountOfMoney"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="189dp"
-                android:text="Adet"
+                android:text="Adet:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/GuncelSahiplik"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="62dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="189dp"
-                android:layout_marginEnd="199dp"
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/backbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="359dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_back" />
 </androidx.constraintlayout.widget.ConstraintLayout>
