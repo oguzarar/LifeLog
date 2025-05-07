@@ -21,15 +21,17 @@
 
             <TextView
                 android:id="@+id/Yemekismi2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Bitcoin"
                 android:textColor="@color/gri"
                 android:textSize="34sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/proteinTextRecview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/KaloriTextRecview"
@@ -49,7 +51,7 @@
                 android:id="@+id/proteinTextRecview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="187dp"
+                android:layout_marginStart="156dp"
                 android:layout_marginTop="32dp"
                 android:text="Protein"
                 android:textColor="@color/white"
@@ -74,7 +76,7 @@
                 android:id="@+id/proteinMiktaritext2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="187dp"
+                android:layout_marginStart="164dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
