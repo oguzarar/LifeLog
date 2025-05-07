@@ -9,10 +9,10 @@
         android:id="@+id/GelenYemekCardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/sari"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/material_dynamic_tertiary60"
         app:cardCornerRadius="25dp"
-        app:cardElevation="6dp"
-        android:layout_marginBottom="15dp">
+        app:cardElevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +24,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Bitcoin"
-                android:textColor="@color/gri"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/acikBeyaz"
                 android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/proteinTextRecview"

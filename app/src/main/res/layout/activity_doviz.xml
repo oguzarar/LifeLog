@@ -62,9 +62,9 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@android:color/holo_green_dark"
                 android:text="Varlık Ekle"
-                app:layout_constraintTop_toBottomOf="@+id/ToplamBakiyeBilgiText"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/ToplamBakiyeBilgiText" />
 
             <ImageView
                 android:id="@+id/imageView"

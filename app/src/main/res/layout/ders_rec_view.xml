@@ -9,10 +9,10 @@
         android:id="@+id/dersCardview"
         android:layout_width="match_parent"
         android:layout_height="105dp"
-        android:backgroundTint="@color/acikmav2"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/aciksari"
         app:cardCornerRadius="25dp"
-        app:cardElevation="6dp"
-        android:layout_margin="8dp">
+        app:cardElevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
