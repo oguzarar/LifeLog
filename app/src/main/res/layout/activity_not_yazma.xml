@@ -19,9 +19,10 @@
 
     <EditText
         android:id="@+id/EditTextMultiLineNotYazma"
-        android:layout_width="362dp"
+        android:layout_width="0dp"
         android:layout_height="484dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="12dp"
         android:background="@null"
         android:ems="10"
@@ -48,15 +49,15 @@
 
     <EditText
         android:id="@+id/editTextBaslikGiris"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="9dp"
         android:ems="10"
         android:hint="Başlık:"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/EditTextMultiLineNotYazma"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewNotlarGeri" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
