@@ -95,8 +95,13 @@ class Goldsdao {
             val currentAmount = cursor.getInt(cursor.getColumnIndexOrThrow("goldAmount"))
             if(currentAmount >= goldAmount){
                 val newAmount = currentAmount - goldAmount
-                updateGoldAmount(vt, goldId, newAmount)
-                gold = Golds(goldId, goldType, newAmount)
+                if(newAmount == 0){
+                    db.delete("Golds", "goldId=?", arrayOf(goldId.toString()))
+                }
+                else{
+                    updateGoldAmount(vt, goldId, newAmount)
+                }
+                gold = Golds(goldId, goldType, goldAmount)
             }
             else{
                 Log.e("Goldsdao", "Yeterli ALtın Yok")

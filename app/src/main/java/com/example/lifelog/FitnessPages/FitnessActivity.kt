@@ -81,6 +81,7 @@ class FitnessActivity : AppCompatActivity() {
 
         var isRunning = false
         var timeWhenStopped: Long = 0
+        var aktiviteBaslatildiMi = false
 
         binding.baslatDurdurButtonKronometre.setOnClickListener {
             if (!isRunning) {
@@ -96,6 +97,7 @@ class FitnessActivity : AppCompatActivity() {
                 isRunning = false
                 binding.baslatDurdurButtonKronometre.text = "Başlat"
             }
+            aktiviteBaslatildiMi = true
         }
 
         var sureMiliSaniye = SystemClock.elapsedRealtime() - binding.chronometer.base
@@ -142,7 +144,6 @@ class FitnessActivity : AppCompatActivity() {
 
                     binding.aktiviteEkleCard.isClickable = true
                     binding.aktiviteEkleCard.alpha = 1.0f
-
                     binding.chronometer.stop()
                     binding.chronometer.base = SystemClock.elapsedRealtime()
                     isRunning = false
@@ -150,6 +151,8 @@ class FitnessActivity : AppCompatActivity() {
                     binding.kronometreCard.visibility = View.GONE
                     binding.buttonAktiviteBitir.visibility = View.GONE
                     binding.baslatDurdurButtonKronometre.visibility = View.GONE
+
+                    aktiviteBaslatildiMi = false
                 }
 
                 .create()
@@ -159,7 +162,7 @@ class FitnessActivity : AppCompatActivity() {
 
         binding.fizikselAktiviteSayfasiGeriTusu.setOnClickListener{
 
-            if(sureSaniye == 0){
+            if(aktiviteBaslatildiMi == true){
                 AlertDialog.Builder(this)
                     .setTitle("Kronometre Çalışıyor")
                     .setMessage("Bitirilmemiş bir aktiviteniz mevcut. Sayfadan çıkmak istediğinize emin misiniz?")
