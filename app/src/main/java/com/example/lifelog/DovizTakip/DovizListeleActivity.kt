@@ -5,7 +5,7 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Doviz.Doviz
+import com.example.lifelog.database.AssetsDao.Doviz.Doviz
 import com.example.lifelog.databinding.ActivityDovizEkleBinding
 
 class DovizListeleActivity : AppCompatActivity() {

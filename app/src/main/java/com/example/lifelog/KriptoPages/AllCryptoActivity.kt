@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Crypto.Crypto
+import com.example.lifelog.database.AssetsDao.Crypto.Crypto
 import com.example.lifelog.databinding.ActivityAllCryptoBinding
 
 class AllCryptoActivity : AppCompatActivity() {

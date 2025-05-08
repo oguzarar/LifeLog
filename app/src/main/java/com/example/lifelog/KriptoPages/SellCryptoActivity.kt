@@ -7,10 +7,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lifelog.ApiKeys.Keys
+import com.example.lifelog.ApiKeys.Keys.Companion.kriptoApiKeys
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Crypto.CryptoDB
-import com.example.lifelog.database.Dao.Crypto.CryptoDao
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySellCryptoBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
@@ -130,7 +130,8 @@ class SellCryptoActivity : AppCompatActivity() {
                 Toast.makeText(this,"Fiyat bilgisi alınamadı", Toast.LENGTH_SHORT).show()
             }else{
                 if(AmountUsdt.toDouble()<=gelenCrypto.AmountOfUSDT.toDouble()&&AmountCrypto.toDouble()<=gelenCrypto.AmountOfCrypto.toDouble()){
-                    CryptoDao().SellCryptoUSDT(vt,gelenCrypto.CryptoLongName,AmountUsdt.toDouble(),AmountCrypto.toDouble())
+                    val crypto= CryptoDB(gelenCrypto.CryptoLongName,gelenCrypto.CryptoShortName,AmountUsdt,AmountCrypto)
+                    CryptoDao().sellAsset(vt,crypto)
                     Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
                     binding.AmountOfUsdt.text.clear()
                     binding.AmountOfCoin.text.clear()
@@ -162,7 +163,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
 
     val request = Request.Builder()
         .url(apiUrl)
-        .addHeader("X-Api-Key", Keys().getKriptoKey())
+        .addHeader("X-Api-Key", kriptoApiKeys)
         .build()
 
     return withContext(Dispatchers.IO) {

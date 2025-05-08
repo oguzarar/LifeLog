@@ -67,6 +67,7 @@ class AddPagesFragment : Fragment() {
         alert.setPositiveButton("EVET") {dialog,which->
             try {
                 AddPagesDao().PluginAdd(vt,PluginName)//Seçilen ek veritabanına kayıt ediliyor
+                Toast.makeText(requireContext(),"Eklendi", Toast.LENGTH_LONG).show()
             }catch (e:SQLiteConstraintException){//Eğer zaten var ise eklenmiyecek
                 Toast.makeText(requireContext(),"Bu eklenti zaten mevcut", Toast.LENGTH_LONG).show()
             }

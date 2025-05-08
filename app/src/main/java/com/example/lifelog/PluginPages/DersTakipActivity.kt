@@ -2,7 +2,6 @@ package com.example.lifelog.PluginPages
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Adapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,8 +9,8 @@ import com.example.lifelog.DersTakip.DersRecview
 import com.example.lifelog.DersTakip.DersTakip2Activity
 import com.example.lifelog.R
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.DersTakip
-import com.example.lifelog.database.DersTakipdao
+import com.example.lifelog.database.TaskDaos.derstakip.DersTakip
+import com.example.lifelog.database.TaskDaos.derstakip.DersTakipDao
 import com.example.lifelog.databinding.ActivityDersTakipBinding
 
 class DersTakipActivity : AppCompatActivity() {
@@ -25,7 +24,7 @@ class DersTakipActivity : AppCompatActivity() {
         binding= ActivityDersTakipBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val vt= Database(this)
-        Gelenders= DersTakipdao().getAllDers(vt)
+        Gelenders= DersTakipDao().GetAllTask(vt)
         binding.DersRV.setHasFixedSize(true)
         binding.DersRV.layoutManager= LinearLayoutManager(this)
         adapter= DersRecview(this,Gelenders)
@@ -45,7 +44,7 @@ class DersTakipActivity : AppCompatActivity() {
         super.onResume()
         val vt= Database(this)
         Gelenders.clear()
-        Gelenders.addAll(DersTakipdao().getAllDers(vt))
+        Gelenders.addAll(DersTakipDao().GetAllTask(vt))
         adapter.notifyDataSetChanged()
     }
 }

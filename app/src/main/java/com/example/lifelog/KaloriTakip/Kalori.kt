@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull
 import java.io.Serializable
 
 @Entity(tableName = "urunler")
-data class Kalori(@PrimaryKey(autoGenerate = true)
-                  var id: Int,
+data class Kalori(
+                  @PrimaryKey
                   @ColumnInfo(name="isim")@NotNull var isim: String,
                   @ColumnInfo(name="kategori")@NotNull
                   var kategori : String,

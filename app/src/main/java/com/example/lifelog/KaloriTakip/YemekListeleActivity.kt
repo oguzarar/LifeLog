@@ -30,7 +30,7 @@ class YemekListeleActivity : AppCompatActivity() {
         val job= CoroutineScope(Dispatchers.Main).launch {//Bu kod kisilerdao sınıfında suspend olan tumKisiler fonskiyonun çalışmasını sağlar
            val yemek1 =dao.tumKisiler()
             for(i in yemek1){
-                var yeni= Kalori(i.id,i.isim,i.kategori,i.kalori,i.protein)
+                var yeni= Kalori(i.isim,i.kategori,i.kalori,i.protein)
                 yemekList.add(yeni)
             }
             binding.KaloriRecview.setHasFixedSize(true)

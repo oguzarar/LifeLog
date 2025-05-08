@@ -1,19 +1,16 @@
 package com.example.lifelog.pages
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lifelog.R
 import com.example.lifelog.ToDoList.RecView
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.ToDoList
-import com.example.lifelog.database.ToDoListdao
+import com.example.lifelog.database.TaskDaos.todolist.ToDoList
+import com.example.lifelog.database.TaskDaos.todolist.ToDoListDao
 import com.example.lifelog.databinding.FragmentToDoBinding
 
 
@@ -36,11 +33,12 @@ class ToDoFragment : Fragment() {
             }
 
             else{//Eğer birşeyler yazılmışsa veritabanına eklenecek
-                ToDoListdao().TaskAdd(vt,Task.toString())//Yazılan veri veritabanına eklendi
+                val task= ToDoList(task = Task.toString())
+                ToDoListDao().TaskAdd(vt,task)//Yazılan veri veritabanına eklendi
                 binding.TaskPlainText.setText("")//Edittext içi siliniyor.
 
                 //Yeni veri eklendiğinde rv güncelleniyor.
-                Tasklist= ToDoListdao().GetAllTask(vt)
+                Tasklist= ToDoListDao().GetAllTask(vt)
                 adapter= RecView(requireContext(),Tasklist.toMutableList())
                 binding.RV.adapter=adapter
             }
@@ -49,7 +47,7 @@ class ToDoFragment : Fragment() {
         //Veritabanında veri çekilip rv'ye gönderildi.
         binding.RV.setHasFixedSize(true)
         binding.RV.layoutManager= LinearLayoutManager(requireContext())
-        Tasklist= ToDoListdao().GetAllTask(vt)
+        Tasklist= ToDoListDao().GetAllTask(vt)
         adapter= RecView(requireContext(),Tasklist.toMutableList())
         binding.RV.adapter=adapter
 

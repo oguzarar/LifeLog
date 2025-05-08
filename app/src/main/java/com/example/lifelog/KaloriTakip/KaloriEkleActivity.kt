@@ -73,7 +73,8 @@ class KaloriEkleActivity : AppCompatActivity() {
                 Toast.makeText(this,"Değer giriniz", Toast.LENGTH_SHORT).show()
             }else{
                 try {
-                    KaloriDao().Addyemek(vt,yemekismi,yemekTuru,yemekkalori,yemekprotein)
+                    val yemek= Kalori(yemekismi,yemekTuru,yemekkalori,yemekprotein)
+                    KaloriDao().Addyemek(vt,yemek)
                     Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
                     binding.editTextText.text.clear()
                     binding.GirlenKaloriMiktari.text=""

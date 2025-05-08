@@ -8,11 +8,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lifelog.ApiKeys.Keys
+import com.example.lifelog.ApiKeys.Keys.Companion.dovizApiKeys2
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Doviz.DovizDao
+import com.example.lifelog.database.AssetsDao.Doviz.DovizDao
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.Dao.Doviz.Doviz
-import com.example.lifelog.database.Dao.Doviz.DovizDB
+import com.example.lifelog.database.AssetsDao.Doviz.Doviz
+import com.example.lifelog.database.AssetsDao.Doviz.DovizDB
 import com.example.lifelog.databinding.ActivitySatinAlimPageBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber4
@@ -117,7 +118,7 @@ fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
 
 // Gerçek API çağrısını yapacak olan suspend fonksiyonu
 suspend fun getCurrencyRate(from: String, to: String): Double? {
-    val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${Keys().getDovizKey()}&base_currency=${from}&currencies=${to}"
+    val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${dovizApiKeys2}&base_currency=${from}&currencies=${to}"
     val client = OkHttpClient()
 
     val request = Request.Builder()

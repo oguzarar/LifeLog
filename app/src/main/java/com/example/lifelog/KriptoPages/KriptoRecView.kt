@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Crypto.Crypto
+import com.example.lifelog.database.AssetsDao.Crypto.Crypto
 
 
 class KriptoRecView(private var mContext: Context, var CryptoList: List<Crypto>) :

@@ -6,12 +6,14 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lifelog.ApiKeys.Keys
+import com.example.lifelog.ApiKeys.Keys.Companion.dovizApiKeys2
 import com.example.lifelog.DovizTakip.DovizListeleActivity
 import com.example.lifelog.DovizTakip.MainPageDovizListeleRecView
+
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Doviz.DovizDao
+import com.example.lifelog.database.AssetsDao.Doviz.DovizDao
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.Dao.Doviz.DovizDB
+import com.example.lifelog.database.AssetsDao.Doviz.DovizDB
 import com.example.lifelog.databinding.ActivityDovizBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +29,6 @@ class DovizActivity : AppCompatActivity() {
     private lateinit var DovizLists: ArrayList<DovizDB>
     private lateinit var DovizUpdate: ArrayList<DovizDB>
     private lateinit var adapter: MainPageDovizListeleRecView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doviz)
@@ -41,6 +42,16 @@ class DovizActivity : AppCompatActivity() {
         }
         DovizUpdate= ArrayList<DovizDB>()
         DovizUpdate=DovizDao().getAllAssets(vt)
+        for(i in DovizUpdate){
+            fetchCurrencyRate(i.DovizShortName, "TRY") { price ->
+                if (price != null) {
+                    val guncel=price.times(i.DovizMiktari.toDouble())
+                    val doviz=DovizDB(i.DovizLongName,i.DovizShortName,i.DovizMiktari,guncel.toString())
+                    DovizDao().updatePrice(vt,doviz)
+
+                }
+            }
+        }
 
 
 
@@ -78,7 +89,7 @@ fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
 
 // Gerçek API çağrısını yapacak olan suspend fonksiyonu
 suspend fun getCurrencyRate(from: String, to: String): Double? {
-    val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${Keys().getDovizKey()}&base_currency=${from}&currencies=${to}"
+    val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${dovizApiKeys2}&base_currency=${from}&currencies=${to}"
     val client = OkHttpClient()
 
     val request = Request.Builder()

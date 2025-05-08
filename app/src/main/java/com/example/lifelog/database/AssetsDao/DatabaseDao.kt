@@ -1,4 +1,4 @@
-package com.example.lifelog.database.Dao
+package com.example.lifelog.database.AssetsDao
 
 import com.example.lifelog.database.Database
 

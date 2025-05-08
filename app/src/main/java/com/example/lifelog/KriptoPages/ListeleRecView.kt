@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Crypto.CryptoDB
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
 
 class ListeleRecView(private var mContext: Context,val CryptoLists:List<CryptoDB>):
     RecyclerView.Adapter<ListeleRecView.KriptoNesneTutucu>(){
@@ -34,8 +34,8 @@ class ListeleRecView(private var mContext: Context,val CryptoLists:List<CryptoDB
         val gelenUSDT="%.2f".format(Crypto.AmountOfUSDT.toDouble())
         val gelenKripto="%.2f".format(Crypto.AmountOfCrypto.toDouble())
         holder.KriptoTutar.text=gelenUSDT
-
         holder.KriptoAdet.text=gelenKripto
+
         holder.KriptoCardview.setOnClickListener {
             val gecis= Intent(mContext, SellCryptoActivity::class.java)//Sayfaya geçiş
             gecis.putExtra("Crypto",Crypto)//Geçilen sayfaya veri aktarımı

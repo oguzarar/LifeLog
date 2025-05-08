@@ -1,17 +1,24 @@
-package com.example.lifelog.database
+package com.example.lifelog.database.TaskDaos.todolist
 
 import android.content.ContentValues
+import com.example.lifelog.database.Database
+import com.example.lifelog.database.TaskDaos.TaskDaos
 
-class ToDoListdao {
-    fun TaskAdd(vt: Database,Task: String){ //Veri ekleme fonskiyonu
+class ToDoListDao: TaskDaos<ToDoList> {
+    override fun TaskAdd(
+        vt: Database,
+        item: ToDoList
+    ) {
         val db=vt.writableDatabase
         val values= ContentValues()
-        values.put("task",Task)
+        values.put("task",item.task)
 
         db.insertOrThrow("ToDoList",null,values)
         db.close()
     }
-    fun GetAllTask(vt: Database) : ArrayList<ToDoList>{
+
+
+    override fun GetAllTask(vt: Database): ArrayList<ToDoList> {
         val TaskList= ArrayList<ToDoList>()
         val db=vt.writableDatabase
         val cursor=db.rawQuery("SELECT * FROM ToDoList",null)
@@ -23,9 +30,10 @@ class ToDoListdao {
         db.close()
         return TaskList
     }
-    fun DeleteTask(vt: Database,kisi_id:Int){
+
+    override fun DeleteTask(vt: Database, Task_id: Int) {
         val db=vt.writableDatabase
-        db.delete("ToDoList","task_id=?",arrayOf(kisi_id.toString()))
+        db.delete("ToDoList","task_id=?",arrayOf(Task_id.toString()))
         db.close()
     }
 

@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
-import com.example.lifelog.database.Dao.Doviz.DovizDB
+import com.example.lifelog.database.AssetsDao.Doviz.DovizDB
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber2
 
 

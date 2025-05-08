@@ -11,8 +11,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.DersTakip
-import com.example.lifelog.database.DersTakipdao
+import com.example.lifelog.database.TaskDaos.derstakip.DersTakip
+import com.example.lifelog.database.TaskDaos.derstakip.DersTakipDao
 
 class DersRecview(private var mContext: Context, val DersLists: MutableList<DersTakip>):
     RecyclerView.Adapter<DersRecview.RecviewNesneTutucu>(){
@@ -31,10 +31,12 @@ class DersRecview(private var mContext: Context, val DersLists: MutableList<Ders
         holder.SinavTarihi.text=ders.dersTarih
         holder.SinavSaati.text=ders.dersSaat
         holder.SinavSilme.setOnClickListener {
-            DersTakipdao().DeleteTask(vt,ders.ders_id)
-            DersLists.removeAt(position)
-            notifyItemRemoved(position)
-            Toast.makeText(mContext,"Silindi", Toast.LENGTH_SHORT).show()
+            if (holder.adapterPosition != RecyclerView.NO_POSITION) {
+                DersTakipDao().DeleteTask(vt, ders.ders_id!!.toInt())
+                DersLists.removeAt(holder.adapterPosition)
+                notifyItemRemoved(holder.adapterPosition)
+                Toast.makeText(mContext, "Silindi", Toast.LENGTH_SHORT).show()
+            }
 
         }
 

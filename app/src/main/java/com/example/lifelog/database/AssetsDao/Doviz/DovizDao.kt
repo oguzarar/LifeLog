@@ -1,7 +1,7 @@
-package com.example.lifelog.database.Dao.Doviz
+package com.example.lifelog.database.AssetsDao.Doviz
 
 import android.content.ContentValues
-import com.example.lifelog.database.Dao.DatabaseDao
+import com.example.lifelog.database.AssetsDao.DatabaseDao
 import com.example.lifelog.database.Database
 
 class DovizDao: DatabaseDao<DovizDB> {
@@ -54,7 +54,7 @@ class DovizDao: DatabaseDao<DovizDB> {
             val yeniTutar = mevcutTutar - doviz.DovizMiktari.toDouble()
             val yeniTry = mevcutTRY - doviz.DovizMiktariTRY.toDouble()
 
-            if (yeniTutar == 0.0 && yeniTry == 0.0) {
+            if (yeniTutar < 0.0001 && yeniTry < 0.0001) {
                 // Eğer tamamen sattıysan kaydı sil
                 db.delete("Doviz", "DovizLongName = ?", arrayOf(doviz.DovizLongName))
             } else {
@@ -96,9 +96,9 @@ class DovizDao: DatabaseDao<DovizDB> {
 
         val values = ContentValues()
 
-        values.put("AmountOfUSDT", doviz.DovizMiktari)
+        values.put("DovizMiktariTRY", doviz.DovizMiktariTRY)
 
-        db.update("CryptoDB", values, "CryptoShortName = ?", arrayOf(doviz.DovizShortName))
+        db.update("Doviz", values, "DovizShortName = ?", arrayOf(doviz.DovizShortName))
 
         db.close()
 
