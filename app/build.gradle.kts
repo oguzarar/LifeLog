@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     kapt("androidx.room:room-compiler:2.7.0")
+    implementation ("androidx.work:work-runtime-ktx:2.10.1")
 
 
 

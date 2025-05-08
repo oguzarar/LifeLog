@@ -10,7 +10,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifelog.database.Doviz
+import com.example.lifelog.database.AssetsDao.Doviz.Doviz
 import com.example.lifelog.R
 
 class DovizListeleRecview(

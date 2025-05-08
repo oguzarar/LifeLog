@@ -10,9 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lifelog.R
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.DersTakipdao
+import com.example.lifelog.database.TaskDaos.derstakip.DersTakip
+import com.example.lifelog.database.TaskDaos.derstakip.DersTakipDao
 import com.example.lifelog.databinding.ActivityDersTakip2Binding
-import com.example.lifelog.databinding.ActivityDersTakipBinding
 
 class DersTakip2Activity : AppCompatActivity() {
     private lateinit var binding: ActivityDersTakip2Binding
@@ -29,9 +29,14 @@ class DersTakip2Activity : AppCompatActivity() {
             val ay=calendar.get(Calendar.MONTH)
             val gun=calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datepicker=DatePickerDialog(this@DersTakip2Activity,DatePickerDialog.OnDateSetListener { datePicker, y, a, g ->
-                binding.Tarihinput.setText("$g/${a+1}/$y")
-            },yil,ay,gun)
+            val datepicker = DatePickerDialog(
+                this@DersTakip2Activity, DatePickerDialog.OnDateSetListener { _, y, a, g ->
+                    val formattedDate = String.format("%02d/%02d/%04d", g, a + 1, y)
+                    binding.Tarihinput.setText(formattedDate)
+                },
+                yil, ay, gun
+            )
+
             //Saateki gibi aynısı yapıldı güncel tarih bilgisi alındı.
 
             datepicker.setTitle("Saat seçiniz")
@@ -43,9 +48,13 @@ class DersTakip2Activity : AppCompatActivity() {
             val calendar= Calendar.getInstance()
             val saat1=calendar.get(Calendar.HOUR_OF_DAY)
             val dakika=calendar.get(Calendar.MINUTE)
-            val timePicker=TimePickerDialog(this@DersTakip2Activity,TimePickerDialog.OnTimeSetListener{timePicker, i, i2 ->
-                binding.saatinput.setText("$i:$i2")
-            },saat1,dakika,true)
+            val timePicker = TimePickerDialog(
+                this@DersTakip2Activity, TimePickerDialog.OnTimeSetListener { _, i, i2 ->
+                    val formattedTime = String.format("%02d:%02d", i, i2)
+                    binding.saatinput.setText(formattedTime)
+                },
+                saat1, dakika, true
+            )
             //Güncel saat bilgisi alındı
 
             timePicker.setTitle("Saat seçiniz")
@@ -54,6 +63,8 @@ class DersTakip2Activity : AppCompatActivity() {
             timePicker.show()
 
         }
+        val tarihkontrol="\\d{2}/\\d{2}/\\d{4}"
+        val saatkontrol="\\d{2}:\\d{2}"
         binding.SNavekle.setOnClickListener {
             val vt= Database(this)
             val dersad=binding.dersinput.text.trim()
@@ -62,11 +73,17 @@ class DersTakip2Activity : AppCompatActivity() {
             if(dersad.isNullOrEmpty()||dersTarih.isNullOrEmpty()||dersSaat.isNullOrEmpty()){
                 Toast.makeText(this,"Boş değer girilemez", Toast.LENGTH_SHORT).show()
             }else{
-                DersTakipdao().dersEkle(vt,dersad.toString(),dersTarih.toString(),dersSaat.toString())
-                binding.dersinput.text.clear()
-                binding.saatinput.text.clear()
-                binding.Tarihinput.text.clear()
-                Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
+                if(dersTarih.matches(Regex(tarihkontrol))&&dersSaat.matches(Regex(saatkontrol))){
+                    val ders= DersTakip(dersAdi =dersad.toString(), dersTarih =dersTarih.toString(), dersSaat = dersSaat.toString()  )
+                    DersTakipDao().TaskAdd(vt,ders)
+                    binding.dersinput.text.clear()
+                    binding.saatinput.text.clear()
+                    binding.Tarihinput.text.clear()
+                    Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(this,"Tarih veya saat yanlış yazıldı",Toast.LENGTH_SHORT).show()
+                }
+
             }
 
         }

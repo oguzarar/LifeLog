@@ -1,7 +1,6 @@
 package com.example.lifelog.ToDoList
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifelog.R
 import com.example.lifelog.database.Database
-import com.example.lifelog.database.ToDoList
-import com.example.lifelog.database.ToDoListdao
+import com.example.lifelog.database.TaskDaos.todolist.ToDoList
+import com.example.lifelog.database.TaskDaos.todolist.ToDoListDao
 
 class RecView(private var mContext: Context, private val TasksList: MutableList<ToDoList>):
     RecyclerView.Adapter<RecView.CardViewNesneTutucu>() {
@@ -25,12 +24,17 @@ class RecView(private var mContext: Context, private val TasksList: MutableList<
     override fun onBindViewHolder(holder: RecView.CardViewNesneTutucu, position: Int) {
         val vt= Database(mContext)
         val task=TasksList[position]
+        holder.checkBox.setOnCheckedChangeListener(null)
+        holder.checkBox.isChecked = false
         holder.ToDoText.text=task.task
         holder.checkBox.setOnCheckedChangeListener({buttonView,isChecked->
             if(isChecked){
-                ToDoListdao().DeleteTask(vt,task.task_id!!.toInt())
-                TasksList.removeAt(position)
-                notifyItemRemoved(position)
+                ToDoListDao().DeleteTask(vt,task.task_id!!.toInt())
+                if (holder.adapterPosition != RecyclerView.NO_POSITION) {
+                    TasksList.removeAt(holder.adapterPosition)
+                    notifyItemRemoved(holder.adapterPosition)
+                }
+
             }
         })
 

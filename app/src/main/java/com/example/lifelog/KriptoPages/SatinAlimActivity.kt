@@ -1,6 +1,5 @@
 package com.example.lifelog.KriptoPages
 
-import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.text.Editable
@@ -8,10 +7,11 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lifelog.ApiKeys.Keys
+import com.example.lifelog.ApiKeys.Keys.Companion.kriptoApiKeys
 import com.example.lifelog.R
-import com.example.lifelog.database.Crypto
-import com.example.lifelog.database.CryptoDao
+import com.example.lifelog.database.AssetsDao.Crypto.Crypto
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySatinAlimBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
@@ -24,7 +24,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DecimalFormat
 
 class SatinAlimActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySatinAlimBinding
@@ -122,11 +121,12 @@ class SatinAlimActivity : AppCompatActivity() {
         binding.KriptoBuyButton.setOnClickListener {
             val adet=binding.GuncelAdet.text.toString()
             val tutar=binding.GuncelTutar.text.toString()
+            val crypto= CryptoDB(gelenCrypto.CryptoName,gelenCrypto.Cryptoshort,adet,tutar)
             try {//Eğer eklenen kripto yoksa vt'ye eklenecek
                 if(adet.isEmpty()||tutar.isEmpty()){
                     Toast.makeText(this,"Fiyat Bilgisi Alınamadı", Toast.LENGTH_SHORT).show()
                 }else{
-                    CryptoDao().AddCrypto(vt,gelenCrypto.CryptoName,gelenCrypto.Cryptoshort,tutar,adet)
+                    CryptoDao().addAsset(vt,crypto)
                     Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
                     binding.AmountOfCoin.text.clear()
                     binding.AmountOfUsdt.text.clear()
@@ -136,7 +136,7 @@ class SatinAlimActivity : AppCompatActivity() {
                 if(adet.isEmpty()||tutar.isEmpty()){
                     Toast.makeText(this,"Fiyat Bilgisi Alınamadı", Toast.LENGTH_SHORT).show()
                 }else{
-                    CryptoDao().UpdateCryptoUSDT(vt,gelenCrypto.CryptoName,tutar.toDouble(),adet.toDouble())
+                    CryptoDao().updateAsset(vt,crypto)
                     Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
                     binding.AmountOfCoin.text.clear()
                     binding.AmountOfUsdt.text.clear()
@@ -165,7 +165,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
 
     val request = Request.Builder()
         .url(apiUrl)
-        .addHeader("X-Api-Key", Keys().getKriptoKey())
+        .addHeader("X-Api-Key", kriptoApiKeys)
         .build()
     return withContext(Dispatchers.IO) {
         try {

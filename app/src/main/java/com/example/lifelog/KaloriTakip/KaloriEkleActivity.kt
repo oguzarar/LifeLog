@@ -1,6 +1,7 @@
 package com.example.lifelog.KaloriTakip
 
 import android.content.Intent
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -71,11 +72,21 @@ class KaloriEkleActivity : AppCompatActivity() {
             if(yemekTuru.isNullOrEmpty()||yemekprotein.isNullOrEmpty()){
                 Toast.makeText(this,"Değer giriniz", Toast.LENGTH_SHORT).show()
             }else{
-                KaloriDao().Addyemek(vt,yemekismi,yemekTuru,yemekkalori,yemekprotein)
-                Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
-                binding.editTextText.text.clear()
-                binding.GirlenKaloriMiktari.text=""
-                binding.girilenproteinmktari.text=""
+                try {
+                    val yemek= Kalori(yemekismi,yemekTuru,yemekkalori,yemekprotein)
+                    KaloriDao().Addyemek(vt,yemek)
+                    Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
+                    binding.editTextText.text.clear()
+                    binding.GirlenKaloriMiktari.text=""
+                    binding.girilenproteinmktari.text=""
+                }catch (e:SQLiteConstraintException){
+                    KaloriDao().UpadteKalori(vt,yemekismi,yemekkalori.toDouble(),yemekprotein.toDouble())
+                    Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
+                    binding.editTextText.text.clear()
+                    binding.GirlenKaloriMiktari.text=""
+                    binding.girilenproteinmktari.text=""
+                }
+
             }
         }
 

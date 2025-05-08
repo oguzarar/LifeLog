@@ -1,28 +1,15 @@
 package com.example.lifelog.KriptoPages
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.R
-import com.example.lifelog.database.CryptoDB
-import com.example.lifelog.database.Database
-import com.google.gson.JsonParser
-import com.google.gson.JsonPrimitive
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
 
 class ListeleRecView(private var mContext: Context,val CryptoLists:List<CryptoDB>):
     RecyclerView.Adapter<ListeleRecView.KriptoNesneTutucu>(){
@@ -43,11 +30,12 @@ class ListeleRecView(private var mContext: Context,val CryptoLists:List<CryptoDB
         holder.KriptoLongText.text=Crypto.CryptoLongName
         holder.KriptoShortText.text=Crypto.CryptoShortName
 
+
         val gelenUSDT="%.2f".format(Crypto.AmountOfUSDT.toDouble())
         val gelenKripto="%.2f".format(Crypto.AmountOfCrypto.toDouble())
         holder.KriptoTutar.text=gelenUSDT
-
         holder.KriptoAdet.text=gelenKripto
+
         holder.KriptoCardview.setOnClickListener {
             val gecis= Intent(mContext, SellCryptoActivity::class.java)//Sayfaya geçiş
             gecis.putExtra("Crypto",Crypto)//Geçilen sayfaya veri aktarımı

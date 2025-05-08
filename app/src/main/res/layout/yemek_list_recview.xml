@@ -21,13 +21,15 @@
 
             <TextView
                 android:id="@+id/Yemekismi"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Bitcoin"
+                android:textAlignment="center"
                 android:textColor="@color/gri"
-                android:textSize="34sp"
+                android:textSize="24dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +63,7 @@
             <TextView
                 android:id="@+id/KaloritextmiktariText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="19dp"
                 android:layout_marginStart="32dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,15 +74,15 @@
             <TextView
                 android:id="@+id/proteinMiktaritext"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="187dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/KaloritextmiktariText"
                 app:layout_constraintTop_toBottomOf="@+id/proteinTextRecview"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

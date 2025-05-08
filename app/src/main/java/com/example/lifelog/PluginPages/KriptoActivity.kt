@@ -1,24 +1,19 @@
 package com.example.lifelog.PluginPages
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Adapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lifelog.ApiKeys.Keys
+import com.example.lifelog.ApiKeys.Keys.Companion.kriptoApiKeys
 
 import com.example.lifelog.KriptoPages.AllCryptoActivity
 import com.example.lifelog.KriptoPages.ListeleRecView
 import com.example.lifelog.R
-import com.example.lifelog.database.CryptoDB
-import com.example.lifelog.database.CryptoDao
-import com.example.lifelog.database.CryptoUpdate
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
+import com.example.lifelog.database.AssetsDao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivityKriptoBinding
-import com.example.lifelog.pages.MainPageFragment
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import kotlinx.coroutines.CoroutineScope
@@ -28,14 +23,12 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import org.json.JSONObject
-import java.io.IOException
 
 class KriptoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityKriptoBinding
     private lateinit var adapter: ListeleRecView
     private lateinit var CrpytoLists: ArrayList<CryptoDB>
-    private lateinit var CryptoList2: List<CryptoUpdate>
+    private lateinit var CryptoList2: List<CryptoDB>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kripto)
@@ -49,24 +42,25 @@ class KriptoActivity : AppCompatActivity() {
         }
         val vt= Database(this)
 
-        //Eklenmiş kripto paralın fiyatını güncelleme kısmı
-        CryptoList2= CryptoDao().getCryptoName(vt)//Veritabaınından kripto kısa isimelri alındı
+        //Eklenmiş kripto paraların fiyatını güncelleme kısmı
+        CryptoList2= CryptoDao().getAllAssets(vt)//Veritabaınından kriptolar alındı
         for(i in CryptoList2){//Döngü içinde listelenmiş kriptoların fiyatları alındı
-            fetchCryptoPrice(i.CryptoShortame){price->
-                val guncel= price?.times(i.CoinAmount.toDouble())//güncel fiyatlar coin miktarı ile çarpıldı
-                CryptoDao().guncelleCrypto(vt,i.CryptoShortame,guncel.toString())//Güncel fiyatlar VT'ye eklendi.
+            fetchCryptoPrice(i.CryptoShortName){price->
+                val guncel= price?.times(i.AmountOfCrypto.toDouble())//güncel fiyatlar coin miktarı ile çarpıldı
+                val crypto= CryptoDB(i.CryptoLongName,i.CryptoShortName,i.AmountOfCrypto,guncel.toString())
+                CryptoDao().updatePrice(vt,crypto)//Güncel fiyatlar VT'ye eklendi.
             }
         }
 
         //Toplam miktar vt'den çekildi
-        val getir=CryptoDao().GetTotalAmount(vt)
+        val getir= CryptoDao().getTotalAmount(vt)
         val son="%.2f".format(getir.toDouble())
         binding.ToplamBakiyeBilgiText.text=son
 
         //Eklenen kriptolar recview ile ekrana verildi.
         binding.kriptoRv.setHasFixedSize(true)
         binding.kriptoRv.layoutManager= LinearLayoutManager(this)
-        CrpytoLists= CryptoDao().GetCrypto(vt)
+        CrpytoLists= CryptoDao().getAllAssets(vt)
         adapter= ListeleRecView(this,CrpytoLists)
         binding.kriptoRv.adapter=adapter
 
@@ -80,9 +74,9 @@ class KriptoActivity : AppCompatActivity() {
         super.onResume()
         val vt= Database(this)
         CrpytoLists.clear()
-        CrpytoLists.addAll(CryptoDao().GetCrypto(vt))
+        CrpytoLists.addAll(CryptoDao().getAllAssets(vt))
         adapter.notifyDataSetChanged()
-        val getir=CryptoDao().GetTotalAmount(vt)
+        val getir=CryptoDao().getTotalAmount(vt)
         val son="%.2f".format(getir.toDouble())
         binding.ToplamBakiyeBilgiText.text=son
     }
@@ -109,7 +103,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
 
     val request = Request.Builder()
         .url(apiUrl)
-        .addHeader("X-Api-Key", Keys().getKriptoKey())
+        .addHeader("X-Api-Key", kriptoApiKeys)
         .build()
 
 
