@@ -3,6 +3,7 @@ package com.example.lifelog.Notes
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -44,9 +45,20 @@ class NotuGoruntuleActivity : AppCompatActivity() {
         }
         //not silme tuşuna basılması durumu
         binding.imageViewNotuSil.setOnClickListener{
-            Notesdao().notSil(vt, gelenNot.note_id!!)
-            Toast.makeText(this@NotuGoruntuleActivity, "Not Silindi.", Toast.LENGTH_SHORT).show()
-            finish()
+
+            AlertDialog.Builder(this)
+                .setTitle("Silinsin Mi?")
+                .setMessage("Notu silmek istediğinize emin misiniz?")
+                .setPositiveButton("Evet"){ _, _ ->
+                    Notesdao().notSil(vt, gelenNot.note_id!!)
+                    Toast.makeText(this@NotuGoruntuleActivity, "Not Silindi.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .setNegativeButton("İptal", null)
+                .show()
+
+
+
         }
 
 
