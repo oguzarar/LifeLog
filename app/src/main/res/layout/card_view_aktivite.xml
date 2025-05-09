@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="16dp"
-        app:cardBackgroundColor="#FDFAFA"
+        app:cardBackgroundColor="@color/acikyesil"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         app:cardUseCompatPadding="false">
@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Aktivite Gelcek"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -39,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="54dp"
                 android:text="Saatte 500 Kalori"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 

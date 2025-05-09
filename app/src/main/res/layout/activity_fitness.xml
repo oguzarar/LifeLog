@@ -14,6 +14,7 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="40dp"
         android:text="Fiziksel Aktivite Takip"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +30,7 @@
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/acikyesil"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aktivite Ekle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -72,6 +75,7 @@
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/acikyesil"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Geçmiş Aktiviteler"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
