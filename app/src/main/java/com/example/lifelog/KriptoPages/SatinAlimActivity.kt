@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lifelog.ApiKeys.Keys.Companion.kriptoApiKeys
+import androidx.lifecycle.ViewModelProvider
 import com.example.lifelog.R
 import com.example.lifelog.database.AssetsDao.Crypto.Crypto
 import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
@@ -15,18 +15,10 @@ import com.example.lifelog.database.AssetsDao.Crypto.CryptoDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.databinding.ActivitySatinAlimBinding
 import com.example.lifelog.duzenleme.duzenleme.Companion.formatNumber
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import com.google.gson.JsonParser
-import com.google.gson.JsonPrimitive
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SatinAlimActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySatinAlimBinding
+    private lateinit var viewModel: LiveData
     var gelenfiyat: String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,13 +32,19 @@ class SatinAlimActivity : AppCompatActivity() {
         binding.GelenCoinLong.text=gelenCrypto.CryptoName
         binding.GelenCoinshort.text=gelenCrypto.Cryptoshort
 
-        //Fiyat bilgisi alma
-        fetchCryptoPrice(gelenCrypto.Cryptoshort) { price ->
-            if (price != null) {
-                gelenfiyat=formatNumber(price)
-                binding.GuncelFiyat.text=gelenfiyat
+
+
+        viewModel = ViewModelProvider(this).get(LiveData::class.java)
+        viewModel.startFetching(gelenCrypto.Cryptoshort)
+
+        viewModel.price.observe(this) { price ->
+            // UI'yi güncelle
+            gelenfiyat=price.toString()
+            binding.GuncelFiyat.text=price.toString()
+            Log.e("Fiyat bilgisi","Güncellendi")
         }
-    }
+
+
         binding.AmountOfCoin.addTextChangedListener(object: TextWatcher{//Edittexte yazılan veriyi anlık olarak alma
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -148,45 +146,13 @@ class SatinAlimActivity : AppCompatActivity() {
         }
 
 
-}
-fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
-    // Coroutine başlatıyoruz
-    CoroutineScope(Dispatchers.Main).launch {
-        val price = getCryptoPrice(symbol)
-        Log.e("Fiyat",price.toString())
-        // Callback ile fiyatı geri gönderiyoruz
-        callback(price)
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlemi sonlandırabiliriz
+    }
+
 }
 
-suspend fun getCryptoPrice(symbol: String): Double? {
-    val apiUrl = "https://api.api-ninjas.com/v1/cryptoprice?symbol=${symbol}USDT"
-    val client = OkHttpClient()
 
-    val request = Request.Builder()
-        .url(apiUrl)
-        .addHeader("X-Api-Key", kriptoApiKeys)
-        .build()
-    return withContext(Dispatchers.IO) {
-        try {
-            val response: Response = client.newCall(request).execute()
-
-            if (response.isSuccessful) {
-                val responseBody = response.body?.string()
-
-                val jsonObject = JsonParser.parseString(responseBody).asJsonObject
-
-                val priceJson: JsonPrimitive? = jsonObject.getAsJsonPrimitive("price")
-
-                priceJson?.asDouble
-            } else {
-                Log.e("Error:", "Fiyat bilgisi gelmedi ${response.code} ${response.message}")
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("Exception:", e.message ?: "Unknown error")
-            null
-        }
-    }
-}}
 

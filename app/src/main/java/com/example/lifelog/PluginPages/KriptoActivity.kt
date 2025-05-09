@@ -18,6 +18,9 @@ import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -29,6 +32,7 @@ class KriptoActivity : AppCompatActivity() {
     private lateinit var adapter: ListeleRecView
     private lateinit var CrpytoLists: ArrayList<CryptoDB>
     private lateinit var CryptoList2: List<CryptoDB>
+    private var job: Job? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kripto)
@@ -42,15 +46,6 @@ class KriptoActivity : AppCompatActivity() {
         }
         val vt= Database(this)
 
-        //Eklenmiş kripto paraların fiyatını güncelleme kısmı
-        CryptoList2= CryptoDao().getAllAssets(vt)//Veritabaınından kriptolar alındı
-        for(i in CryptoList2){//Döngü içinde listelenmiş kriptoların fiyatları alındı
-            fetchCryptoPrice(i.CryptoShortName){price->
-                val guncel= price?.times(i.AmountOfCrypto.toDouble())//güncel fiyatlar coin miktarı ile çarpıldı
-                val crypto= CryptoDB(i.CryptoLongName,i.CryptoShortName,i.AmountOfCrypto,guncel.toString())
-                CryptoDao().updatePrice(vt,crypto)//Güncel fiyatlar VT'ye eklendi.
-            }
-        }
 
         //Toplam miktar vt'den çekildi
         val getir= CryptoDao().getTotalAmount(vt)
@@ -69,19 +64,52 @@ class KriptoActivity : AppCompatActivity() {
         }
     }
 
-    //Yeni kritp eklendiğinde sayfa güncellenecek
+
     override fun onResume() {
         super.onResume()
-        val vt= Database(this)
-        CrpytoLists.clear()
-        CrpytoLists.addAll(CryptoDao().getAllAssets(vt))
-        adapter.notifyDataSetChanged()
-        val getir=CryptoDao().getTotalAmount(vt)
-        val son="%.2f".format(getir.toDouble())
-        binding.ToplamBakiyeBilgiText.text=son
+
+        val vt = Database(this) // Veritabanı bağlantısını sadece bir kez aç
+
+        job = CoroutineScope(Dispatchers.Main).launch {
+            // Arka planda işlemler
+            withContext(Dispatchers.IO) {
+                while (isActive) {
+                    // Kripto para listelerini güncelle
+                    CrpytoLists.clear()
+                    CrpytoLists.addAll(CryptoDao().getAllAssets(vt))
+
+                    // UI'yı güncelle
+                    withContext(Dispatchers.Main) {
+                        adapter.notifyDataSetChanged()
+                        val getir = CryptoDao().getTotalAmount(vt)
+                        val son = "%.2f".format(getir.toDouble())
+                        binding.ToplamBakiyeBilgiText.text = son
+                    }
+
+                    // Kripto fiyatlarını güncelle
+                    CryptoList2 = CryptoDao().getAllAssets(vt)
+                    for (i in CryptoList2) {
+                        fetchCryptoPrice(i.CryptoShortName) { price ->
+                            if (price != null) {
+                                val guncel = price.times(i.AmountOfCrypto.toDouble())
+                                val crypto = CryptoDB(i.CryptoLongName, i.CryptoShortName, i.AmountOfCrypto, guncel.toString())
+                                CryptoDao().updatePrice(vt, crypto) // Güncel fiyatları VT'ye kaydet
+                                Log.e("Fiyat", "Güncellendi") // Fiyat güncellendiğini logla
+                            }
+                        }
+                    }
+
+                    delay(3000) // Her 3 saniyede bir güncelleme yapılacak
+                }
+            }
+        }
     }
 
-
+    override fun onPause() {
+        super.onPause()
+        // Sayfa başka bir aktiviteye geçtiğinde veya arka planda olduğunda, işlemi durdur
+        job?.cancel()
+    }
 }
 
 //Apiden fiat bilgisi

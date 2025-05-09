@@ -22,6 +22,8 @@ import com.example.lifelog.database.KaloriDao
 import com.example.lifelog.databinding.ActivityKaloriBinding
 import java.util.Calendar
 import androidx.work.*
+import com.example.lifelog.KaloriTakip.GecmisKaloriActivity
+import com.example.lifelog.PluginPages.DovizActivity
 import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 
@@ -34,9 +36,13 @@ class KaloriActivity : AppCompatActivity() {
         setContentView(R.layout.activity_kalori)
         binding= ActivityKaloriBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.GecmisButton.setOnClickListener {
+            val gecis= Intent(this@KaloriActivity, GecmisKaloriActivity::class.java)
+            startActivity(gecis)
+        }
 
         val vt= Database(this)
-
+        KaloriDao().kaloriSifirlama(vt)
         binding.Toplamkalroitext.text= "%.2f".format(KaloriDao().GetTotalcalorie(vt).first)
         binding.ToplamprtoeinText.text= "%.2f".format(KaloriDao().GetTotalcalorie(vt).second)
 

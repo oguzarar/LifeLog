@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.lifelog.ApiKeys.Keys.Companion.kriptoApiKeys
 import com.example.lifelog.R
 import com.example.lifelog.database.AssetsDao.Crypto.CryptoDB
@@ -27,6 +28,7 @@ import okhttp3.Response
 class SellCryptoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySellCryptoBinding
     private lateinit var CrpytoLists: ArrayList<CryptoDB>
+    private lateinit var viewModel: LiveData
     var gelenfiyat: String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +40,20 @@ class SellCryptoActivity : AppCompatActivity() {
         val vt= Database(this)
         val gelenCrypto= intent.getSerializableExtra("Crypto") as CryptoDB
 
+        viewModel = ViewModelProvider(this).get(LiveData::class.java)
+        viewModel.startFetching(gelenCrypto.CryptoShortName)
+
+        viewModel.price.observe(this) { price ->
+            // UI'yi güncelle
+            gelenfiyat=price.toString()
+            binding.GuncelFiyat.text=price.toString()
+            Log.e("Fiyat bilgisi","Güncellendi")
+        }
+
 
         binding.GelenCoinLong.text=gelenCrypto.CryptoLongName
         binding.GelenCoinshort.text=gelenCrypto.CryptoShortName
-        fetchCryptoPrice(gelenCrypto.CryptoShortName) { price ->
-            if (price != null) {
-                gelenfiyat=price.toString()
-                binding.GuncelFiyat.text=gelenfiyat
-            }
-        }
+
         binding.SahipTutar.text=gelenCrypto.AmountOfUSDT
         binding.SahipCrypto.text=gelenCrypto.AmountOfCrypto
 
@@ -147,47 +154,12 @@ class SellCryptoActivity : AppCompatActivity() {
         }
 
     }
-}
-fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
-    // Coroutine başlatıyoruz
-    CoroutineScope(Dispatchers.Main).launch {
-        val price = getCryptoPrice(symbol)
-        Log.e("Fiyat",price.toString())
-        // Callback ile fiyatı geri gönderiyoruz
-        callback(price)
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlemi sonlandırabiliriz
     }
 }
-suspend fun getCryptoPrice(symbol: String): Double? {
-    val apiUrl = "https://api.api-ninjas.com/v1/cryptoprice?symbol=${symbol}USDT"
-    val client = OkHttpClient()
 
-    val request = Request.Builder()
-        .url(apiUrl)
-        .addHeader("X-Api-Key", kriptoApiKeys)
-        .build()
-
-    return withContext(Dispatchers.IO) {
-        try {
-            val response: Response = client.newCall(request).execute()
-
-            if (response.isSuccessful) {
-                val responseBody = response.body?.string()
-
-                val jsonObject = JsonParser.parseString(responseBody).asJsonObject
-
-                val priceJson: JsonPrimitive? = jsonObject.getAsJsonPrimitive("price")
-
-                priceJson?.asDouble
-            } else {
-                Log.e("Error:", "${response.code} ${response.message}")
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("Exception:", e.message ?: "Unknown error")
-            null
-        }
-    }
-}
 
 
 

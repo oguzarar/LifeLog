@@ -9,14 +9,19 @@ import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.ApiKeys.Keys.Companion.dovizApiKeys2
 import com.example.lifelog.DovizTakip.DovizListeleActivity
 import com.example.lifelog.DovizTakip.MainPageDovizListeleRecView
+import com.example.lifelog.KaloriTakip.GecmisKaloriActivity
 
 import com.example.lifelog.R
 import com.example.lifelog.database.AssetsDao.Doviz.DovizDao
 import com.example.lifelog.database.Database
 import com.example.lifelog.database.AssetsDao.Doviz.DovizDB
+import com.example.lifelog.database.KaloriDao
 import com.example.lifelog.databinding.ActivityDovizBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -29,6 +34,7 @@ class DovizActivity : AppCompatActivity() {
     private lateinit var DovizLists: ArrayList<DovizDB>
     private lateinit var DovizUpdate: ArrayList<DovizDB>
     private lateinit var adapter: MainPageDovizListeleRecView
+    private var job: Job? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doviz)
@@ -40,19 +46,6 @@ class DovizActivity : AppCompatActivity() {
             val gecis= Intent(this@DovizActivity, DovizListeleActivity::class.java)
             startActivity(gecis)
         }
-        DovizUpdate= ArrayList<DovizDB>()
-        DovizUpdate=DovizDao().getAllAssets(vt)
-        for(i in DovizUpdate){
-            fetchCurrencyRate(i.DovizShortName, "TRY") { price ->
-                if (price != null) {
-                    val guncel=price.times(i.DovizMiktari.toDouble())
-                    val doviz=DovizDB(i.DovizLongName,i.DovizShortName,i.DovizMiktari,guncel.toString())
-                    DovizDao().updatePrice(vt,doviz)
-
-                }
-            }
-        }
-
 
 
         DovizLists= ArrayList<DovizDB>()
@@ -70,14 +63,46 @@ class DovizActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val vt= Database(this)
-        DovizLists.clear()
-        DovizLists.addAll(DovizDao().getAllAssets(vt))
-        adapter.notifyDataSetChanged()
-        val getir= DovizDao().getTotalAmount(vt)
-        val son="%.2f".format(getir.toDouble())
-        binding.ToplamBakiyeBilgiText.text=son
+        val vt = Database(this) // Veritabanı bağlantısını sadece bir kez aç
+        job = CoroutineScope(Dispatchers.Main).launch {
+
+            withContext(Dispatchers.IO) {
+                while (isActive) {
+                    // Doviz listesi güncelleniyor
+                    DovizLists.clear()
+                    DovizLists.addAll(DovizDao().getAllAssets(vt))
+
+                    // UI'yı güncelle
+                    withContext(Dispatchers.Main) {
+                        adapter.notifyDataSetChanged()
+
+                        val getir = DovizDao().getTotalAmount(vt)
+                        val son = "%.2f".format(getir.toDouble())
+                        binding.ToplamBakiyeBilgiText.text = son
+                    }
+
+                    // Döviz fiyatlarını güncelle
+                    DovizUpdate = DovizDao().getAllAssets(vt)
+                    for (i in DovizUpdate) {
+                        fetchCurrencyRate(i.DovizShortName, "TRY") { price ->
+                            if (price != null) {
+                                val guncel = price.times(i.DovizMiktari.toDouble())
+                                val doviz = DovizDB(i.DovizLongName, i.DovizShortName, i.DovizMiktari, guncel.toString())
+                                DovizDao().updatePrice(vt, doviz)
+                                Log.e("Fiyat","Güncellendi")
+                            }
+                        }
+                    }
+                    delay(3000)
+                }
+            }
+        }
     }
+    override fun onPause() {
+        super.onPause()
+        job?.cancel()
+    }
+
 }
 fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
     // Coroutine başlatıyoruz

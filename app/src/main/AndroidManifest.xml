@@ -4,9 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="31">
+        <activity
+            android:name=".KaloriTakip.GecmisKaloriActivity"
+            android:exported="false" />
         <activity
             android:name=".DovizTakip.SellPageActivity"
             android:exported="false" />
@@ -31,8 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".KaloriTakip.YemekListeleActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".FitnessPages.GecmisAktivitelerActivity"
             android:exported="false" />

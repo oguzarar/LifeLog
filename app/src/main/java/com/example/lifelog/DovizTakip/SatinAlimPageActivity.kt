@@ -7,8 +7,10 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.ApiKeys.Keys.Companion.dovizApiKeys2
+import com.example.lifelog.KriptoPages.LiveData
 import com.example.lifelog.R
 import com.example.lifelog.database.AssetsDao.Doviz.DovizDao
 import com.example.lifelog.database.Database
@@ -29,6 +31,7 @@ import org.json.JSONObject
 class SatinAlimPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySatinAlimPageBinding
     var gelenfiyat: String?=null
+    private lateinit var viewModel: Livedata
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_satin_alim_page)
@@ -39,10 +42,14 @@ class SatinAlimPageActivity : AppCompatActivity() {
 
         val gelen=intent.getSerializableExtra("Doviz") as Doviz
 
-        fetchCurrencyRate(gelen.Dovizshort,"TRY") {price->
+        viewModel = ViewModelProvider(this).get(Livedata::class.java)
+        viewModel.startFetching(gelen.Dovizshort)
+
+        viewModel.price.observe(this) { price ->
             if (price != null) {
                 gelenfiyat=formatNumber4(price)
                 binding.GuncelFiyat.text=gelenfiyat
+                Log.e("Fiyat bilgisi","GÜncellendi")
             }
         }
         binding.GelenDovizLong.text=gelen.DovizName
@@ -107,42 +114,9 @@ class SatinAlimPageActivity : AppCompatActivity() {
             finish()
         }
     }
-}
-fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
-    // Coroutine başlatıyoruz
-    CoroutineScope(Dispatchers.Main).launch {
-        val rate = getCurrencyRate(from, to)
-        callback(rate)
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlemi sonlandırabiliriz
     }
 }
 
-// Gerçek API çağrısını yapacak olan suspend fonksiyonu
-suspend fun getCurrencyRate(from: String, to: String): Double? {
-    val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${dovizApiKeys2}&base_currency=${from}&currencies=${to}"
-    val client = OkHttpClient()
-
-    val request = Request.Builder()
-        .url(apiUrl)
-        .build()
-
-    return withContext(Dispatchers.IO) {
-        try {
-            val response: Response = client.newCall(request).execute()
-
-            if (response.isSuccessful) {
-                val responseBody = response.body?.string()
-                val jsonObject = JSONObject(responseBody)
-
-                // Gelen JSON'dan döviz kuru değerini alıyoruz
-                val price = jsonObject.getJSONObject("data").getDouble(to)
-                price
-            } else {
-                Log.e("Error:", "${response.code} ${response.message}")
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("Exception:", e.message ?: "Unknown error")
-            null
-        }
-    }
-}

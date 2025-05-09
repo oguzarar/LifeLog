@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.lifelog.ApiKeys.Keys
 import com.example.lifelog.ApiKeys.Keys.Companion.dovizApiKeys2
 import com.example.lifelog.PluginPages.DovizActivity
@@ -28,6 +29,7 @@ import org.json.JSONObject
 class SellPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySellPageBinding
     var gelenfiyat: String?=null
+    private lateinit var viewModel: Livedata
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sell_page)
@@ -41,10 +43,14 @@ class SellPageActivity : AppCompatActivity() {
         binding.SellGelenDovizshort.text=gelenDoviz.DovizShortName
         binding.GuncelSahiplik.text=gelenDoviz.DovizMiktari
 
-        CurrencyUtil.fetchCurrencyRate(gelenDoviz.DovizShortName,"TRY") { price->
+        viewModel = ViewModelProvider(this).get(Livedata::class.java)
+        viewModel.startFetching(gelenDoviz.DovizShortName)
+
+        viewModel.price.observe(this) { price ->
             if(price!=null){
                 gelenfiyat=formatNumber4(price)
                 binding.SellGuncelFiyat.text=gelenfiyat
+                Log.e("Fiyat","Güncellendi")
             }
         }
 
@@ -107,41 +113,9 @@ class SellPageActivity : AppCompatActivity() {
             finish()
         }
     }
-}
-
-
-
-
-object CurrencyUtil {
-    fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val rate = getCurrencyRate(from, to)
-            callback(rate)
-        }
-    }
-
-    suspend fun getCurrencyRate(from: String, to: String): Double? {
-        val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${dovizApiKeys2}&base_currency=$from&currencies=$to"
-        val client = OkHttpClient()
-
-        val request = Request.Builder().url(apiUrl).build()
-
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = client.newCall(request).execute()
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    val json = JSONObject(body)
-                    json.getJSONObject("data").getDouble(to)
-                } else {
-                    Log.e("API", "Error: ${response.code}")
-                    null
-                }
-            } catch (e: Exception) {
-                Log.e("API", "Exception: ${e.message}")
-                null
-            }
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlemi sonlandırabiliriz
     }
 }
 

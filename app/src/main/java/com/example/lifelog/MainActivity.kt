@@ -13,7 +13,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
-import com.example.lifelog.database.Database
+
 import com.example.lifelog.databinding.ActivityMainBinding
 import java.util.Calendar
 import java.util.TimeZone

@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".PluginPages.KaloriActivity">
 
+    <Button
+        android:id="@+id/GecmisButton"
+        android:layout_width="177dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/material_dynamic_tertiary40"
+        android:text="Gecmiş"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backbutton"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/backbutton"
         android:layout_width="47dp"
