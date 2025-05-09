@@ -23,17 +23,17 @@
 
     <EditText
         android:id="@+id/saatinput"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/plain_text_border"
         android:ems="10"
         android:inputType="text"
+        android:paddingStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        android:paddingStart="8dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView12"
@@ -51,16 +51,16 @@
 
     <EditText
         android:id="@+id/Tarihinput"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="@drawable/plain_text_border"
         android:ems="10"
         android:inputType="text"
+        android:paddingStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        android:paddingStart="8dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView7"
@@ -78,24 +78,27 @@
 
     <EditText
         android:id="@+id/dersinput"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="@drawable/plain_text_border"
         android:ems="10"
         android:inputType="text"
+        android:paddingStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        android:paddingStart="8dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <Button
         android:id="@+id/Sınavekle"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="77dp"
-        android:backgroundTint="#09610F"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="@color/aciksari"
         android:text="Ekle"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

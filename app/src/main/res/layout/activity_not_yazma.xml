@@ -43,7 +43,7 @@
         android:layout_marginBottom="30dp"
         android:backgroundTint="#09610F"
         android:text="KAYDET"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
