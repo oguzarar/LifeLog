@@ -41,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Toplam Bakiye"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,10 +51,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0$"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ToplamDovizBaslikText"
-                app:layout_constraintBottom_toTopOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/ToplamDovizBaslikText" />
 
             <Button
                 android:id="@+id/button"
@@ -62,9 +64,9 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@android:color/holo_green_dark"
                 android:text="Varlık Ekle"
-                app:layout_constraintTop_toBottomOf="@+id/ToplamBakiyeBilgiText"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/ToplamBakiyeBilgiText" />
 
             <ImageView
                 android:id="@+id/imageView"
