@@ -63,12 +63,10 @@ class LiveData : ViewModel() {
         return withContext(Dispatchers.IO) {
             try {
                 val response: Response = client.newCall(request).execute()
-
                 if (response.isSuccessful) {
                     val responseBody = response.body?.string()
                     val jsonObject = JsonParser.parseString(responseBody).asJsonObject
                     val priceJson: JsonPrimitive? = jsonObject.getAsJsonPrimitive("price")
-
                     priceJson?.asDouble
                 } else {
                     Log.e("Error:", "Fiyat bilgisi gelmedi ${response.code} ${response.message}")

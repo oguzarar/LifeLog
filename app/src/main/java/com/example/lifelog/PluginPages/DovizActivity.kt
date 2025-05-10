@@ -105,14 +105,13 @@ class DovizActivity : AppCompatActivity() {
 
 }
 fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
-    // Coroutine başlatıyoruz
     CoroutineScope(Dispatchers.Main).launch {
         val rate = getCurrencyRate(from, to)
         callback(rate)
     }
 }
 
-// Gerçek API çağrısını yapacak olan suspend fonksiyonu
+
 suspend fun getCurrencyRate(from: String, to: String): Double? {
     val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${dovizApiKeys2}&base_currency=${from}&currencies=${to}"
     val client = OkHttpClient()
@@ -129,7 +128,6 @@ suspend fun getCurrencyRate(from: String, to: String): Double? {
                 val responseBody = response.body?.string()
                 val jsonObject = JSONObject(responseBody)
 
-                // Gelen JSON'dan döviz kuru değerini alıyoruz
                 val price = jsonObject.getJSONObject("data").getDouble(to)
                 price
             } else {
@@ -137,7 +135,7 @@ suspend fun getCurrencyRate(from: String, to: String): Double? {
                 null
             }
         } catch (e: Exception) {
-            Log.e("Exception:", e.message ?: "Unknown error")
+            Log.e("Exception:", e.message ?: "Hata")
             null
         }
     }

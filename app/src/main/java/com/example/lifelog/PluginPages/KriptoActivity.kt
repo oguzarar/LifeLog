@@ -99,7 +99,7 @@ class KriptoActivity : AppCompatActivity() {
                         }
                     }
 
-                    delay(3000) // Her 3 saniyede bir güncelleme yapılacak
+                    delay(3000)
                 }
             }
         }
@@ -154,7 +154,7 @@ suspend fun getCryptoPrice(symbol: String): Double? {
                 null
             }
         } catch (e: Exception) {
-            Log.e("Exception:", e.message ?: "Unknown error")
+            Log.e("Exception:", e.message ?: "Hata")
             null
         }
     }

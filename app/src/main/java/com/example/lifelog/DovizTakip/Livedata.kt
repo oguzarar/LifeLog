@@ -48,7 +48,6 @@ class Livedata : ViewModel(){
         }
     }
 
-    // Gerçek API çağrısını yapacak olan suspend fonksiyonu
     suspend fun getCurrencyRate(from: String, to: String): Double? {
         val apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=${dovizApiKeys2}&base_currency=${from}&currencies=${to}"
         val client = OkHttpClient()
