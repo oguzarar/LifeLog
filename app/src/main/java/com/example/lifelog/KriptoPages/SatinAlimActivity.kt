@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -39,8 +40,14 @@ class SatinAlimActivity : AppCompatActivity() {
 
         viewModel.price.observe(this) { price ->
             // UI'yi güncelle
-            gelenfiyat=price.toString()
-            binding.GuncelFiyat.text=price.toString()
+            if(price!=null){
+                binding.progressBar.visibility= View.GONE
+                gelenfiyat=price.toString()
+                binding.GuncelFiyat.text=price.toString()
+            }else{
+                binding.progressBar.visibility= View.VISIBLE
+            }
+
             Log.e("Fiyat bilgisi","Güncellendi")
         }
 

@@ -20,40 +20,41 @@ import okhttp3.Request
 import okhttp3.Response
 
 class LiveData : ViewModel() {
+
+    private val client = OkHttpClient()
+
     private val _price = MutableLiveData<Double?>()
     val price: LiveData<Double?> get() = _price
 
     private var fetchJob: Job? = null
 
-    // Fiyatı periyodik olarak çekmeye başlamak için
     fun startFetching(symbol: String) {
-        fetchJob?.cancel() // varsa iptal et
+        fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             while (isActive) {
                 fetchCryptoPrice(symbol) { currentPrice ->
                     _price.value = currentPrice
+
                 }
-                delay(2000)
+                delay(100)
             }
         }
     }
+
     fun stopFetching() {
-        fetchJob?.cancel() // İşlemi durdur
+        fetchJob?.cancel()
     }
 
-    // API'den kripto para fiyatını çeken fonksiyon
     private fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
         CoroutineScope(Dispatchers.Main).launch {
-            val price = getCryptoPrice(symbol.uppercase()) // "BTC" gibi sembollerle çalışmak için
+            val price = getCryptoPrice(symbol.uppercase())
             Log.e("Fiyat", price.toString())
             callback(price)
         }
     }
 
-    // Kripto para fiyatını almak için API çağrısı
     suspend fun getCryptoPrice(symbol: String): Double? {
         val apiUrl = "https://api.api-ninjas.com/v1/cryptoprice?symbol=${symbol}USDT"
-        val client = OkHttpClient()
 
         val request = Request.Builder()
             .url(apiUrl)
@@ -66,7 +67,6 @@ class LiveData : ViewModel() {
 
                 if (response.isSuccessful) {
                     val responseBody = response.body?.string()
-
                     val jsonObject = JsonParser.parseString(responseBody).asJsonObject
                     val priceJson: JsonPrimitive? = jsonObject.getAsJsonPrimitive("price")
 
