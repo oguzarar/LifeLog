@@ -68,17 +68,17 @@ class KriptoActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val vt = Database(this) // Veritabanı bağlantısını sadece bir kez aç
+        val vt = Database(this)
 
         job = CoroutineScope(Dispatchers.Main).launch {
             // Arka planda işlemler
             withContext(Dispatchers.IO) {
                 while (isActive) {
-                    // Kripto para listelerini güncelle
+                    // Kripto para listelerini güncelleme
                     CrpytoLists.clear()
                     CrpytoLists.addAll(CryptoDao().getAllAssets(vt))
 
-                    // UI'yı güncelle
+                    // UI'yı güncelleme
                     withContext(Dispatchers.Main) {
                         adapter.notifyDataSetChanged()
                         val getir = CryptoDao().getTotalAmount(vt)
@@ -86,7 +86,7 @@ class KriptoActivity : AppCompatActivity() {
                         binding.ToplamBakiyeBilgiText.text = son
                     }
 
-                    // Kripto fiyatlarını güncelle
+                    // Kripto fiyatlarını güncelleme
                     CryptoList2 = CryptoDao().getAllAssets(vt)
                     for (i in CryptoList2) {
                         fetchCryptoPrice(i.CryptoShortName) { price ->

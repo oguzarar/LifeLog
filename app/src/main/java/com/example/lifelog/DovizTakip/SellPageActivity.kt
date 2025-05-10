@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -36,24 +37,27 @@ class SellPageActivity : AppCompatActivity() {
         binding= ActivitySellPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val gelenDoviz=intent.getSerializableExtra("Doviz") as DovizDB
+        val gelenDoviz=intent.getSerializableExtra("Doviz") as DovizDB //Ana sayfadan gelen veri alındı
 
-
+        //Alınan veriler, TextView'lere yerleştirildi
         binding.SellGelenDovizLong.text=gelenDoviz.DovizLongName
         binding.SellGelenDovizshort.text=gelenDoviz.DovizShortName
         binding.GuncelSahiplik.text=gelenDoviz.DovizMiktari
 
         viewModel = ViewModelProvider(this).get(Livedata::class.java)
         viewModel.startFetching(gelenDoviz.DovizShortName)
-
         viewModel.price.observe(this) { price ->
             if(price!=null){
+                binding.progressBar.visibility=View.GONE
                 gelenfiyat=formatNumber4(price)
                 binding.SellGuncelFiyat.text=gelenfiyat
                 Log.e("Fiyat","Güncellendi")
+            }else{
+                binding.progressBar.visibility=View.VISIBLE
             }
         }
 
+        //EditTexte yazılan verileri anlık olarak alma kısmı
         binding.SellAmountOfMoney.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -89,33 +93,40 @@ class SellPageActivity : AppCompatActivity() {
                 }
             }
         })
-        val vt= Database(this)
+        val vt= Database(this)//Veritabanı bağlantısı yapıldı.
+
+
         binding.DovizSellButton.setOnClickListener {
+            //Girilen değerler alındı
             val girilenAmount=binding.SellAmountOfMoney.text.toString()
             val totalAmount=binding.GuncelTutar.text.toString()
+            //Eğer fiyat bilgisi alınmamışsa işlem yapılmayacak
             if(girilenAmount.isEmpty()&&totalAmount.isEmpty()){
                 Toast.makeText(this,"Fİyat bilgisi alınamadı",Toast.LENGTH_SHORT).show()
             }else{
+                //Eğer girilen veri sahip olunan miktardan fazla ise işlem yapılmaaycak
                 if(girilenAmount.toDouble()>gelenDoviz.DovizMiktari.toDouble()){
                     Toast.makeText(this,"Yetersiz Bakiye",Toast.LENGTH_SHORT).show()
                 }else{
+                    //Eğer herşey doğru ise satış işlemi tamamlanıyor.
                     val doviz= DovizDB(gelenDoviz.DovizLongName,gelenDoviz.DovizShortName,girilenAmount,totalAmount)
                     DovizDao().sellAsset(vt,doviz)
                     Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
+                    //Satış sayfasından döviz sayfasına geçiş yapılıyor.
                     val gecis= Intent(this@SellPageActivity, DovizActivity::class.java)
                     startActivity(gecis)
                     finish()
                 }
             }
         }
-
+        //Geri butonu
         binding.backbutton.setOnClickListener {
             finish()
         }
     }
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlemi sonlandırabiliriz
+        viewModel.stopFetching()
     }
 }
 

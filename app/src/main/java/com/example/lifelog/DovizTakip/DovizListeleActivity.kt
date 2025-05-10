@@ -54,26 +54,28 @@ class DovizListeleActivity : AppCompatActivity() {
             "ZAR" to "South African Rand"
         )
         for(i in currencies){
-            var currency= Doviz(i.key,i.value)
-            CurrencyList.add(currency)
+            var currency= Doviz(i.key,i.value)//Doviz sınıfından bir nesne oluşturuluyor
+            CurrencyList.add(currency)// ve bu nesneler ArrayList'e ekleniyor.
         }
 
+        //alınan veriler revcview'e gönderildi
         binding.DovizListeleRecView.setHasFixedSize(true)
         binding.DovizListeleRecView.layoutManager= LinearLayoutManager(this)
-
         adapter= DovizListeleRecview(this,CurrencyList)
         binding.DovizListeleRecView.adapter=adapter
 
+        //Arama işlmei
         binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.filter?.filter(newText)
+                adapter.filter.filter(newText)
                 return true
             }
         })
+
+        //Geri butonu
         binding.backbutton.setOnClickListener {
             finish()
         }

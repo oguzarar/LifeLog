@@ -1,5 +1,6 @@
 package com.example.lifelog.DovizTakip
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -33,6 +34,9 @@ class DovizListeleRecview(
             val gecis = Intent(mContext, SatinAlimPageActivity::class.java)
             gecis.putExtra("Doviz", currency)
             mContext.startActivity(gecis)
+            if (mContext is Activity) {
+                (mContext as Activity).finish()
+            }
         }
     }
 

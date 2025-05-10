@@ -56,11 +56,7 @@ class CryptoDao: DatabaseDao<CryptoDB> {
             val yeniUSDT = mevcutUSDT - item.AmountOfUSDT.toDouble()
             val yeniCoin = mevcutCoin - item.AmountOfCrypto.toDouble()
 
-            if (yeniUSDT < 0 || yeniCoin < 0) {
-                cursor.close()
-                db.close()
-                return
-            }
+
 
             if (yeniUSDT < 0.0001 && yeniCoin < 0.0001) {
                 // Eğer tamamen sattıysan kaydı sil

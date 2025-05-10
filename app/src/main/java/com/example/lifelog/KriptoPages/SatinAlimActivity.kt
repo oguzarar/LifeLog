@@ -27,9 +27,11 @@ class SatinAlimActivity : AppCompatActivity() {
         binding= ActivitySatinAlimBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val vt= Database(this)
+        val vt= Database(this)//Veritabanı bağlantısı
+
         val gelenCrypto=intent.getSerializableExtra("Crypto") as Crypto//Diğer sayfadan gelen veri
 
+        //Alınan veriler textview'lere yerleştildi
         binding.GelenCoinLong.text=gelenCrypto.CryptoName
         binding.GelenCoinshort.text=gelenCrypto.Cryptoshort
 
@@ -37,9 +39,8 @@ class SatinAlimActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(LiveData::class.java)
         viewModel.startFetching(gelenCrypto.Cryptoshort)
-
         viewModel.price.observe(this) { price ->
-            // UI'yi güncelle
+
             if(price!=null){
                 binding.progressBar.visibility= View.GONE
                 gelenfiyat=price.toString()
@@ -47,11 +48,10 @@ class SatinAlimActivity : AppCompatActivity() {
             }else{
                 binding.progressBar.visibility= View.VISIBLE
             }
-
             Log.e("Fiyat bilgisi","Güncellendi")
         }
 
-
+        //Editexte yazılan verileri anlık olarak almak için
         binding.AmountOfCoin.addTextChangedListener(object: TextWatcher{//Edittexte yazılan veriyi anlık olarak alma
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -80,7 +80,6 @@ class SatinAlimActivity : AppCompatActivity() {
                         Log.e("Fiyat alınamadı","Fiyat alınamadı")
 
                     }
-
                 }catch (e:NumberFormatException){
                     if(binding.AmountOfUsdt.text.isNullOrEmpty()&&binding.AmountOfCoin.text.isNullOrEmpty()){
                         binding.GuncelAdet.text=""
@@ -90,6 +89,7 @@ class SatinAlimActivity : AppCompatActivity() {
                 }
             }
         })
+        //Editexte yazılan verileri anlık olarak almak için
         binding.AmountOfUsdt.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -123,14 +123,19 @@ class SatinAlimActivity : AppCompatActivity() {
                 }
             }
         })
+
+
+
         binding.KriptoBuyButton.setOnClickListener {
+            //Yazılan veriler alındı
             val adet=binding.GuncelAdet.text.toString()
             val tutar=binding.GuncelTutar.text.toString()
+            //CryptoDB sınıfından nesne oluşturuldu
             val crypto= CryptoDB(gelenCrypto.CryptoName,gelenCrypto.Cryptoshort,adet,tutar)
-            try {//Eğer eklenen kripto yoksa vt'ye eklenecek
-                if(adet.isEmpty()||tutar.isEmpty()){
+            try {
+                if(adet.isEmpty()||tutar.isEmpty()){//Eğer fiyat bilgisi alınmamışsa işlem yapılmayacak
                     Toast.makeText(this,"Fiyat Bilgisi Alınamadı", Toast.LENGTH_SHORT).show()
-                }else{
+                }else{//Eğer Kripto veritabanında yoksa eklenecek
                     CryptoDao().addAsset(vt,crypto)
                     Toast.makeText(this,"Eklendi", Toast.LENGTH_SHORT).show()
                     binding.AmountOfCoin.text.clear()
@@ -148,10 +153,11 @@ class SatinAlimActivity : AppCompatActivity() {
                 }
             }
         }
+
+        //Geri butonu
         binding.backbutton.setOnClickListener {
             finish()
         }
-
 
     }
     override fun onDestroy() {

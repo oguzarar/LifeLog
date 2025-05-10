@@ -122,32 +122,32 @@ class AllCryptoActivity : AppCompatActivity() {
         )
 
         for(i in cryptoMap){
-            var kripto=Crypto(i.key,i.value)
-            cryptoList.add(kripto)
+            var kripto=Crypto(i.key,i.value)//Crypto sınıfından nesne oluşturuluyor
+            cryptoList.add(kripto)//Bu nesneler arrayliste ekleniyor
         }
+
+        //Eklenen veriler recview'e gönderildi
         binding.KriptoRV.setHasFixedSize(true)
         binding.KriptoRV.layoutManager= LinearLayoutManager(this)
-
         adapter= KriptoRecView(this,cryptoList)
         binding.KriptoRV.adapter=adapter
 
+        //Arama işlemi
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.filter?.filter(newText)
+                adapter.filter.filter(newText)
                 return true
             }
         })
 
+        //Geri butonu
         binding.backButton.setOnClickListener {
             finish()
         }
     }
-
-
 }
 
 
