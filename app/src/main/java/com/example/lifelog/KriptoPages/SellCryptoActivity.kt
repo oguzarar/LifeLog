@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -37,26 +38,31 @@ class SellCryptoActivity : AppCompatActivity() {
         binding= ActivitySellCryptoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val vt= Database(this)
-        val gelenCrypto= intent.getSerializableExtra("Crypto") as CryptoDB
+        val vt= Database(this)//Veritabanı bağlantısı
+
+        val gelenCrypto= intent.getSerializableExtra("Crypto") as CryptoDB//Ana sayfadan alınan veirler
 
         viewModel = ViewModelProvider(this).get(LiveData::class.java)
         viewModel.startFetching(gelenCrypto.CryptoShortName)
-
         viewModel.price.observe(this) { price ->
-            // UI'yi güncelle
-            gelenfiyat=price.toString()
-            binding.GuncelFiyat.text=price.toString()
+            if(price!=null){
+                binding.progressBar.visibility= View.GONE
+                gelenfiyat=price.toString()
+                binding.GuncelFiyat.text=price.toString()
+            }else{
+                binding.progressBar.visibility=View.VISIBLE
+            }
             Log.e("Fiyat bilgisi","Güncellendi")
         }
 
 
+        //Alınan veriler textview'lere yerleştirildi
         binding.GelenCoinLong.text=gelenCrypto.CryptoLongName
         binding.GelenCoinshort.text=gelenCrypto.CryptoShortName
-
         binding.SahipTutar.text=gelenCrypto.AmountOfUSDT
         binding.SahipCrypto.text=gelenCrypto.AmountOfCrypto
 
+        //Editexte yazılan verileri anlık olarak almak için
         binding.AmountOfCoin.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -64,8 +70,6 @@ class SellCryptoActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
-
-
             }
             override fun onTextChanged(
                 p0: CharSequence?,
@@ -92,6 +96,7 @@ class SellCryptoActivity : AppCompatActivity() {
                 }
             }
         })
+        //Editexte yazılan verileri anlık olarak almak için
         binding.AmountOfUsdt.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -99,8 +104,6 @@ class SellCryptoActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
-
-
             }
             override fun onTextChanged(
                 p0: CharSequence?,
@@ -108,9 +111,7 @@ class SellCryptoActivity : AppCompatActivity() {
                 p2: Int,
                 p3: Int
             ) {
-
             }
-
             override fun afterTextChanged(p0: Editable?) {
                 try {
                     val yazilan=p0.toString()
@@ -130,14 +131,17 @@ class SellCryptoActivity : AppCompatActivity() {
             }
         })
 
+
         binding.KriptoBuyButton.setOnClickListener {
+            //yazılan veriler alındı
             val AmountUsdt=binding.GuncelTutar.text.toString()
             val AmountCrypto=binding.GuncelAdet.text.toString()
-            if(AmountUsdt.isEmpty()||AmountCrypto.isEmpty()){
+            if(AmountUsdt.isEmpty()||AmountCrypto.isEmpty()){//Eğer fiyat bilgisi alınmamışsa işlem yapılmayacak
                 Toast.makeText(this,"Fiyat bilgisi alınamadı", Toast.LENGTH_SHORT).show()
             }else{
+                //Eğer girilen miktar sahip olunan miktardan büyükse işlem yapılmayacak
                 if(AmountUsdt.toDouble()<=gelenCrypto.AmountOfUSDT.toDouble()&&AmountCrypto.toDouble()<=gelenCrypto.AmountOfCrypto.toDouble()){
-                    val crypto= CryptoDB(gelenCrypto.CryptoLongName,gelenCrypto.CryptoShortName,AmountUsdt,AmountCrypto)
+                    val crypto= CryptoDB(gelenCrypto.CryptoLongName,gelenCrypto.CryptoShortName,AmountCrypto,AmountUsdt)
                     CryptoDao().sellAsset(vt,crypto)
                     Toast.makeText(this,"Satıldı", Toast.LENGTH_SHORT).show()
                     binding.AmountOfUsdt.text.clear()

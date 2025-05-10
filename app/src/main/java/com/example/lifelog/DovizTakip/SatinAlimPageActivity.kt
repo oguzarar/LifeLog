@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -38,23 +39,30 @@ class SatinAlimPageActivity : AppCompatActivity() {
         binding= ActivitySatinAlimPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val vt= Database(this)
+        val vt= Database(this)//Veritabanı bağlantısı yapıldı
 
-        val gelen=intent.getSerializableExtra("Doviz") as Doviz
+        val gelen=intent.getSerializableExtra("Doviz") as Doviz//Ana sayfadan gelen veri alındı
+
+
 
         viewModel = ViewModelProvider(this).get(Livedata::class.java)
         viewModel.startFetching(gelen.Dovizshort)
-
         viewModel.price.observe(this) { price ->
             if (price != null) {
+                binding.progressBar.visibility= View.GONE
                 gelenfiyat=formatNumber4(price)
                 binding.GuncelFiyat.text=gelenfiyat
                 Log.e("Fiyat bilgisi","GÜncellendi")
+            }else{
+                binding.progressBar.visibility= View.VISIBLE
             }
+
         }
+        //Alınan veriler, TextView'lere yerleştirildi
         binding.GelenDovizLong.text=gelen.DovizName
         binding.GelenDovizshort.text=gelen.Dovizshort
 
+        //EditTexte yazılan verileri anlık olarak alma kısmı
         binding.AmountOfMoney.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -92,16 +100,18 @@ class SatinAlimPageActivity : AppCompatActivity() {
         })
 
         binding.DovizBuyButton.setOnClickListener {
+            //Girilen değerler alındı
             val DovizAmount=binding.AmountOfMoney.text.toString()
             val DovizTRYTutar=binding.GuncelTutar.text.toString()
-
+            //Eğer fiyat bilgisi alınmamışsa işlem yapılmayacak
             if(DovizAmount.isEmpty()&&DovizTRYTutar.isEmpty()){
                 Toast.makeText(this,"Fiyat Bilgisi Alınamadı",Toast.LENGTH_SHORT).show()
             }else{
+                //Verileri veritabanına göndermek için DovizDB'den nesne oluşturuldu
                 val doviz= DovizDB(gelen.DovizName,gelen.Dovizshort,binding.AmountOfMoney.text.toString(),binding.GuncelTutar.text.toString())
-                try {
+                try {//eğer alınan döviz veritabanında yoksa ekliyor
                     DovizDao().addAsset(vt,doviz)
-                }catch (e: SQLiteConstraintException){
+                }catch (e: SQLiteConstraintException){//eğer varsa toplam miktara ekleniyor
                     DovizDao().updateAsset(vt,doviz)
                 }
                 binding.AmountOfMoney.text.clear()
@@ -109,14 +119,14 @@ class SatinAlimPageActivity : AppCompatActivity() {
                 Toast.makeText(this,"Eklendi",Toast.LENGTH_SHORT).show()
             }
         }
-
+        //Geri tuşuş
         binding.backbutton.setOnClickListener {
             finish()
         }
     }
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlemi sonlandırabiliriz
+        viewModel.stopFetching() // Activity kapandığında stopFetching çağırarak işlem sonlandırıldı
     }
 }
 

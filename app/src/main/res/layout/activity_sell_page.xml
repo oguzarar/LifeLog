@@ -24,13 +24,25 @@
             android:layout_width="match_parent"
             android:layout_height="167dp"
             android:background="@android:color/holo_green_dark">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="24dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/SellGelenDovizLong"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="39dp"
-                android:layout_marginTop="57dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="#FFFFFF"
@@ -42,41 +54,41 @@
                 android:id="@+id/Textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="96dp"
-                android:layout_marginTop="57dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="76dp"
                 android:text="Güncel Fiyat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="#FFFAFA"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/SellGelenDovizLong"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/SellGuncelFiyat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="96dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="4dp"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/SellGelenDovizLong"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Textview" />
 
             <TextView
                 android:id="@+id/SellGelenDovizshort"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="39dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginBottom="56dp"
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FDFDFD"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/SellGelenDovizLong" />
+                app:layout_constraintTop_toBottomOf="@+id/SellGelenDovizLong"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

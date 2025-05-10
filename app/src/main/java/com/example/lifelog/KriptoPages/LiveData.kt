@@ -34,9 +34,8 @@ class LiveData : ViewModel() {
             while (isActive) {
                 fetchCryptoPrice(symbol) { currentPrice ->
                     _price.value = currentPrice
-
                 }
-                delay(100)
+                delay(1000)
             }
         }
     }

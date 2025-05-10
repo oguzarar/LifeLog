@@ -20,13 +20,16 @@ class DersRecview(private var mContext: Context, val DersLists: MutableList<Ders
         parent: ViewGroup,
         viewType: Int
     ): RecviewNesneTutucu {
+        //XML ile RecyclerView bağlantısı kuruldu
         val design= LayoutInflater.from(mContext).inflate(R.layout.ders_rec_view,parent,false)
         return RecviewNesneTutucu(design)
     }
 
     override fun onBindViewHolder(holder: DersRecview.RecviewNesneTutucu, position: Int) {
         val ders=DersLists[position]
-        val vt= Database(mContext)
+
+        val vt= Database(mContext)//Veritabanı bağlantısı yapıldı
+
         holder.DersAdiText.text=ders.dersAdi
         holder.SinavTarihi.text=ders.dersTarih
         holder.SinavSaati.text=ders.dersSaat

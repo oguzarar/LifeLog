@@ -24,6 +24,7 @@ class DersTakip2Activity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.Tarihinput.setOnClickListener {
+            //Güncel tarih bilgisi alındı.
             val calendar= Calendar.getInstance()
             val yil=calendar.get(Calendar.YEAR)
             val ay=calendar.get(Calendar.MONTH)
@@ -36,15 +37,13 @@ class DersTakip2Activity : AppCompatActivity() {
                 },
                 yil, ay, gun
             )
-
-            //Saateki gibi aynısı yapıldı güncel tarih bilgisi alındı.
-
-            datepicker.setTitle("Saat seçiniz")
+            datepicker.setTitle("Tarih seçiniz")
             datepicker.setButton(DialogInterface.BUTTON_POSITIVE,"Ayarla",datepicker)//Ayarlamak için buton ayarlandı
             datepicker.setButton(DialogInterface.BUTTON_NEGATIVE,"İPTAL",datepicker)//İptal etmek için buton ayarlandı
             datepicker.show()
         }
         binding.saatinput.setOnClickListener {
+            //Güncel saat bilgisi alındı
             val calendar= Calendar.getInstance()
             val saat1=calendar.get(Calendar.HOUR_OF_DAY)
             val dakika=calendar.get(Calendar.MINUTE)
@@ -63,16 +62,24 @@ class DersTakip2Activity : AppCompatActivity() {
             timePicker.show()
 
         }
+        //Girilen tarih ve saatin kotrnolü için
         val tarihkontrol="\\d{2}/\\d{2}/\\d{4}"
         val saatkontrol="\\d{2}:\\d{2}"
+
+
         binding.SNavekle.setOnClickListener {
-            val vt= Database(this)
+            val vt= Database(this)//Veritabanı bağlantısı yapıldı
+
+            //İnputlardaki veriler boşluksuz şekilde alındı.
             val dersad=binding.dersinput.text.trim()
             val dersTarih=binding.Tarihinput.text.trim()
             val dersSaat=binding.saatinput.text.trim()
+
+            //Boş değer kontrolü
             if(dersad.isNullOrEmpty()||dersTarih.isNullOrEmpty()||dersSaat.isNullOrEmpty()){
                 Toast.makeText(this,"Boş değer girilemez", Toast.LENGTH_SHORT).show()
             }else{
+                //Girilen tarih ve saat uygun formattamı kontrol ediliyor.
                 if(dersTarih.matches(Regex(tarihkontrol))&&dersSaat.matches(Regex(saatkontrol))){
                     val ders= DersTakip(dersAdi =dersad.toString(), dersTarih =dersTarih.toString(), dersSaat = dersSaat.toString()  )
                     DersTakipDao().TaskAdd(vt,ders)
@@ -87,6 +94,7 @@ class DersTakip2Activity : AppCompatActivity() {
             }
 
         }
+        //Geri tuşu
         binding.backbutton.setOnClickListener {
             finish()
         }

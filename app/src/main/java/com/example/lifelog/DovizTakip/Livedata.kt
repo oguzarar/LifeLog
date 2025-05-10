@@ -73,7 +73,7 @@ class Livedata : ViewModel(){
                     null
                 }
             } catch (e: Exception) {
-                Log.e("Exception:", e.message ?: "Unknown error")
+                Log.e("Exception:", e.message ?: "Hata")
                 null
             }
         }

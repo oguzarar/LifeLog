@@ -54,7 +54,7 @@ class DovizDao: DatabaseDao<DovizDB> {
             val yeniTutar = mevcutTutar - doviz.DovizMiktari.toDouble()
             val yeniTry = mevcutTRY - doviz.DovizMiktariTRY.toDouble()
 
-            if (yeniTutar < 0.0001 && yeniTry < 0.0001) {
+            if (yeniTutar < 0.1 && yeniTry < 0.1) {
                 // Eğer tamamen sattıysan kaydı sil
                 db.delete("Doviz", "DovizLongName = ?", arrayOf(doviz.DovizLongName))
             } else {
