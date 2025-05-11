@@ -58,7 +58,7 @@ class CryptoDao: DatabaseDao<CryptoDB> {
 
 
 
-            if (yeniUSDT < 0.0001 && yeniCoin < 0.0001) {
+            if (yeniUSDT < 0.01 && yeniCoin < 0.01) {
                 // Eğer tamamen sattıysan kaydı sil
                 db.delete("CryptoDB", "CryptoLongName = ?", arrayOf(item.CryptoLongName))
             } else {

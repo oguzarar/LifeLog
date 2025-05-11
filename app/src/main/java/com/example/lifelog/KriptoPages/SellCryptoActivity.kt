@@ -49,6 +49,7 @@ class SellCryptoActivity : AppCompatActivity() {
                 binding.progressBar.visibility= View.GONE
                 gelenfiyat=price.toString()
                 binding.GuncelFiyat.text=price.toString()
+                binding.SahipTutar.text=(gelenCrypto.AmountOfCrypto.toDouble()*gelenfiyat!!.toDouble()).toString()
             }else{
                 binding.progressBar.visibility=View.VISIBLE
             }
@@ -59,7 +60,7 @@ class SellCryptoActivity : AppCompatActivity() {
         //Alınan veriler textview'lere yerleştirildi
         binding.GelenCoinLong.text=gelenCrypto.CryptoLongName
         binding.GelenCoinshort.text=gelenCrypto.CryptoShortName
-        binding.SahipTutar.text=gelenCrypto.AmountOfUSDT
+
         binding.SahipCrypto.text=gelenCrypto.AmountOfCrypto
 
         //Editexte yazılan verileri anlık olarak almak için
