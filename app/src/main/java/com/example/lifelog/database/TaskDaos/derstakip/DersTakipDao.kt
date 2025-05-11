@@ -25,10 +25,10 @@ class DersTakipDao: TaskDaos<DersTakip> {
         val cursor = db.rawQuery("SELECT * FROM DersTakip", null)
         while (cursor.moveToNext()) {
             val ders = DersTakip(
-                cursor.getInt(cursor.getColumnIndex("Ders_id")),
-                cursor.getString(cursor.getColumnIndex("DersAdi")),
-                cursor.getString(cursor.getColumnIndex("SinavTarih")),
-                cursor.getString(cursor.getColumnIndex("SinavSaat")))
+                cursor.getInt(cursor.getColumnIndexOrThrow("Ders_id")),
+                cursor.getString(cursor.getColumnIndexOrThrow("DersAdi")),
+                cursor.getString(cursor.getColumnIndexOrThrow("SinavTarih")),
+                cursor.getString(cursor.getColumnIndexOrThrow("SinavSaat")))
             gelenders.add(ders)
         }
         db.close()

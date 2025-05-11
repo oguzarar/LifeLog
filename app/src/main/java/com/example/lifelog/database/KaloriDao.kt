@@ -25,10 +25,10 @@ class KaloriDao {
         val cursor = db.rawQuery("SELECT * FROM Kalori", null)
         while (cursor.moveToNext()) {
             val yemek = Kalori(
-                cursor.getString(cursor.getColumnIndex("yemek_ismi")),
-                cursor.getString(cursor.getColumnIndex("yemek_turu")),
-                cursor.getString(cursor.getColumnIndex("yemek_kalori")),
-                cursor.getString(cursor.getColumnIndex("yemek_protein")))
+                cursor.getString(cursor.getColumnIndexOrThrow("yemek_ismi")),
+                cursor.getString(cursor.getColumnIndexOrThrow("yemek_turu")),
+                cursor.getString(cursor.getColumnIndexOrThrow("yemek_kalori")),
+                cursor.getString(cursor.getColumnIndexOrThrow("yemek_protein")))
             gelenYemek.add(yemek)
         }
         db.close()
@@ -40,8 +40,8 @@ class KaloriDao {
         var toplamProtein=0.0
         val cursor = db.rawQuery("SELECT yemek_kalori,yemek_protein FROM Kalori", null)
         while (cursor.moveToNext()) {
-            var amountKalori = cursor.getString(cursor.getColumnIndex("yemek_kalori"))
-            var amountProtein=cursor.getString(cursor.getColumnIndex("yemek_protein"))
+            var amountKalori = cursor.getString(cursor.getColumnIndexOrThrow("yemek_kalori"))
+            var amountProtein=cursor.getString(cursor.getColumnIndexOrThrow("yemek_protein"))
             toplamKalori += amountKalori.toDouble()
             toplamProtein+=amountProtein.toDouble()
         }
@@ -55,8 +55,8 @@ class KaloriDao {
         val cursor = db.rawQuery("SELECT yemek_kalori, yemek_protein FROM Kalori WHERE yemek_ismi = ?", arrayOf(Yemek_ismi))
 
         if (cursor.moveToFirst()) {
-            val mevcutKalori = cursor.getString(cursor.getColumnIndex("yemek_kalori")).toDouble()
-            val mevcutProtein = cursor.getString(cursor.getColumnIndex("yemek_protein")).toDouble()
+            val mevcutKalori = cursor.getString(cursor.getColumnIndexOrThrow("yemek_kalori")).toDouble()
+            val mevcutProtein = cursor.getString(cursor.getColumnIndexOrThrow("yemek_protein")).toDouble()
 
             val yeniKalori = mevcutKalori+Yemek_kalori
             val yeniProtein = mevcutProtein+Yemek_Protein
@@ -76,7 +76,7 @@ class KaloriDao {
         val db = vt.writableDatabase
         val content = ContentValues()
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -1) // 1 gün geri git
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
         val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val formattedDate = formatter.format(calendar.time)
 
@@ -84,40 +84,40 @@ class KaloriDao {
         var kaloriTarih: String? = null
 
         if (gecmisCursor == null || !gecmisCursor.moveToFirst()) {
-            // Yeni veriyi GecmisKalori tablosuna ekle
+            // Yeni veriyi GecmisKalori tablosuna ekler
             content.put("KaloriTarih", formattedDate)
             content.put("kalori", "0")
             content.put("protein", "0")
             db.insertOrThrow("GecmisKalori", null, content)
 
-            // Kalori tablosunu temizle
+            // Kalori tablosunu temizler
             db.execSQL("DELETE FROM Kalori")
             Log.e("1","if bloğu çalıştı")
         } else {
-            // Geçmiş veriyi al
+            // Geçmiş veriyi alır
             kaloriTarih = gecmisCursor.getString(gecmisCursor.getColumnIndexOrThrow("KaloriTarih"))
 
-            // Eğer bugün tarih, geçmiş tarihten daha büyükse verileri sıfırla
+            // Eğer bugün tarih, geçmiş tarihten daha büyükse verileri sıfırlar
             if (formattedDate != kaloriTarih) {
                 var toplamKalori = 0.0
                 var toplamProtein = 0.0
                 val kaloriCursor = db.rawQuery("SELECT yemek_kalori, yemek_protein FROM Kalori", null)
 
                 while (kaloriCursor.moveToNext()) {
-                    val amountKalori = kaloriCursor.getString(kaloriCursor.getColumnIndex("yemek_kalori"))
-                    val amountProtein = kaloriCursor.getString(kaloriCursor.getColumnIndex("yemek_protein"))
+                    val amountKalori = kaloriCursor.getString(kaloriCursor.getColumnIndexOrThrow("yemek_kalori"))
+                    val amountProtein = kaloriCursor.getString(kaloriCursor.getColumnIndexOrThrow("yemek_protein"))
                     toplamKalori += amountKalori.toDouble()
                     toplamProtein += amountProtein.toDouble()
                 }
                 kaloriCursor.close()
 
-                // Yeni veriyi GecmisKalori tablosuna ekle
+                // Yeni veriyi GecmisKalori tablosuna ekler
                 content.put("KaloriTarih", formattedDate)
                 content.put("kalori", toplamKalori)
                 content.put("protein", toplamProtein)
                 db.insertOrThrow("GecmisKalori", null, content)
 
-                // Kalori tablosunu temizle
+                // Kalori tablosunu temizler
                 db.execSQL("DELETE FROM Kalori")
                 Log.e("2","Else bloğu çalıştı")
             }
@@ -132,17 +132,17 @@ class KaloriDao {
         val gelenYemek = ArrayList<KaloriDB>()
         val cursor = db.rawQuery("SELECT * FROM GecmisKalori", null)
 
-        // İlk satırı atla
+        // İlk satırı atlar
         if (cursor.moveToFirst()) {
-            // İlk satırı atlamak için hiçbir şey yapma
+
         }
 
-        // Geri kalan satırları al
+        // Geri kalan satırları alır
         while (cursor.moveToNext()) {
             val yemek = KaloriDB(
-                cursor.getString(cursor.getColumnIndex("kalori")),
-                cursor.getString(cursor.getColumnIndex("protein")),
-                cursor.getString(cursor.getColumnIndex("KaloriTarih"))
+                cursor.getString(cursor.getColumnIndexOrThrow("kalori")),
+                cursor.getString(cursor.getColumnIndexOrThrow("protein")),
+                cursor.getString(cursor.getColumnIndexOrThrow("KaloriTarih"))
             )
             gelenYemek.add(yemek)
         }

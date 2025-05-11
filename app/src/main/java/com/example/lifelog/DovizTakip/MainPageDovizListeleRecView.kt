@@ -1,5 +1,6 @@
 package com.example.lifelog.DovizTakip
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -35,6 +36,9 @@ RecyclerView.Adapter<MainPageDovizListeleRecView.DovizNesneTutucu>(){
             val gecis= Intent(mContext, SellPageActivity::class.java)
             gecis.putExtra("Doviz", Doviz)
             mContext.startActivity(gecis)
+            if (mContext is Activity) {
+                (mContext as Activity).finish()
+            }
         }
 
     }

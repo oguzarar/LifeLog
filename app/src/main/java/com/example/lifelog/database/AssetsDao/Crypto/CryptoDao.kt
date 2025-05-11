@@ -22,10 +22,10 @@ class CryptoDao: DatabaseDao<CryptoDB> {
         val db=vt.writableDatabase
         val cursor=db.rawQuery("SELECT * FROM CryptoDB",null)
         while(cursor.moveToNext()){
-            val gelen= CryptoDB(cursor.getString(cursor.getColumnIndex("CryptoLongName")),
-                cursor.getString(cursor.getColumnIndex("CryptoShortName")),
-                cursor.getString(cursor.getColumnIndex("AmountOfCrypto")),
-                cursor.getString(cursor.getColumnIndex("AmountOfUSDT")))
+            val gelen= CryptoDB(cursor.getString(cursor.getColumnIndexOrThrow("CryptoLongName")),
+                cursor.getString(cursor.getColumnIndexOrThrow("CryptoShortName")),
+                cursor.getString(cursor.getColumnIndexOrThrow("AmountOfCrypto")),
+                cursor.getString(cursor.getColumnIndexOrThrow("AmountOfUSDT")))
             gelenCrypto.add(gelen)
         }
         db.close()
@@ -37,7 +37,7 @@ class CryptoDao: DatabaseDao<CryptoDB> {
         var toplam = 0.0
         val cursor = db.rawQuery("SELECT AmountOfUSDT FROM CryptoDB", null)
         while (cursor.moveToNext()) {
-            val amount = cursor.getDouble(cursor.getColumnIndex("AmountOfUSDT"))
+            val amount = cursor.getDouble(cursor.getColumnIndexOrThrow("AmountOfUSDT"))
             toplam += amount
         }
         cursor.close()
@@ -51,8 +51,8 @@ class CryptoDao: DatabaseDao<CryptoDB> {
 
 
         if (cursor.moveToFirst()) {
-            val mevcutCoin = cursor.getString(cursor.getColumnIndex("AmountOfCrypto")).toDouble()
-            val mevcutUSDT = cursor.getString(cursor.getColumnIndex("AmountOfUSDT")).toDouble()
+            val mevcutCoin = cursor.getString(cursor.getColumnIndexOrThrow("AmountOfCrypto")).toDouble()
+            val mevcutUSDT = cursor.getString(cursor.getColumnIndexOrThrow("AmountOfUSDT")).toDouble()
             val yeniUSDT = mevcutUSDT - item.AmountOfUSDT.toDouble()
             val yeniCoin = mevcutCoin - item.AmountOfCrypto.toDouble()
 
@@ -81,8 +81,8 @@ class CryptoDao: DatabaseDao<CryptoDB> {
 
 
         if (cursor.moveToFirst()) {
-            val mevcutCoin=cursor.getString(cursor.getColumnIndex("AmountOfCrypto")).toDouble()
-            val mevcutUSDT = cursor.getString(cursor.getColumnIndex("AmountOfUSDT")).toDouble()
+            val mevcutCoin=cursor.getString(cursor.getColumnIndexOrThrow("AmountOfCrypto")).toDouble()
+            val mevcutUSDT = cursor.getString(cursor.getColumnIndexOrThrow("AmountOfUSDT")).toDouble()
             val yeniUSDT = mevcutUSDT + item.AmountOfUSDT.toDouble()
             val yeniCoin=mevcutCoin + item.AmountOfCrypto.toDouble()
 

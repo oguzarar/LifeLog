@@ -21,10 +21,10 @@ class DovizDao: DatabaseDao<DovizDB> {
         val db=vt.writableDatabase
         val cursor=db.rawQuery("SELECT * FROM Doviz",null)
         while(cursor.moveToNext()){
-            val Doviz= DovizDB(cursor.getString(cursor.getColumnIndex("DovizLongName")),
-                cursor.getString(cursor.getColumnIndex("DovizShortName")),
-                cursor.getString(cursor.getColumnIndex("DovizAmount")),
-                cursor.getString(cursor.getColumnIndex("DovizMiktariTRY")))
+            val Doviz= DovizDB(cursor.getString(cursor.getColumnIndexOrThrow("DovizLongName")),
+                cursor.getString(cursor.getColumnIndexOrThrow("DovizShortName")),
+                cursor.getString(cursor.getColumnIndexOrThrow("DovizAmount")),
+                cursor.getString(cursor.getColumnIndexOrThrow("DovizMiktariTRY")))
             gelenDoviz.add(Doviz)
         }
         db.close()
@@ -36,7 +36,7 @@ class DovizDao: DatabaseDao<DovizDB> {
         var toplam = 0.0
         val cursor = db.rawQuery("SELECT DovizMiktariTRY FROM Doviz", null)
         while (cursor.moveToNext()) {
-            val amount = cursor.getDouble(cursor.getColumnIndex("DovizMiktariTRY"))
+            val amount = cursor.getDouble(cursor.getColumnIndexOrThrow("DovizMiktariTRY"))
             toplam += amount
         }
         cursor.close()
@@ -49,8 +49,8 @@ class DovizDao: DatabaseDao<DovizDB> {
         val cursor = db.rawQuery("SELECT DovizAmount, DovizMiktariTRY FROM Doviz WHERE DovizLongName = ?", arrayOf(doviz.DovizLongName))
 
         if (cursor.moveToFirst()) {
-            val mevcutTutar = cursor.getString(cursor.getColumnIndex("DovizAmount")).toDouble()
-            val mevcutTRY = cursor.getString(cursor.getColumnIndex("DovizMiktariTRY")).toDouble()
+            val mevcutTutar = cursor.getString(cursor.getColumnIndexOrThrow("DovizAmount")).toDouble()
+            val mevcutTRY = cursor.getString(cursor.getColumnIndexOrThrow("DovizMiktariTRY")).toDouble()
             val yeniTutar = mevcutTutar - doviz.DovizMiktari.toDouble()
             val yeniTry = mevcutTRY - doviz.DovizMiktariTRY.toDouble()
 
@@ -73,8 +73,8 @@ class DovizDao: DatabaseDao<DovizDB> {
         val cursor = db.rawQuery("SELECT DovizAmount, DovizMiktariTRY FROM Doviz WHERE DovizLongName = ?", arrayOf(doviz.DovizLongName))
 
         if (cursor.moveToFirst()) {
-            val mevcutTutar = cursor.getString(cursor.getColumnIndex("DovizAmount")).toDouble()
-            val mevcutTRY = cursor.getString(cursor.getColumnIndex("DovizMiktariTRY")).toDouble()
+            val mevcutTutar = cursor.getString(cursor.getColumnIndexOrThrow("DovizAmount")).toDouble()
+            val mevcutTRY = cursor.getString(cursor.getColumnIndexOrThrow("DovizMiktariTRY")).toDouble()
 
             val yeniTutar = mevcutTutar + doviz.DovizMiktari.toDouble()
             val yeniTRY = mevcutTRY + doviz.DovizMiktariTRY.toDouble()

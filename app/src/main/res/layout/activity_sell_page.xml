@@ -104,11 +104,11 @@
                 android:background="@drawable/plain_text_border3"
                 android:ems="10"
                 android:hint="Ne kadarlık?"
-                android:inputType="number"
+                android:inputType="text"
+                android:paddingStart="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/DovizSellButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:paddingStart="8dp"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/DovizSellButton"

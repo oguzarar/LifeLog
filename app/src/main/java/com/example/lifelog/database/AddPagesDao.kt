@@ -16,7 +16,7 @@ class AddPagesDao {
         val db=vt.writableDatabase
         val cursor=db.rawQuery("SELECT * FROM Plugins",null)
         while(cursor.moveToNext()){
-            val plugin= Plugins(cursor.getString(cursor.getColumnIndex("Plugin_name")))
+            val plugin= Plugins(cursor.getString(cursor.getColumnIndexOrThrow("Plugin_name")))
             PluginList.add(plugin)
         }
         db.close()

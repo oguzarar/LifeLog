@@ -7,9 +7,7 @@ import java.util.Date
 import java.util.Locale
 
 class Notesdao {
-
     fun notEkle(vt: Database, note:String, note_title:String){  //Not kayıt
-
         val formatterDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val formatterTime = SimpleDateFormat("HH:mm", Locale.getDefault())
         val currentDate = formatterDate.format(Date())  //Anlık tarih ve saat bilgilerini alma
@@ -22,7 +20,6 @@ class Notesdao {
         values.put("note_title", note_title)    //verilerin eklenmesi
         values.put("note_date", currentDate)
         values.put("note_time", currentTime)
-
         //olası hataya karşı try-catch bloğu
         try {
             db.insertOrThrow("Notes", null, values)    //yazma işlemi

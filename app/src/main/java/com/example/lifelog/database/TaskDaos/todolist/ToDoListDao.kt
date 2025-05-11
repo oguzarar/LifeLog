@@ -23,8 +23,8 @@ class ToDoListDao: TaskDaos<ToDoList> {
         val db=vt.writableDatabase
         val cursor=db.rawQuery("SELECT * FROM ToDoList",null)
         while(cursor.moveToNext()){
-            val Task= ToDoList(cursor.getInt(cursor.getColumnIndex("task_id")),
-                cursor.getString(cursor.getColumnIndex("task")))
+            val Task= ToDoList(cursor.getInt(cursor.getColumnIndexOrThrow("task_id")),
+                cursor.getString(cursor.getColumnIndexOrThrow("task")))
             TaskList.add(Task)
         }
         db.close()
