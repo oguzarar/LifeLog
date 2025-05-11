@@ -112,7 +112,7 @@ class KriptoActivity : AppCompatActivity() {
     }
 }
 
-//Apiden fiat bilgisi
+//Apiden fiyat bilgisi
 fun fetchCryptoPrice(symbol: String, callback: (Double?) -> Unit) {
 
     CoroutineScope(Dispatchers.Main).launch {

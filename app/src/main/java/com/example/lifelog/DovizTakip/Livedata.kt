@@ -26,7 +26,7 @@ class Livedata : ViewModel(){
     private var fetchJob: Job? = null
 
     fun startFetching(symbol: String) {
-        fetchJob?.cancel() // varsa iptal et
+        fetchJob?.cancel() // eğer varsa iptal eder
         fetchJob = viewModelScope.launch {
             while (isActive) {
                 fetchCurrencyRate(symbol,"TRY") { currentPrice ->
@@ -37,11 +37,11 @@ class Livedata : ViewModel(){
         }
     }
     fun stopFetching() {
-        fetchJob?.cancel() // İşlemi durdur
+        fetchJob?.cancel() // İşlemi durdurur
     }
 
     fun fetchCurrencyRate(from: String, to: String, callback: (Double?) -> Unit) {
-        // Coroutine başlatıyoruz
+
         CoroutineScope(Dispatchers.Main).launch {
             val rate = getCurrencyRate(from, to)
             callback(rate)
@@ -64,7 +64,7 @@ class Livedata : ViewModel(){
                     val responseBody = response.body?.string()
                     val jsonObject = JSONObject(responseBody)
 
-                    // Gelen JSON'dan döviz kuru değerini alıyoruz
+
                     val price = jsonObject.getJSONObject("data").getDouble(to)
                     price
                 } else {
