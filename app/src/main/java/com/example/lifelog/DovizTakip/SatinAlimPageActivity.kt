@@ -55,6 +55,8 @@ class SatinAlimPageActivity : AppCompatActivity() {
                 Log.e("Fiyat bilgisi","GÜncellendi")
             }else{
                 binding.progressBar.visibility= View.VISIBLE
+                Log.e("Veri","Veri gelmedi")
+
             }
 
         }
