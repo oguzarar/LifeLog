@@ -32,7 +32,7 @@ class Livedata : ViewModel(){
                 fetchCurrencyRate(symbol,"TRY") { currentPrice ->
                     _price.value = currentPrice
                 }
-                delay(2000)
+                delay(1000)
             }
         }
     }
