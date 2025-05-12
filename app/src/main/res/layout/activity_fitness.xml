@@ -121,6 +121,7 @@
         android:clickable="false"
         android:foreground="?attr/selectableItemBackground"
         android:visibility="invisible"
+        app:cardBackgroundColor="@color/acikyesil"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +144,8 @@
                 android:layout_height="wrap_content"
                 android:text="Seçilen Aktivite"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/secilenAktiviteKalori"
@@ -197,11 +199,13 @@
         android:id="@+id/baslatDurdurButtonKronometre"
         android:layout_width="113dp"
         android:layout_height="44dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/acikyesil"
         android:text="Başlat"
+        android:textColor="#070707"
+        android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kronometre_card" />
 
@@ -210,7 +214,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/acikyesil"
         android:text="Tamamla"
+        android:textColor="#0B0B0B"
+        android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
